@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Comp Slide Builder</title>
+<meta name="description" content="A free Claude skill that turns a case prompt into a judge-ready case competition slide, then a full deck.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- PostHog analytics: paste your Project API key below (see WALKTHROUGH.md, step 3) -->
+<script>
+  window.POSTHOG_KEY = "phc_REPLACE_ME";
+  window.POSTHOG_HOST = "https://us.i.posthog.com";
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset identify alias people.set people.set_once set_config get_distinct_id get_session_id".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  if (!window.POSTHOG_KEY.includes("REPLACE_ME")) {
+    posthog.init(window.POSTHOG_KEY, { api_host: window.POSTHOG_HOST, person_profiles: "identified_only" });
+  }
+</script>
+
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --ink: #14171f;
+    --muted: #5b6170;
+    --line: #e3e1da;
+    --accent: #1f3a8a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e6ebf8;
+    --code-bg: #f0eee8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1115;
+      --surface: #171a21;
+      --ink: #eceef3;
+      --muted: #9aa1b2;
+      --line: #2a2f3a;
+      --accent: #8ea8ff;
+      --accent-ink: #0f1115;
+      --accent-soft: #1d2540;
+      --code-bg: #1f232c;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  header.nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; }
+  .brand { font-weight: 700; letter-spacing: -0.01em; }
+  .brand span { color: var(--accent); }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 20px; font-size: 15px; }
+  nav a:hover { color: var(--ink); }
+
+  .hero { padding: 56px 0 40px; }
+  .eyebrow {
+    display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-soft); padding: 5px 11px; border-radius: 999px;
+  }
+  h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.08; letter-spacing: -0.03em; margin: 18px 0 16px; font-weight: 800; }
+  .lede { font-size: 19px; color: var(--muted); max-width: 640px; margin: 0 0 30px; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 10px;
+    font-weight: 600; font-size: 16px; text-decoration: none; transition: transform .1s ease, opacity .15s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { opacity: .9; }
+  .btn-ghost { color: var(--ink); border: 1px solid var(--line); background: var(--surface); }
+  .fine { font-size: 13px; color: var(--muted); margin-top: 12px; }
+
+  section { padding: 44px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 28px; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .card h3 { font-size: 16px; margin: 0 0 6px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .flow { display: flex; flex-wrap: wrap; gap: 8px; }
+  .flow span {
+    font-size: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px;
+  }
+
+  .tabs { display: flex; gap: 6px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .tab {
+    background: none; border: none; font: inherit; font-weight: 600; color: var(--muted); padding: 10px 14px;
+    cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  .panel[hidden] { display: none; }
+
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; }
+  ol.steps li { counter-increment: s; position: relative; padding: 0 0 22px 48px; }
+  ol.steps li::before {
+    content: counter(s); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent); font-weight: 700; display: grid; place-items: center; font-size: 15px;
+  }
+  ol.steps li strong { display: block; }
+  ol.steps li p { margin: 2px 0 0; color: var(--muted); }
+  code, pre { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 14px; }
+  code { background: var(--code-bg); padding: 2px 6px; border-radius: 5px; }
+  pre { background: var(--code-bg); padding: 14px 16px; border-radius: 10px; overflow-x: auto; margin: 10px 0 0; }
+  .note {
+    background: var(--accent-soft); border-radius: 10px; padding: 14px 16px; font-size: 15px; margin-top: 8px;
+  }
+
+  .prompts { display: grid; gap: 10px; }
+  .prompt { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 15px; }
+
+  details { border-bottom: 1px solid var(--line); padding: 14px 0; }
+  summary { font-weight: 600; cursor: pointer; }
+  details p { color: var(--muted); margin: 8px 0 0; }
+
+  footer { padding: 36px 0 60px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    nav a:not(:last-child) { display: none; }
+    .hero { padding-top: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <div class="brand">Case Comp <span>Slide Builder</span></div>
+    <nav>
+      <a href="#what">What it does</a>
+      <a href="#install">Install</a>
+      <a href="#use">How to use</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <span class="eyebrow">Free Claude skill</span>
+    <h1>Turn a case prompt into judge-ready slides.</h1>
+    <p class="lede">A Claude skill that asks the right questions one at a time, does the research, and builds case competition slides that look like they came from a top consulting team. It's based on real Ivey/Western case comp decks.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="case-comp-slide-builder.zip" download data-track="hero">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download skill (.zip)
+      </a>
+      <a class="btn btn-ghost" href="#install">How to install</a>
+    </div>
+    <p class="fine">Works with Claude.ai (Pro, Max, Team, Enterprise) and Claude Code. Takes about 2 minutes to set up.</p>
+  </div>
+
+  <section id="what">
+    <h2>What it does</h2>
+    <p class="sub">Built for the way case competitions are judged: one clear message per slide, and every element backs it up.</p>
+    <div class="grid">
+      <div class="card"><h3>Asks, then builds</h3><p>It asks one or two questions at a time, so you never get a wall of questions. Then it researches and fills in the gaps.</p></div>
+      <div class="card"><h3>Never invents numbers</h3><p>Figures it hasn't confirmed get flagged with <code>[verify]</code> until you source them. The case prompt is always the source of truth.</p></div>
+      <div class="card"><h3>Distinctive by default</h3><p>Layouts are designed to stand out to a judge who has already seen 15 other decks, with fonts and colors matched to the client's brand.</p></div>
+    </div>
+    <p class="sub" style="margin:28px 0 12px">The workflow:</p>
+    <div class="flow">
+      <span>Intake</span><span>Rough layout</span><span>Questions</span><span>Research</span><span>Build</span><span>Pick font + colors</span><span>Full deck</span><span>Polish + QA</span>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2>Install it</h2>
+    <p class="sub">Choose where you use Claude.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-tab="web">Claude.ai / Desktop app</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="code">Claude Code</button>
+    </div>
+
+    <div class="panel" data-panel="web">
+      <ol class="steps">
+        <li><strong>Download the zip</strong><p>Use the button above. <b>Don't unzip it</b>. Claude wants the .zip file itself.</p></li>
+        <li><strong>Open Settings → Capabilities</strong><p>In Claude.ai or the desktop app, click your name (bottom left), then <b>Settings</b>. Make sure <b>Code execution and file creation</b> is turned on. Skills need it to build PowerPoint files.</p></li>
+        <li><strong>Upload the skill</strong><p>Scroll down to <b>Skills</b>, click <b>Upload skill</b>, and choose <code>case-comp-slide-builder.zip</code>.</p></li>
+        <li><strong>Turn it on</strong><p>Check that the toggle next to <b>case-comp-slide-builder</b> is on. That's it.</p></li>
+      </ol>
+      <div class="note">On a Team or Enterprise plan? An admin may need to enable skills for your organization first.</div>
+    </div>
+
+    <div class="panel" data-panel="code" hidden>
+      <ol class="steps">
+        <li><strong>Download the zip</strong><p>Use the button above.</p></li>
+        <li><strong>Unzip it into your skills folder</strong><p>Run this in Terminal from the folder where you downloaded the file:</p>
+          <pre>mkdir -p ~/.claude/skills && unzip case-comp-slide-builder.zip -d ~/.claude/skills/</pre></li>
+        <li><strong>Restart Claude Code</strong><p>The skill should now show up as <code>/case-comp-slide-builder</code>.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="use">
+    <h2>How to use it</h2>
+    <p class="sub">Start a new chat and either upload your case prompt (PDF or doc) or describe the slide you need. Claude loads the skill on its own when it sees the request. Try:</p>
+    <div class="prompts">
+      <div class="prompt">"Here's our case prompt. Build me the executive summary slide."</div>
+      <div class="prompt">"I need a situational analysis slide for a Canadian Tire case on e-commerce growth."</div>
+      <div class="prompt">"Use the case comp slide builder to turn this recommendation into a full deck."</div>
+    </div>
+    <div class="note" style="margin-top:18px"><b>Tip:</b> Answer its questions as you go. It's built to ask only one or two at a time, and the slides get noticeably better with your answers.</div>
+  </section>
+
+  <section id="faq">
+    <h2>FAQ</h2>
+    <details><summary>Is it free?</summary><p>Yes. You need a Claude plan that supports skills: Pro, Max, Team or Enterprise on Claude.ai, or Claude Code.</p></details>
+    <details><summary>The upload says the file is invalid.</summary><p>Upload the .zip as-is. If your computer unzipped it automatically (Safari does this), compress the <code>case-comp-slide-builder</code> folder again: right-click it and choose Compress.</p></details>
+    <details><summary>Claude isn't using the skill.</summary><p>Make sure the toggle is on under Settings → Capabilities → Skills, and start a new chat. You can also ask for it by name: "use the case comp slide builder."</p></details>
+  </section>
+
+  <footer>
+    Case Comp Slide Builder · An independent, community-made Claude skill, not affiliated with Anthropic.
+  </footer>
+</div>
+
+<script>
+  // Tabs
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b === btn));
+      document.querySelectorAll(".panel").forEach(p => p.hidden = p.dataset.panel !== btn.dataset.tab);
+      if (window.posthog && posthog.capture) posthog.capture("install_tab_viewed", { tab: btn.dataset.tab });
+    });
+  });
+  // Download tracking
+  document.querySelectorAll("[data-track]").forEach(a => {
+    a.addEventListener("click", () => {
+      if (window.posthog && posthog.capture) posthog.capture("skill_downloaded", { location: a.dataset.track });
+    });
+  });
+</script>
+</body>
+</html>
