@@ -1,11 +1,12 @@
-# Launching the Case Comp Slide Builder site
+# Launching the eightytwenty site
 
 What's in this folder:
 
 | File | What it is |
 |---|---|
 | `index.html` | The whole website (one page) |
-| `case-comp-slide-builder.zip` | The skill people download (the folder with `SKILL.md` inside) |
+| `eightytwenty.zip` | The skill people download (the folder with `SKILL.md` inside) |
+| `logo-white.png`, `logo-black.png`, `favicon.png` | The logo, made from `Eighty Twenty.pdf` |
 
 Total time: about 20 minutes. Total cost: $0.
 
@@ -69,7 +70,7 @@ When you change the skill, re-zip it and push:
 cd "/Users/user/Claude Projects/case-comp-skill-site" && git commit -am "Update skill" && git push
 ```
 
-Or just ask Claude to "re-package the case comp skill and push the site."
+Or just ask Claude to "re-package the eightytwenty skill and push the site."
 
 ## Sharing tips
 
