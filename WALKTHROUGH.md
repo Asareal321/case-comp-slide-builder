@@ -63,6 +63,7 @@ The site sends these events:
 - `signup_submitted` / `signup_failed`, when someone joins the email list (`source` says which form)
 - `link_shared` / `link_copied`, when a phone visitor sends the page to their laptop
 - `text_copied`, when someone copies the install command or an example prompt
+- `feedback_submitted`, when someone sends the score sheet on the Feedback slide (`outcome`, `message`, and `email` if they gave one)
 
 Add a **Signups** insight too: Trends → `signup_submitted` → "Total count".
 
@@ -90,6 +91,25 @@ The signup forms (on phones at the top of the page, and on the last slide) send 
 > Then attach your case prompt and ask for a slide. I'll only email you when a new skill ships.
 
 **Consent:** you're in Canada, so the anti-spam law (CASL) applies. The forms already say what people are signing up for and that they can unsubscribe. Kit adds the unsubscribe link to every email. Don't add people to the list any other way.
+
+## Step 6: Read feedback (2 min, then weekly)
+
+The last slide is a feedback score sheet. Each submission arrives in PostHog as a `feedback_submitted` event.
+
+1. In PostHog, open **Activity**, filter by the event `feedback_submitted`, and click any row to read `outcome`, `message` and `email`.
+2. For a running list, create a new **SQL insight** with this query and add it to your dashboard:
+
+```sql
+select timestamp, properties.outcome, properties.message, properties.email
+from events
+where event = 'feedback_submitted'
+order by timestamp desc
+```
+
+3. Add a **Trends** insight on `feedback_submitted` broken down by `outcome` to see how decks are turning out over time.
+4. Link people to it directly: `https://case-comp-slide-builder.vercel.app/#feedback`. Add that link to the Kit welcome email.
+
+If a visitor's ad blocker stops PostHog, the form tells them it was blocked instead of pretending it sent.
 
 ## Updating the skill later
 

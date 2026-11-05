@@ -169,6 +169,11 @@
   @keyframes grow { from { transform: scaleY(.04); } }
   .panel-h { background: var(--panel); color: #fff; font-weight: 700; line-height: 1.2; }
 
+  sup.fn { font-size: 60%; font-weight: 400; color: var(--muted); line-height: 0; margin-left: .1em; }
+  .navy sup.fn, .bubble-claude sup.fn { color: var(--on-navy-faint); }
+  .starts .label small { float: right; font-weight: 400; color: var(--muted); }
+  .bars.three, .years.three { gap: 14%; padding: 0 8%; }
+
   /* ---------- 01 Title ---------- */
   .title-slide .slide-body { display: grid; grid-template-columns: 1fr calc(var(--u) * 33.3); gap: calc(var(--u) * 4.5); align-items: center; padding-top: calc(var(--u) * 1.8); }
   .display { font-size: calc(var(--u) * 4.8); line-height: 1.12; letter-spacing: -0.02em; font-weight: 700; max-width: 10.4em; }
@@ -268,7 +273,7 @@
 
   /* ---------- 05 Install ---------- */
   .install .slide-body { display: grid; grid-template-columns: 1fr calc(var(--u) * 42.7); gap: calc(var(--u) * 5); }
-  .stepper { list-style: none; margin: 0; padding: calc(var(--u) * .6) 0 calc(var(--u) * 1); display: grid; align-content: space-between; }
+  .stepper { list-style: none; margin: 0; padding: calc(var(--u) * .6) 0 0; display: grid; align-content: space-between; }
   .stepper li { display: grid; grid-template-columns: calc(var(--u) * 2.9) 1fr; column-gap: calc(var(--u) * 1.9); position: relative; }
   .stepper li:not(:last-child)::before { content: ""; position: absolute; left: calc(var(--u) * 1.45 - 1px); top: calc(var(--u) * 2.9); bottom: calc(var(--u) * -3); width: 2px; background: var(--bar-grey); }
   .stepper .disc { grid-row: span 2; position: relative; }
@@ -291,11 +296,13 @@
   .notes { margin-top: calc(var(--u) * 1.9); }
   .notes div { border-top: 1px solid var(--line); padding: calc(var(--u) * 1.1) 0 calc(var(--u) * .9); }
   .notes b { display: block; font-size: calc(var(--u) * 1.4); line-height: 1.3; }
+  .notes div:last-child { padding-bottom: 0; }
   .notes p { font-size: calc(var(--u) * 1.45); line-height: 1.45; color: var(--muted); margin-top: calc(var(--u) * .2); }
   .notes .link-btn { color: var(--blue); font-weight: 700; margin-left: .4em; }
 
   /* ---------- 06 Try it ---------- */
-  .try .slide-body { display: grid; grid-template-columns: calc(var(--u) * 59.3) 1fr; gap: calc(var(--u) * 3); align-items: start; }
+  .try .slide-body { display: grid; grid-template-columns: calc(var(--u) * 59.3) 1fr; gap: calc(var(--u) * 3); align-items: stretch; }
+  .try .slide-body > div { display: flex; flex-direction: column; }
   .try .window { margin-top: 0; }
   .chat { padding: calc(var(--u) * 1.6) calc(var(--u) * 1.6) calc(var(--u) * 1); display: flex; flex-direction: column; }
   .attach { align-self: flex-end; border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .5); padding: calc(var(--u) * .6) calc(var(--u) * 1.2); min-width: calc(var(--u) * 16.8); font-size: calc(var(--u) * 1.2); font-weight: 700; }
@@ -310,8 +317,8 @@
   .chip:hover { background: var(--tint); color: var(--blue-hover); }
   .reply { display: flex; justify-content: space-between; align-items: center; margin-top: calc(var(--u) * .8); border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .6); padding: calc(var(--u) * .5) calc(var(--u) * .6) calc(var(--u) * .5) calc(var(--u) * 1.4); font-size: calc(var(--u) * 1.3); color: var(--muted); }
   .reply i { width: calc(var(--u) * 2.1); height: calc(var(--u) * 2.1); border-radius: 50%; background: var(--blue); }
-  .tips { list-style: none; margin: calc(var(--u) * 1.2) 0 0; padding: 0; }
-  .tips li { display: grid; grid-template-columns: calc(var(--u) * 4) 1fr; border-top: 1px solid var(--line); padding: calc(var(--u) * 2.2) 0 calc(var(--u) * 2.4); }
+  .tips { list-style: none; margin: calc(var(--u) * 1.2) 0 0; padding: 0; flex: 1; display: grid; grid-auto-rows: 1fr; }
+  .tips li { display: grid; grid-template-columns: calc(var(--u) * 4) 1fr; align-content: start; border-top: 1px solid var(--line); padding: calc(var(--u) * 2.2) 0 0; }
   .tips .n { font-size: calc(var(--u) * 1.75); font-weight: 700; color: var(--blue); line-height: 1.2; }
   .tips h3 { font-size: calc(var(--u) * 1.65); line-height: 1.3; }
   .tips p { font-size: calc(var(--u) * 1.45); line-height: 1.5; color: var(--muted); margin-top: calc(var(--u) * .6); }
@@ -357,6 +364,45 @@
   .team { grid-column: 1 / -1; background: var(--navy-card); border: 1px solid var(--navy-line); border-radius: calc(var(--u) * 1); padding: calc(var(--u) * 2) calc(var(--u) * 2.1) calc(var(--u) * 2.2); }
   .team ol { list-style: none; margin: calc(var(--u) * 1.4) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--u) * 2); }
   .team li { display: flex; align-items: center; gap: calc(var(--u) * 1.2); font-size: calc(var(--u) * 1.6); line-height: 1.3; }
+
+  /* ---------- 09 Feedback: a judge's score sheet ---------- */
+  .feedback .slide-body { display: grid; grid-template-columns: calc(var(--u) * 59.3) 1fr; gap: calc(var(--u) * 3); align-items: stretch; }
+  .feedback .slide-body > div { display: flex; flex-direction: column; }
+  .sheet { background: var(--surface); border: 1px solid var(--line); border-radius: calc(var(--u) * .9); overflow: hidden; display: flex; flex-direction: column; flex: 1; }
+  .sheet-bar { display: flex; justify-content: space-between; align-items: center; background: var(--panel); color: #fff; padding: calc(var(--u) * .8) calc(var(--u) * 1.6); font-size: calc(var(--u) * 1.15); font-weight: 700; }
+  .sheet-bar span { font-weight: 400; color: var(--on-navy-muted); }
+  .sheet form { flex: 1; display: flex; flex-direction: column; padding: 0 calc(var(--u) * 1.6) calc(var(--u) * 1.4); }
+  .sheet-row { display: grid; grid-template-columns: calc(var(--u) * 12) 1fr; gap: calc(var(--u) * 1.4); align-items: start; padding: calc(var(--u) * 1.3) 0; border-bottom: 1px solid var(--line); margin: 0; min-width: 0; }
+  .sheet-row.grow { flex: 1; }
+  .sheet-row > :first-child { font-size: calc(var(--u) * 1.25); font-weight: 700; color: var(--ink); padding: calc(var(--u) * .55) 0 0; }
+  .sheet-row small { display: block; font-size: calc(var(--u) * 1); font-weight: 400; color: var(--muted); margin-top: calc(var(--u) * .2); }
+  fieldset.sheet-row { border: 0; border-bottom: 1px solid var(--line); }
+  fieldset.sheet-row legend { float: left; width: 100%; padding: calc(var(--u) * .55) 0 0; font-size: calc(var(--u) * 1.25); font-weight: 700; }
+  .scores { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * .7); }
+  .score { position: relative; }
+  .score input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .score span { display: block; border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .5); padding: calc(var(--u) * .75) calc(var(--u) * 1); font-size: calc(var(--u) * 1.2); font-weight: 700; color: var(--ink); background: var(--surface); transition: background .15s, border-color .15s; }
+  .score:hover span { border-color: var(--blue); }
+  .score input:checked + span { background: var(--tint); border-color: var(--blue); color: var(--blue-hover); box-shadow: inset calc(var(--u) * .35) 0 0 var(--blue); }
+  .score input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .sheet textarea, .sheet input[type=email] {
+    width: 100%; font: 400 calc(var(--u) * 1.3) / 1.45 var(--font); color: var(--ink); background: var(--slide);
+    border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .5); padding: calc(var(--u) * .75) calc(var(--u) * 1);
+  }
+  .sheet textarea { resize: vertical; min-height: calc(var(--u) * 7.5); height: 100%; }
+  .sheet textarea::placeholder, .sheet input::placeholder { color: var(--muted); }
+  .sheet textarea:focus-visible, .sheet input:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; border-color: var(--blue); }
+  .sheet [aria-invalid="true"] { border-color: var(--red); }
+  .sheet-foot { display: flex; align-items: center; gap: calc(var(--u) * 1.4); padding-top: calc(var(--u) * 1.3); }
+  .sheet-foot .btn { font-size: calc(var(--u) * 1.3); padding: .8em 1.6em; }
+  .sheet .fb-status { font-size: calc(var(--u) * 1.15); line-height: 1.4; color: var(--muted); }
+  .sheet .fb-status.err { color: var(--red); }
+  .sheet .fb-done { flex: 1; display: none; flex-direction: column; justify-content: center; align-items: flex-start; gap: calc(var(--u) * .8); padding: calc(var(--u) * 2) calc(var(--u) * 2.4); }
+  .sheet .fb-done b { font-size: calc(var(--u) * 2.2); }
+  .sheet .fb-done p { font-size: calc(var(--u) * 1.45); color: var(--muted); max-width: 30em; }
+  .sheet .fb-done .link-btn { color: var(--blue-hover); font-weight: 700; }
+  .sheet.sent form { display: none; }
+  .sheet.sent .fb-done { display: flex; }
 
   /* ---------- Deck mode: real 16:9 slides, one per screen ---------- */
   @media (min-width: 1024px) and (min-height: 620px) {
@@ -433,11 +479,18 @@
     .stepper { gap: 26px; }
     .stepper li:not(:last-child)::before { bottom: -26px; }
     .chips { grid-template-columns: 1fr; }
+    .tips { grid-auto-rows: auto; }
+    .tips li { padding-bottom: 22px; }
     .bubble-you, .bubble-claude { max-width: 90%; }
     .qa div { grid-template-columns: 1fr; gap: 6px; }
     .ticket { grid-template-columns: 1fr 88px; }
     .team ol { grid-template-columns: 1fr; gap: 14px; }
     .signup-col { padding-top: 0; }
+    .feedback .slide-body { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .sheet-row, fieldset.sheet-row { grid-template-columns: 1fr; gap: 10px; }
+    .scores { grid-template-columns: 1fr; }
+    .sheet textarea { min-height: 120px; }
+    .sheet-foot { flex-wrap: wrap; }
     .slide-foot { flex-direction: column; gap: 4px; }
     .slide-foot .num { margin-left: 0; }
   }
@@ -459,14 +512,15 @@
   <a class="logo" href="#title"><img src="logo-white.png" alt="eightytwenty, back to the first slide" width="62" height="34"></a>
   <nav class="tracker" aria-label="Slides">
     <a href="#summary">Summary</a>
-    <a href="#why">Why it's different</a>
-    <a href="#how">How it works</a>
+    <a href="#why">Why It's Different</a>
+    <a href="#how">How It Works</a>
     <a href="#install">Install</a>
-    <a href="#try">Try it</a>
+    <a href="#try">Try It</a>
     <a href="#qa">Q&amp;A</a>
-    <a href="#next">Next steps</a>
+    <a href="#next">Next Steps</a>
+    <a href="#feedback">Feedback</a>
   </nav>
-  <div class="counter" aria-live="polite"><b id="slide-now">01</b> / 08</div>
+  <div class="counter" aria-live="polite"><b id="slide-now">01</b> / 09</div>
   <a class="btn btn-primary topbar-cta" href="#install">Install</a>
 </header>
 
@@ -515,27 +569,25 @@
           </div>
           <p class="arrow-step">A few sharp questions</p>
           <div class="get-row"><span class="label">You Get</span><small>Sample slide · fictional client</small></div>
-          <div class="mini chart-anim" role="img" aria-label="Sample slide for a fictional client, Northwind: online sales rose from 12% to 41% of category sales between 2021 and 2025, with three recommendations.">
+          <div class="mini chart-anim" role="img" aria-label="Sample slide for a fictional client, Northwind: online-only buyers spend $745 a year, 2.4 times the $310 of store-only buyers, with three recommendations.">
             <div class="mini-head"><b>Market Opportunity</b><span>Northwind</span></div>
-            <p class="mini-tag">Online sales tripled their share of the category since 2021</p>
+            <p class="mini-tag">Online buyers spend 2.4x what store-only buyers do</p>
             <div class="mini-body">
               <div>
-                <div class="panel-h">Online share of category sales</div>
-                <div class="bars">
-                  <div><b>12%</b><i style="height:24%"></i></div>
-                  <div><b>17%</b><i style="height:34%"></i></div>
-                  <div><b>23%</b><i style="height:46%"></i></div>
-                  <div><b>30%</b><i style="height:60%"></i></div>
-                  <div class="hl"><b>41%</b><i style="height:82%"></i></div>
+                <div class="panel-h">Annual spend per customer, $</div>
+                <div class="bars three">
+                  <div><b>310</b><i style="height:33%"></i></div>
+                  <div><b>480</b><i style="height:52%"></i></div>
+                  <div class="hl"><b>745</b><i style="height:80%"></i></div>
                 </div>
-                <div class="years"><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span></div>
+                <div class="years three"><span>Store</span><span>Both</span><span>Online</span></div>
               </div>
               <div>
                 <div class="panel-h">Recommendation</div>
                 <ul class="recs">
-                  <li><b>Move spend online</b><span>from store promotions</span></li>
-                  <li><b>Rebuild checkout</b><span>app and web first</span></li>
-                  <li><b>Pilot, then scale</b><span>one region before national</span></li>
+                  <li><b>Move Spend Online</b><span>from store promotions</span></li>
+                  <li><b>Rebuild Checkout</b><span>app and web first</span></li>
+                  <li><b>Pilot, Then Scale</b><span>one region before national</span></li>
                 </ul>
               </div>
             </div>
@@ -563,7 +615,7 @@
       <div class="slide-body">
         <div class="exec-card chart-anim" role="img" aria-label="Sample executive summary slide for a fictional client, Northwind: online share of category sales grew from 12 to 41 percent, with the 2025 bar highlighted, beside three headline numbers.">
           <div class="ec-head">
-            <div><b>Executive Summary</b><span>Northwind must shift spend to digital to recover 4 pts of margin by 2028</span></div>
+            <div><b>Executive Summary<sup class="fn">1</sup></b><span>Northwind must shift spend to digital to recover 4 pts of margin by 2028</span></div>
             <i class="ec-dot"></i>
           </div>
           <div class="ec-body">
@@ -590,14 +642,14 @@
           <div class="ec-tracker"><span>Problem</span><span class="on">Summary</span><span>Strategy</span><span>Financials</span><span>Risks</span></div>
         </div>
         <ol class="points">
-          <li><span class="disc">1</span><span class="dash"></span><div><h3>Asks, then builds</h3><p>The tagline is the claim you picked when it asked, not a topic label.</p></div></li>
-          <li><span class="disc">2</span><span class="dash"></span><div><h3>Never invents numbers</h3><p>Figures come from your case prompt. Anything else is tagged <span class="flag">verify</span>.</p></div></li>
-          <li class="lead"><span class="disc">3</span><span class="dash"></span><div><h3>One highlight per chart</h3><p>Every bar is grey except the one that proves the claim, so judges find it in two seconds.</p></div></li>
-          <li><span class="disc">4</span><span class="dash"></span><div><h3>Polished from the first draft</h3><p>Tracker, shared margins and one type style.</p></div></li>
+          <li><span class="disc">1</span><span class="dash"></span><div><h3>Asks, Then Builds</h3><p>The tagline is the claim you picked when it asked, not a topic label.</p></div></li>
+          <li><span class="disc">2</span><span class="dash"></span><div><h3>Never Invents Numbers</h3><p>Figures come from your case prompt. Anything else is tagged <span class="flag">verify</span>.</p></div></li>
+          <li class="lead"><span class="disc">3</span><span class="dash"></span><div><h3>One Highlight per Chart</h3><p>Every bar is grey except the one that proves the claim, so judges find it in two seconds.</p></div></li>
+          <li><span class="disc">4</span><span class="dash"></span><div><h3>Polished from the First Draft</h3><p>Tracker, shared margins and one type style.</p></div></li>
         </ol>
       </div>
       <div class="slide-foot">
-        <span>Sample slide. Northwind is a fictional client.</span>
+        <span>1. Sample slide. Northwind is a fictional client.</span>
         <span class="num">02</span>
       </div>
     </div>
@@ -616,7 +668,7 @@
       <hr class="rule">
       <div class="slide-body">
         <table class="compare">
-          <thead><tr><th scope="col">Judges Score</th><th scope="col">Typical AI Deck</th><th scope="col">With eightytwenty</th></tr></thead>
+          <thead><tr><th scope="col">Judges Score<sup class="fn">1</sup></th><th scope="col">Typical AI Deck</th><th scope="col">With eightytwenty</th></tr></thead>
           <tbody>
             <tr><th scope="row">Analysis</th><td class="typ" data-label="Typical AI deck">Symptoms listed as if they were causes</td><td class="ours" data-label="With eightytwenty">Ranked root causes, the mechanism behind each, and what the evidence ruled out</td></tr>
             <tr><th scope="row">Insight</th><td class="typ" data-label="Typical AI deck">The same so-what box on every slide</td><td class="ours" data-label="With eightytwenty">The proof shown a new way on each slide: a chart note, a hero number or a callout</td></tr>
@@ -626,7 +678,7 @@
         </table>
       </div>
       <div class="slide-foot">
-        <span>Modeled on Ivey/Western case comp decks.</span>
+        <span>1. Criteria modeled on Ivey/Western case comp decks.</span>
         <span class="num">03</span>
       </div>
     </div>
@@ -651,7 +703,7 @@
           <ol class="phases">
             <li>
               <h3 class="phase-h"><span class="disc">1</span>Brief</h3>
-              <p class="does-card"><b>Upload the case prompt</b> or describe the slide. It takes fonts and colors from the client's brand.</p>
+              <p class="does-card"><b>Upload the case prompt</b> or describe the slide. Colors follow the client's brand.</p>
               <p class="decide-card"><span class="m-label">You decide</span>Confirm the client, the ask and the brand</p>
             </li>
             <li>
@@ -666,16 +718,15 @@
             </li>
             <li>
               <h3 class="phase-h"><span class="disc dark">4</span>Polish</h3>
-              <p class="does-card"><b>The rest of the deck</b> and a final polish pass, then an offer to push the blandest slides further.</p>
-              <p class="decide-card"><span class="m-label">You decide</span>Keep or delete working slides, and pick which slides to push</p>
+              <p class="does-card"><b>The rest of the deck,</b> a polish pass, then an offer to push bland slides further.</p>
+              <p class="decide-card"><span class="m-label">You decide</span>Keep or delete working slides, pick which to push</p>
             </li>
           </ol>
         </div>
         <p class="flow-note">The output is real, editable slides you can keep working on in PowerPoint or Google Slides.</p>
       </div>
       <div class="slide-foot">
-        <span>Working slides move to the back of the deck. Only you decide whether to delete them.</span>
-        <span class="num">04</span>
+                <span class="num">04</span>
       </div>
     </div>
   </section>
@@ -693,10 +744,10 @@
       <hr class="rule">
       <div class="slide-body">
         <ol class="stepper">
-          <li><span class="disc">1</span><h3>Download the zip <a class="btn btn-primary btn-sm" href="eightytwenty.zip" download data-track="install">eightytwenty.zip</a></h3><p><b>Don't unzip it.</b> Claude wants the .zip file itself.</p></li>
-          <li><span class="disc">2</span><h3>Turn on code execution</h3><p>In <b>Settings</b>, open <b>Capabilities</b> and turn on <b>Code execution and file creation</b>.</p></li>
-          <li><span class="disc">3</span><h3>Upload the skill</h3><p>In <b>Customize</b>, open <b>Skills</b>, click <b>Upload skill</b> to add it.</p></li>
-          <li><span class="disc dark">4</span><h3>Switch it on</h3><p>Check its toggle is on, then start a new chat.</p></li>
+          <li><span class="disc">1</span><h3>Download the Zip <a class="btn btn-primary btn-sm" href="eightytwenty.zip" download data-track="install">eightytwenty.zip</a></h3><p><b>Don't unzip it.</b> Claude wants the .zip file itself.</p></li>
+          <li><span class="disc">2</span><h3>Turn On Code Execution</h3><p>In <b>Settings</b>, open <b>Capabilities</b><sup class="fn">1</sup> and turn on <b>Code execution and file creation</b>.</p></li>
+          <li><span class="disc">3</span><h3>Upload the Skill</h3><p>In <b>Customize</b>, open <b>Skills</b>, click <b>Upload skill</b> to add it.</p></li>
+          <li><span class="disc">4</span><h3>Switch It On</h3><p>Check its toggle is on, then start a new chat.</p></li>
         </ol>
         <div>
           <span class="label">What Done Looks Like</span>
@@ -709,13 +760,13 @@
           </div>
           <div class="notes">
             <div><b>Using Claude Code?</b><p>Unzip into <code>~/.claude/skills/</code> for every project.<button class="link-btn" type="button" data-copy-text="mkdir -p ~/.claude/skills && unzip eightytwenty.zip -d ~/.claude/skills/" aria-label="Copy the Claude Code install command">Copy command</button></p></div>
-            <div><b>On a Team or Enterprise plan?</b><p>An owner may need to turn on skills first.</p></div>
-            <div><b>Safari unzipped it?</b><p>Right-click the folder, choose Compress, upload that.</p></div>
+            <div><b>On a Team or Enterprise Plan?</b><p>An owner may need to turn on skills first.</p></div>
+            <div><b>Safari Unzipped It?</b><p>Right-click the folder, choose Compress, upload that.</p></div>
           </div>
         </div>
       </div>
       <div class="slide-foot">
-        <span>Menu names can move between Claude releases. If one differs, look for Skills under Settings.</span>
+        <span>1. Menu names can change between Claude releases. If one differs, look for Skills under Settings.</span>
         <span class="num">05</span>
       </div>
     </div>
@@ -738,9 +789,9 @@
           <div class="chat">
             <span class="attach">case-prompt.pdf</span>
             <p class="bubble-you"><span class="visually-hidden">You: </span>Here's our case prompt. Build me the executive summary slide.</p>
-            <p class="bubble-claude"><span class="label">Claude, using eightytwenty</span>Before I build: what's the one recommendation this slide has to prove? If you don't have it yet, I'll draft two options.<small>Question 1 of 2</small></p>
+            <p class="bubble-claude"><span class="label">Claude, using eightytwenty<sup class="fn">1</sup></span>Before I build: what's the one recommendation this slide has to prove? If you don't have it yet, I'll draft two options.<small>Question 1 of 2</small></p>
             <div class="starts">
-              <span class="label">More Ways to Start</span>
+              <span class="label">More Ways to Start <small>Tap to copy</small></span>
               <div class="chips">
                 <button class="chip" type="button" data-copy-text="I need a situational analysis slide for a retail case on e-commerce growth." aria-label="Copy prompt: situational analysis for a retail case">Situational analysis for a retail case</button>
                 <button class="chip" type="button" data-copy-text="Use eightytwenty to turn this recommendation into a full deck." aria-label="Copy prompt: turn this recommendation into a deck">Turn this recommendation into a deck</button>
@@ -752,14 +803,14 @@
         <div>
           <span class="label">For Better Slides</span>
           <ol class="tips">
-            <li><span class="n">01</span><div><h3>Start with one slide</h3><p>Get one slide right first. The rest of the deck follows its style.</p></div></li>
-            <li><span class="n">02</span><div><h3>Answer as you go</h3><p>Each answer sharpens the slide. Say skip and it moves on.</p></div></li>
-            <li><span class="n">03</span><div><h3>Ask for it by name</h3><p>If it doesn't start, type "use eightytwenty."</p></div></li>
+            <li><span class="n">01</span><div><h3>Start with One Slide</h3><p>Get one slide right first. The rest of the deck follows its style.</p></div></li>
+            <li><span class="n">02</span><div><h3>Answer as You Go</h3><p>Each answer sharpens the slide. Say skip and it moves on.</p></div></li>
+            <li><span class="n">03</span><div><h3>Ask for It by Name</h3><p>If it doesn't start, type "use eightytwenty."</p></div></li>
           </ol>
         </div>
       </div>
       <div class="slide-foot">
-        <span>Example exchange. Tap a starter to copy it. Real replies depend on your case.</span>
+        <span>1. Example exchange. Real replies depend on your case.</span>
         <span class="num">06</span>
       </div>
     </div>
@@ -778,17 +829,16 @@
       <hr class="rule">
       <div class="slide-body">
         <dl class="qa">
-          <div><dt>Is it free?</dt><dd>The skill is. Running it needs a paid Claude plan: Pro, Max, Team or Enterprise, with code execution on.</dd></div>
-          <div><dt>Can it use our team's template?</dt><dd>Yes. It reads the fonts and colors your deck already uses, and asks before changing the font or layout.</dd></div>
-          <div><dt>What if there's no client logo?</dt><dd>It uses the company's published brand colors, or picks a color that fits the prompt and tells you so.</dd></div>
-          <div><dt>Can it fix a deck we started?</dt><dd>Yes. It reads each slide before it edits anything, and keeps your wording unless you ask it to change.</dd></div>
-          <div><dt>Will judges spot it as AI?</dt><dd>It strips the usual tells, like arrow symbols, all-caps labels and stray fonts, before you see the deck.</dd></div>
-          <div><dt>Can I use it on my phone?</dt><dd>Install it on a computer. Once it's on, you can use it anywhere your Claude account works.</dd></div>
+          <div><dt>Is It Free?</dt><dd>The skill is. Running it needs a paid Claude plan: Pro, Max, Team or Enterprise, with code execution on.</dd></div>
+          <div><dt>Can It Use Our Team's Template?</dt><dd>Yes. It reads the fonts and colors your deck already uses, and asks before changing the font or layout.</dd></div>
+          <div><dt>What if There's No Client Logo?</dt><dd>It uses the company's published brand colors, or picks a color that fits the prompt and tells you so.</dd></div>
+          <div><dt>Can It Fix a Deck We Started?</dt><dd>Yes. It reads each slide before it edits anything, and keeps your wording unless you ask it to change.</dd></div>
+          <div><dt>Will Judges Spot It as AI?</dt><dd>It strips the usual tells, like arrow symbols, all-caps labels and stray fonts, before you see the deck.</dd></div>
+          <div><dt>Can I Use It on My Phone?</dt><dd>Install it on a computer. Once it's on, you can use it anywhere your Claude account works.</dd></div>
         </dl>
       </div>
       <div class="slide-foot">
-        <span>Still stuck? Ask for it by name in a new chat: "use eightytwenty".</span>
-        <span class="num">07</span>
+                <span class="num">07</span>
       </div>
     </div>
   </section>
@@ -817,7 +867,7 @@
           <div class="stub"><strong>2</strong><span class="label">minutes</span><span>to install</span></div>
         </div>
         <div class="signup-col">
-          <h3>Get the next skill</h3>
+          <h3>Get the Next Skill</h3>
           <p>One email with the install link now, then a short note whenever a new eightytwenty skill ships.</p>
           <form class="signup" data-kit-url="https://app.kit.com/forms/10145789/subscriptions" data-kit-form data-source="next-steps" novalidate>
             <label for="email-next">Your email</label>
@@ -841,6 +891,69 @@
       <div class="slide-foot">
         <span>eightytwenty · Independent, community-made Claude skill. Not affiliated with Anthropic.</span>
         <span class="num">08</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 Feedback -->
+  <section class="stage-wrap" id="feedback" aria-labelledby="t-feedback">
+    <div class="slide feedback">
+      <div class="slide-head">
+        <div>
+          <h2 class="slide-title" id="t-feedback">Feedback</h2>
+          <p class="tagline">The next version is built from what people report here</p>
+        </div>
+        <span class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></span>
+      </div>
+      <hr class="rule">
+      <div class="slide-body">
+        <div>
+          <div class="sheet" id="fb-sheet">
+            <div class="sheet-bar">Score Sheet <span>Judge: you</span></div>
+            <form id="fb-form" novalidate>
+              <fieldset class="sheet-row">
+                <legend>How Did It Go?</legend>
+                <div class="scores">
+                  <label class="score"><input type="radio" name="outcome" value="ready"><span>Ready to present</span></label>
+                  <label class="score"><input type="radio" name="outcome" value="needed-edits"><span>Close, needed edits</span></label>
+                  <label class="score"><input type="radio" name="outcome" value="needed-rewrite"><span>Needed a rewrite</span></label>
+                  <label class="score"><input type="radio" name="outcome" value="install-problem"><span>Couldn't get it working</span></label>
+                </div>
+              </fieldset>
+              <div class="sheet-row grow">
+                <label for="fb-message">Comments<small>Name the slide if you can</small></label>
+                <textarea id="fb-message" name="message" maxlength="2000" placeholder="The exec summary's outcome cards ran past the right margin." aria-describedby="fb-status"></textarea>
+              </div>
+              <div class="sheet-row">
+                <label for="fb-email">Email<small>Optional</small></label>
+                <div>
+                  <input type="email" id="fb-email" name="email" autocomplete="email" inputmode="email" placeholder="you@school.ca" aria-describedby="fb-email-note fb-status">
+                  <small id="fb-email-note" style="font-size:calc(var(--u) * 1);color:var(--muted);display:block;margin-top:calc(var(--u) * .4)">Only used to reply to this feedback.</small>
+                </div>
+              </div>
+              <div class="sheet-foot">
+                <button class="btn btn-primary" type="submit" disabled>Send feedback</button>
+                <p class="fb-status" id="fb-status" role="status"></p>
+              </div>
+            </form>
+            <div class="fb-done" tabindex="-1">
+              <b>Thanks. It's logged.</b>
+              <p>Every note is read before the next version of the skill ships.</p>
+              <button class="link-btn" type="button" id="fb-again">Send another</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="label">Feedback That Gets Fixed Fastest</span>
+          <ol class="tips">
+            <li><span class="n">01</span><div><h3>Point to the Slide</h3><p>"Cards ran past the margin on the exec summary" beats "the layout was off."</p></div></li>
+            <li><span class="n">02</span><div><h3>Say What a Judge Would Flag</h3><p>The skill is tuned to how panels score, so tell it where yours would push back.</p></div></li>
+            <li><span class="n">03</span><div><h3>Leave Out Case Details</h3><p>Describe the problem, not your client's data or confidential prompt.</p></div></li>
+          </ol>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span class="num">09</span>
       </div>
     </div>
   </section>
@@ -946,6 +1059,36 @@
       } finally { button.disabled = false; button.textContent = label; }
     });
   });
+  // Feedback score sheet: sent to PostHog as a feedback_submitted event
+  (() => {
+    const sheet = document.getElementById("fb-sheet");
+    const form = document.getElementById("fb-form");
+    const msg = document.getElementById("fb-message");
+    const email = document.getElementById("fb-email");
+    const status = document.getElementById("fb-status");
+    const button = form.querySelector("button[type=submit]");
+    const say = (t, kind) => { status.textContent = t; status.className = "fb-status " + (kind || ""); };
+    button.disabled = false;
+    [msg, email].forEach(f => f.addEventListener("input", () => { f.removeAttribute("aria-invalid"); if (status.classList.contains("err")) say(""); }));
+    form.addEventListener("change", () => { if (status.classList.contains("err")) say(""); });
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const outcome = (form.querySelector("input[name=outcome]:checked") || {}).value;
+      const message = msg.value.trim();
+      if (!outcome && !message) { msg.setAttribute("aria-invalid", "true"); msg.focus(); return say("Pick how it went or write a comment first.", "err"); }
+      if (email.value.trim() && !email.checkValidity()) { email.setAttribute("aria-invalid", "true"); email.focus(); return say("That email doesn't look right. Fix it or leave it blank.", "err"); }
+      if (!(window.posthog && posthog.__loaded)) return say("Your browser blocked the send, usually an ad blocker. Allow this site and try again.", "err");
+      const props = { outcome: outcome || "none", message, source: "feedback-slide" };
+      if (email.value.trim()) props.email = email.value.trim();
+      posthog.capture("feedback_submitted", props, { send_instantly: true });
+      say("");
+      sheet.classList.add("sent");
+      sheet.querySelector(".fb-done").focus();
+    });
+    document.getElementById("fb-again").addEventListener("click", () => {
+      form.reset(); sheet.classList.remove("sent"); msg.focus();
+    });
+  })();
 </script>
 </body>
 </html>
