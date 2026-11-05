@@ -30,11 +30,15 @@ export default async function handler(req, res) {
     if (host !== req.headers.host) return res.status(403).json({ error: "origin" });
   }
 
-  // Vercel names the token BLOB_READ_WRITE_TOKEN, or <PREFIX>_READ_WRITE_TOKEN if the store was connected with a custom prefix
+  // Credentials: a read-write token (BLOB_READ_WRITE_TOKEN, or <PREFIX>_READ_WRITE_TOKEN for a prefixed
+  // connection), or OIDC, where Vercel sets BLOB_STORE_ID and hands each function a short-lived token.
   const tokenVar = process.env.BLOB_READ_WRITE_TOKEN ? "BLOB_READ_WRITE_TOKEN"
     : Object.keys(process.env).find(k => /_READ_WRITE_TOKEN$/.test(k) && String(process.env[k]).startsWith("vercel_blob_rw_"));
-  if (!tokenVar) return res.status(503).json({ error: "not-configured" });
-  const token = process.env[tokenVar];
+  const oidcHeader = req.headers["x-vercel-oidc-token"];
+  let auth;
+  if (tokenVar) auth = { token: process.env[tokenVar] };
+  else if (process.env.BLOB_STORE_ID) auth = oidcHeader ? { oidcToken: String(oidcHeader) } : {};
+  else return res.status(503).json({ error: "not-configured" });
 
   const type = String(req.headers["content-type"] || "").split(";")[0].trim().toLowerCase();
   if (!TYPES[type]) return res.status(415).json({ error: "type" });
@@ -55,7 +59,7 @@ export default async function handler(req, res) {
     const blob = await put(`feedback/${day}/${randomUUID()}.${TYPES[type]}`, body, {
       access: "private",
       contentType: type,
-      token,
+      ...auth,
     });
     return res.status(200).json({ pathname: blob.pathname });
   } catch (err) {
