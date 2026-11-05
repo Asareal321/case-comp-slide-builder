@@ -118,7 +118,7 @@ If a visitor's ad blocker stops PostHog, the form tells them it was blocked inst
 People can attach up to 3 screenshots to their feedback. They're stored privately in your Vercel account, so only you can see them. Until you do this, the form tells people uploads aren't switched on and still lets them send text.
 
 1. In Vercel, open the `case-comp-slide-builder` project and go to **Storage → Create → Blob**.
-2. Name it `feedback-photos`, choose **Private** access, and connect it to the project for all environments. Vercel adds the `BLOB_READ_WRITE_TOKEN` setting for you.
+2. Name it `feedback-photos`, choose **Private** access, and connect it to the project with **Production** ticked. Vercel connects it with OIDC and adds `BLOB_STORE_ID` for you. No token to copy. The upload function also accepts an older-style `BLOB_READ_WRITE_TOKEN`.
 3. Go to **Deployments**, open the menu on the latest one, and click **Redeploy**, so the site picks up the new setting.
 4. Test it: send yourself feedback with a screenshot from the live site.
 
