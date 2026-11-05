@@ -239,7 +239,6 @@
   .points .dash { border-top: 1.5px dashed var(--blue); margin: calc(var(--u) * 1.1) calc(var(--u) * .5) 0 0; }
   .points h3 { font-size: calc(var(--u) * 1.6); line-height: 1.35; }
   .points p { font-size: calc(var(--u) * 1.45); line-height: 1.55; color: var(--muted); margin-top: calc(var(--u) * .3); }
-  .points li.lead::before { content: ""; position: absolute; right: 100%; top: calc(var(--u) * 1.1); width: calc(var(--u) * 19.6); border-top: 1.5px dashed var(--blue); }
   .flag { font-family: var(--mono); font-size: .9em; background: var(--gold); color: var(--ink); padding: .05em .3em; }
 
   /* ---------- 03 Why it's different ---------- */
@@ -452,7 +451,6 @@
     .mobile-only .signup label { font-size: 15px; font-weight: 600; line-height: 1.4; }
 
     .points { margin: 0; padding: 0; gap: 24px; }
-    .points li.lead::before { display: none; }
     .ec-tracker { justify-content: space-between; padding: 0; }
     .exec-card .bars { min-height: 150px; }
 
@@ -645,7 +643,7 @@
         <ol class="points">
           <li><span class="disc">1</span><span class="dash"></span><div><h3>The Tagline Is the Claim</h3><p>Not a topic label like "Market Overview," but the one sentence a judge should remember.</p></div></li>
           <li><span class="disc">2</span><span class="dash"></span><div><h3>Never Invents Numbers</h3><p>Figures come from your case prompt. Anything else is tagged <span class="flag">verify</span>.</p></div></li>
-          <li class="lead"><span class="disc">3</span><span class="dash"></span><div><h3>One Highlight per Chart</h3><p>Every bar is grey except the one that proves the claim.</p></div></li>
+          <li><span class="disc">3</span><span class="dash"></span><div><h3>One Highlight per Chart</h3><p>Every bar is grey except the one that proves the claim.</p></div></li>
           <li><span class="disc">4</span><span class="dash"></span><div><h3>A Tracker on Every Slide</h3><p>Judges always know which section they're in and what's left.</p></div></li>
         </ol>
       </div>
