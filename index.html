@@ -932,7 +932,9 @@
         <div>
           <div class="sheet" id="fb-sheet">
             <div class="sheet-bar">Score Sheet <span>Judge: You</span></div>
-            <form id="fb-form" novalidate>
+            <form id="fb-form" action="https://formspree.io/f/xnpprgyq" method="POST" novalidate>
+              <input type="hidden" name="_subject" value="eightytwenty feedback">
+              <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
               <div class="sheet-row stack" role="radiogroup" aria-labelledby="fb-outcome-label">
                 <span class="fb-label" id="fb-outcome-label">How Did It Go?</span>
                 <div class="scores">
@@ -980,7 +982,7 @@
         </div>
       </div>
       <div class="slide-foot">
-        <span>Feedback is stored with PostHog and Vercel. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="cookies.html">Cookies</a></span>
+        <span>Feedback is sent with Formspree; screenshots are stored with Vercel. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="cookies.html">Cookies</a></span>
         <span class="num">09</span>
       </div>
     </div>
@@ -1087,7 +1089,8 @@
       } finally { button.disabled = false; button.textContent = label; }
     });
   });
-  // Feedback score sheet: screenshots go to the private upload function, the rest to PostHog as feedback_submitted
+  // Feedback score sheet: screenshots go to the private upload function, the feedback itself to Formspree.
+  // PostHog only gets a content-free count (outcome and number of photos).
   (() => {
     const MAX_PHOTOS = 3, MAX_SIDE = 2000;
     const sheet = document.getElementById("fb-sheet");
@@ -1164,8 +1167,6 @@
       const message = msg.value.trim();
       if (!outcome && !message && !photos.length) { msg.setAttribute("aria-invalid", "true"); msg.focus(); return say("Pick how it went, write a comment or add a screenshot first.", "err"); }
       if (email.value.trim() && !email.checkValidity()) { email.setAttribute("aria-invalid", "true"); email.focus(); return say("That email doesn't look right. Fix it or leave it blank.", "err"); }
-      if (window.ANALYTICS_OFF) return say("Your browser's privacy setting turns off the service that carries feedback. Email eightytwenty.tech@gmail.com instead.", "err");
-      if (!(window.posthog && posthog.__loaded)) return say("Your browser blocked the send, usually an ad blocker. Allow this site and try again.", "err");
 
       button.disabled = true;
       const paths = [];
@@ -1182,10 +1183,36 @@
         return say(why, "err");
       }
 
-      const props = { outcome: outcome || "none", message, source: "feedback-slide", photo_count: paths.length };
-      if (paths.length) props.photos = paths;
-      if (email.value.trim()) props.email = email.value.trim();
-      posthog.capture("feedback_submitted", props, { send_instantly: true });
+      button.textContent = "Sending…";
+      const payload = {
+        _subject: "eightytwenty feedback" + (outcome ? ": " + outcome : ""),
+        _gotcha: form.querySelector("[name=_gotcha]").value,
+        outcome: outcome || "none",
+        message,
+        photo_count: paths.length,
+        photos: paths.join("\n"),
+        page: location.href.split("#")[0]
+      };
+      if (email.value.trim()) payload.email = email.value.trim();
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const errs = (data.errors || []).map(x => x.message).filter(Boolean);
+          throw new Error(errs.join(" ") || "send");
+        }
+      } catch (err) {
+        button.disabled = false; button.textContent = label;
+        track("feedback_failed", { reason: String(err.message).slice(0, 80) });
+        return say(err.message && err.message !== "send" && err.message !== "Failed to fetch"
+          ? "That didn't send: " + err.message
+          : "That didn't send. Check your connection and try again, or email eightytwenty.tech@gmail.com.", "err");
+      }
+      track("feedback_submitted", { outcome: outcome || "none", photo_count: paths.length, has_email: !!email.value.trim() });
       button.disabled = false; button.textContent = label;
       say("");
       sheet.classList.add("sent");

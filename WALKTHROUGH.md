@@ -65,7 +65,7 @@ The site sends these events:
 - `signup_submitted` / `signup_failed`, when someone joins the email list (`source` says which form)
 - `link_shared` / `link_copied`, when a phone visitor sends the page to their laptop
 - `text_copied`, when someone copies the install command or an example prompt
-- `feedback_submitted`, when someone sends the score sheet on the Feedback slide (`outcome`, `message`, `photo_count`, `photos`, and `email` if they gave one)
+- `feedback_submitted` / `feedback_failed`, when someone sends the score sheet on the Feedback slide. Only `outcome`, `photo_count` and `has_email` go to PostHog; the feedback itself goes to Formspree
 
 Add a **Signups** insight too: Trends → `signup_submitted` → "Total count".
 
@@ -96,22 +96,15 @@ The signup forms (on phones at the top of the page, and on the last slide) send 
 
 ## Step 6: Read feedback (2 min, then weekly)
 
-The last slide is a feedback score sheet. Each submission arrives in PostHog as a `feedback_submitted` event.
+The last slide is a feedback score sheet. Each submission goes to your Formspree form (`xnpprgyq`), which emails it to you and keeps it in the dashboard.
 
-1. In PostHog, open **Activity**, filter by the event `feedback_submitted`, and click any row to read `outcome`, `message` and `email`.
-2. For a running list, create a new **SQL insight** with this query and add it to your dashboard:
+1. Read submissions in your inbox, or at formspree.io under the form's **Submissions** tab. Each one shows `outcome`, `message`, `email` (if given, and Formspree uses it as the reply-to, so you can just hit Reply), `photos` and `page`.
+2. In Formspree's form **Settings**, restrict submissions to `case-comp-slide-builder.vercel.app` so other sites can't post to your form.
+3. Formspree's free plan accepts 50 submissions a month. If feedback outgrows that, upgrade or ask Claude to move it somewhere else.
+4. For trends, PostHog still gets a `feedback_submitted` event with only the outcome and photo count. Add a **Trends** insight broken down by `outcome`.
+5. Link people to it directly: `https://case-comp-slide-builder.vercel.app/#feedback`. Add that link to the Kit welcome email.
 
-```sql
-select timestamp, properties.outcome, properties.message, properties.email
-from events
-where event = 'feedback_submitted'
-order by timestamp desc
-```
-
-3. Add a **Trends** insight on `feedback_submitted` broken down by `outcome` to see how decks are turning out over time.
-4. Link people to it directly: `https://case-comp-slide-builder.vercel.app/#feedback`. Add that link to the Kit welcome email.
-
-If a visitor's ad blocker stops PostHog, the form tells them it was blocked instead of pretending it sent.
+Formspree isn't blocked by ad blockers or privacy settings the way analytics are, so everyone can send feedback. A hidden spam trap field (`_gotcha`) quietly drops most bot submissions.
 
 ### Turn on screenshot uploads (5 min, once)
 
@@ -122,7 +115,7 @@ People can attach up to 3 screenshots to their feedback. They're stored privatel
 3. Go to **Deployments**, open the menu on the latest one, and click **Redeploy**, so the site picks up the new setting.
 4. Test it: send yourself feedback with a screenshot from the live site.
 
-**Finding the photos:** each `feedback_submitted` event lists its photos under `photos`, as paths like `feedback/2026-11-05/....jpg`. Open **Storage → feedback-photos** in Vercel and find the file under that path. Add `properties.photos` to the SQL query above to see them next to each comment.
+**Finding the photos:** each Formspree submission lists its photos under `photos`, as paths like `feedback/2026-11-05/....jpg`. Open **Storage → feedback-photos** in Vercel and find the file under that path.
 
 Each photo is checked to be a real image, shrunk to at most 2000px a side, and capped at 4 MB. Vercel's free Hobby plan includes a little Blob storage, which covers thousands of screenshots this size.
 
@@ -130,7 +123,7 @@ Each photo is checked to be a real image, shrunk to at most 2000px a side, and c
 
 The site has a [Privacy Policy](privacy.html), [Terms of Use](terms.html) (with the refund section) and a [Cookie Policy](cookies.html). They name eightytwenty as an independent project in Ontario, Canada, with eightytwenty.tech@gmail.com as the contact. They only stay accurate if these hold:
 
-1. **Read that inbox.** People can ask to see or delete their data there, and you have 30 days to answer. To delete someone: remove them in Kit, delete their `feedback_submitted` events in PostHog (Activity, then filter by their email), and delete their screenshots in Vercel Blob.
+1. **Read that inbox.** People can ask to see or delete their data there, and you have 30 days to answer. To delete someone: remove them in Kit, delete their submissions in Formspree, and delete their screenshots in Vercel Blob.
 2. **Add a mailing address in Kit** (Settings, then Account). Canada's anti-spam law (CASL) requires one in every marketing email, and Kit prints it in the footer. A PO box is fine.
 3. **Don't switch PostHog back to cookies** or turn on session replay. The site runs PostHog in memory only, which is why there's no cookie banner. If you ever want either, the Cookie Policy says you'll ask for consent first, so a banner would be needed.
 4. **Clear out old screenshots** in Vercel Blob once you've acted on the feedback. The Privacy Policy promises to keep them only as long as needed.
