@@ -90,14 +90,15 @@
   .topbar .logo img { height: 34px; width: auto; }
   .tracker { display: flex; gap: 4px; }
   .tracker a {
-    font-size: 13px; font-weight: 500; letter-spacing: .02em; color: var(--on-navy-faint);
+    font-size: 13px; font-weight: 400; color: var(--on-navy-faint);
     text-decoration: none; padding: 6px 10px; border-radius: 6px; position: relative; transition: color .15s;
   }
-  .tracker a:hover, .tracker a[aria-current="true"] { color: #fff; }
+  .tracker a:hover { color: #fff; }
+  .tracker a[aria-current="true"] { color: var(--blue-bright); font-weight: 700; }
   .tracker a[aria-current="true"]::after {
     content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; height: 2px; background: var(--blue-bright);
   }
-  .counter { justify-self: end; font-size: 13px; color: var(--on-navy-faint); letter-spacing: .04em; }
+  .counter { justify-self: end; font-size: 13px; color: var(--on-navy-faint); }
   .counter b { color: #fff; font-weight: 600; }
   .topbar .topbar-cta { display: none; }
 
@@ -229,8 +230,8 @@
   .kpis { list-style: none; margin: calc(var(--u) * 1.3) 0 0; padding: 0; display: grid; gap: calc(var(--u) * 1.5); }
   .kpis b { display: block; font-size: calc(var(--u) * 2.15); line-height: 1.05; color: var(--panel); letter-spacing: -0.01em; }
   .kpis span { display: block; font-size: calc(var(--u) * 1.05); color: var(--muted); margin-top: calc(var(--u) * .3); }
-  .ec-tracker { display: flex; justify-content: space-around; margin-top: calc(var(--u) * 1.6); padding: 0 calc(var(--u) * 1); font-size: calc(var(--u) * .92); font-weight: 700; color: var(--muted); }
-  .ec-tracker .on { color: var(--red); box-shadow: 0 calc(var(--u) * .45) 0 -1px var(--red); }
+  .ec-tracker { display: flex; justify-content: space-around; margin-top: calc(var(--u) * 1.6); padding: 0 calc(var(--u) * 1); font-size: calc(var(--u) * .92); color: var(--muted); }
+  .ec-tracker .on { font-weight: 700; color: var(--red); box-shadow: 0 calc(var(--u) * .45) 0 -1px var(--red); }
 
   .points { list-style: none; margin: 0 0 0 calc(var(--u) * -.85); padding: calc(var(--u) * 2.5) 0 calc(var(--u) * 1.6); display: grid; align-content: space-between; position: relative; z-index: 1; }
   .points li { display: grid; grid-template-columns: calc(var(--u) * 1.7) calc(var(--u) * 3.2) 1fr; align-items: start; position: relative; }
@@ -545,12 +546,12 @@
 
           <div class="mobile-only">
             <form class="signup" data-kit-url="https://app.kit.com/forms/10145789/subscriptions" data-kit-form data-source="hero-mobile" novalidate>
-              <label for="email-hero">Installing happens on a laptop. Get the link by email:</label>
+              <label for="email-hero">Installing happens on a laptop. Your email:</label>
               <div class="field">
                 <input type="email" id="email-hero" name="email_address" autocomplete="email" inputmode="email" placeholder="you@school.ca" required aria-describedby="consent-hero status-hero">
                 <button class="btn btn-primary" type="submit" disabled>Email me the install link</button>
               </div>
-              <p class="consent" id="consent-hero">eightytwenty will email you the install link and the occasional new skill. Unsubscribe anytime.</p>
+              <p class="consent" id="consent-hero">Sent by eightytwenty, with the occasional new skill after. Unsubscribe anytime.</p>
               <p class="form-status" id="status-hero" role="status"></p>
             </form>
             <div class="share-row">
@@ -642,10 +643,10 @@
           <div class="ec-tracker"><span>Problem</span><span class="on">Summary</span><span>Strategy</span><span>Financials</span><span>Risks</span></div>
         </div>
         <ol class="points">
-          <li><span class="disc">1</span><span class="dash"></span><div><h3>Asks, Then Builds</h3><p>The tagline is the claim you picked when it asked, not a topic label.</p></div></li>
+          <li><span class="disc">1</span><span class="dash"></span><div><h3>The Tagline Is the Claim</h3><p>Not a topic label like "Market Overview," but the one sentence a judge should remember.</p></div></li>
           <li><span class="disc">2</span><span class="dash"></span><div><h3>Never Invents Numbers</h3><p>Figures come from your case prompt. Anything else is tagged <span class="flag">verify</span>.</p></div></li>
-          <li class="lead"><span class="disc">3</span><span class="dash"></span><div><h3>One Highlight per Chart</h3><p>Every bar is grey except the one that proves the claim, so judges find it in two seconds.</p></div></li>
-          <li><span class="disc">4</span><span class="dash"></span><div><h3>Polished from the First Draft</h3><p>Tracker, shared margins and one type style.</p></div></li>
+          <li class="lead"><span class="disc">3</span><span class="dash"></span><div><h3>One Highlight per Chart</h3><p>Every bar is grey except the one that proves the claim.</p></div></li>
+          <li><span class="disc">4</span><span class="dash"></span><div><h3>A Tracker on Every Slide</h3><p>Judges always know which section they're in and what's left.</p></div></li>
         </ol>
       </div>
       <div class="slide-foot">
@@ -690,7 +691,7 @@
       <div class="slide-head">
         <div>
           <h2 class="slide-title" id="t-how">How It Works</h2>
-          <p class="tagline">The full deck follows once your first slide is right</p>
+          <p class="tagline">You make four calls, and it handles everything in between</p>
         </div>
         <span class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></span>
       </div>
@@ -803,9 +804,9 @@
         <div>
           <span class="label">For Better Slides</span>
           <ol class="tips">
-            <li><span class="n">01</span><div><h3>Start with One Slide</h3><p>Get one slide right first. The rest of the deck follows its style.</p></div></li>
-            <li><span class="n">02</span><div><h3>Answer as You Go</h3><p>Each answer sharpens the slide. Say skip and it moves on.</p></div></li>
-            <li><span class="n">03</span><div><h3>Ask for It by Name</h3><p>If it doesn't start, type "use eightytwenty."</p></div></li>
+            <li><span class="n">01</span><div><h3>Ask for It by Name</h3><p>If it doesn't start on its own, add "use eightytwenty" to your message.</p></div></li>
+            <li><span class="n">02</span><div><h3>One Case per Chat</h3><p>Start a new chat for each case so one client's facts stay out of another's slides.</p></div></li>
+            <li><span class="n">03</span><div><h3>Present from a PDF</h3><p>Helvetica Neue isn't installed on Windows, so export a PDF for presentation day.</p></div></li>
           </ol>
         </div>
       </div>
@@ -829,7 +830,7 @@
       <hr class="rule">
       <div class="slide-body">
         <dl class="qa">
-          <div><dt>Is It Free?</dt><dd>The skill is. Running it needs a paid Claude plan: Pro, Max, Team or Enterprise, with code execution on.</dd></div>
+          <div><dt>What's in the Zip?</dt><dd>One SKILL.md file of written instructions for Claude. No code, and nothing runs on your computer.</dd></div>
           <div><dt>Can It Use Our Team's Template?</dt><dd>Yes. It reads the fonts and colors your deck already uses, and asks before changing the font or layout.</dd></div>
           <div><dt>What if There's No Client Logo?</dt><dd>It uses the company's published brand colors, or picks a color that fits the prompt and tells you so.</dd></div>
           <div><dt>Can It Fix a Deck We Started?</dt><dd>Yes. It reads each slide before it edits anything, and keeps your wording unless you ask it to change.</dd></div>
@@ -909,7 +910,7 @@
       <div class="slide-body">
         <div>
           <div class="sheet" id="fb-sheet">
-            <div class="sheet-bar">Score Sheet <span>Judge: you</span></div>
+            <div class="sheet-bar">Score Sheet <span>Judge: You</span></div>
             <form id="fb-form" novalidate>
               <fieldset class="sheet-row">
                 <legend>How Did It Go?</legend>
@@ -922,7 +923,7 @@
               </fieldset>
               <div class="sheet-row grow">
                 <label for="fb-message">Comments<small>Name the slide if you can</small></label>
-                <textarea id="fb-message" name="message" maxlength="2000" placeholder="The exec summary's outcome cards ran past the right margin." aria-describedby="fb-status"></textarea>
+                <textarea id="fb-message" name="message" maxlength="2000" placeholder="The risk matrix on my KPI slide was too small to read." aria-describedby="fb-status"></textarea>
               </div>
               <div class="sheet-row">
                 <label for="fb-email">Email<small>Optional</small></label>
@@ -938,7 +939,6 @@
             </form>
             <div class="fb-done" tabindex="-1">
               <b>Thanks. It's logged.</b>
-              <p>Every note is read before the next version of the skill ships.</p>
               <button class="link-btn" type="button" id="fb-again">Send another</button>
             </div>
           </div>
