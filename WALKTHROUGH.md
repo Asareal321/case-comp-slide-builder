@@ -57,6 +57,8 @@ In PostHog, go to **Dashboards → New dashboard** and add these insights:
 | **Conversion rate** | Funnels → step 1 `$pageview`, step 2 `skill_downloaded` |
 | **Where visitors come from** | Trends → `$pageview` → Breakdown by "Referring domain" |
 
+The site runs PostHog without cookies (memory only), so each visit counts as a new visitor and "unique users" will read high. Visitors whose browsers send Global Privacy Control or Do Not Track aren't tracked at all.
+
 The site sends these events:
 - `$pageview`, automatically on every visit
 - `skill_downloaded`, on every click of a Download button (`location` says which one)
@@ -123,6 +125,18 @@ People can attach up to 3 screenshots to their feedback. They're stored privatel
 **Finding the photos:** each `feedback_submitted` event lists its photos under `photos`, as paths like `feedback/2026-11-05/....jpg`. Open **Storage → feedback-photos** in Vercel and find the file under that path. Add `properties.photos` to the SQL query above to see them next to each comment.
 
 Each photo is checked to be a real image, shrunk to at most 2000px a side, and capped at 4 MB. Vercel's free Hobby plan includes a little Blob storage, which covers thousands of screenshots this size.
+
+## Step 7: Keep the legal pages true (10 min, once)
+
+The site has a [Privacy Policy](privacy.html), [Terms of Use](terms.html) (with the refund section) and a [Cookie Policy](cookies.html). They name eightytwenty as an independent project in Ontario, Canada, with eightytwenty.tech@gmail.com as the contact. They only stay accurate if these hold:
+
+1. **Read that inbox.** People can ask to see or delete their data there, and you have 30 days to answer. To delete someone: remove them in Kit, delete their `feedback_submitted` events in PostHog (Activity, then filter by their email), and delete their screenshots in Vercel Blob.
+2. **Add a mailing address in Kit** (Settings, then Account). Canada's anti-spam law (CASL) requires one in every marketing email, and Kit prints it in the footer. A PO box is fine.
+3. **Don't switch PostHog back to cookies** or turn on session replay. The site runs PostHog in memory only, which is why there's no cookie banner. If you ever want either, the Cookie Policy says you'll ask for consent first, so a banner would be needed.
+4. **Clear out old screenshots** in Vercel Blob once you've acted on the feedback. The Privacy Policy promises to keep them only as long as needed.
+5. **Update the date** at the top of a page whenever you change it.
+
+These pages are a good-faith baseline for a free, no-payments student project. They aren't legal advice. If eightytwenty starts charging, collecting more data or growing a lot, have a lawyer review them.
 
 ## Updating the skill later
 

@@ -22,8 +22,17 @@
   window.POSTHOG_KEY = "phc_m3thJQFJYZdPwUGsYYmft4t7gdnKUFpLTf4JvvbAERhL";
   window.POSTHOG_HOST = "https://us.i.posthog.com";
   !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset identify alias people.set people.set_once set_config get_distinct_id get_session_id".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-  if (!window.POSTHOG_KEY.includes("REPLACE_ME")) {
-    posthog.init(window.POSTHOG_KEY, { api_host: window.POSTHOG_HOST, person_profiles: "identified_only" });
+  // Privacy: no cookies or browser storage (memory only), no session recordings,
+  // and no analytics at all when the browser sends Global Privacy Control or Do Not Track.
+  window.ANALYTICS_OFF = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1";
+  if (!window.POSTHOG_KEY.includes("REPLACE_ME") && !window.ANALYTICS_OFF) {
+    posthog.init(window.POSTHOG_KEY, {
+      api_host: window.POSTHOG_HOST,
+      person_profiles: "identified_only",
+      persistence: "memory",
+      disable_session_recording: true,
+      disable_surveys: true
+    });
   }
   // Kit (ConvertKit) form ID: paste yours here (see WALKTHROUGH.md). Until then the signup forms don't send anything.
   window.KIT_FORM_ID = "10145789";
@@ -126,6 +135,7 @@
     font-size: calc(var(--u) * 1.05); color: var(--muted);
   }
   .navy .slide-foot { border-top-color: var(--navy-line); color: var(--on-navy-faint); }
+  .slide-foot a { color: inherit; }
   .slide-foot .num { font-weight: 700; color: var(--ink); margin-left: auto; }
   .navy .slide-foot .num { color: #fff; }
   .label { font-size: calc(var(--u) * 1.05); font-weight: 700; color: var(--blue); }
@@ -354,6 +364,7 @@
   .signup input::placeholder { color: var(--on-navy-faint); }
   .signup input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   .signup input[aria-invalid="true"] { border-color: #ff8f8f; }
+  .consent a { color: inherit; }
   .consent { margin-top: calc(var(--u) * 1.1); font-size: calc(var(--u) * 1.1); line-height: 1.45; color: var(--on-navy-faint); }
   .form-status { margin-top: calc(var(--u) * .8); font-size: calc(var(--u) * 1.2); line-height: 1.4; min-height: 1.4em; }
   .form-status.ok { color: #9be7b4; }
@@ -561,7 +572,7 @@
                 <input type="email" id="email-hero" name="email_address" autocomplete="email" inputmode="email" placeholder="you@school.ca" required aria-describedby="consent-hero status-hero">
                 <button class="btn btn-primary" type="submit" disabled>Email me the install link</button>
               </div>
-              <p class="consent" id="consent-hero">Sent by eightytwenty, with the occasional new skill after. Unsubscribe anytime.</p>
+              <p class="consent" id="consent-hero">By joining, you agree to emails from eightytwenty: this link now, then a note when a new skill ships. Unsubscribe anytime. <a href="privacy.html">Privacy</a></p>
               <p class="form-status" id="status-hero" role="status"></p>
             </form>
             <div class="share-row">
@@ -886,7 +897,7 @@
               <input type="email" id="email-next" name="email_address" autocomplete="email" inputmode="email" placeholder="you@school.ca" required aria-describedby="consent-next status-next">
               <button class="btn btn-primary" type="submit" disabled>Join the list</button>
             </div>
-            <p class="consent" id="consent-next">No spam. Unsubscribe anytime.</p>
+            <p class="consent" id="consent-next">By joining, you agree to emails from eightytwenty. Unsubscribe anytime. <a href="privacy.html">Privacy</a></p>
             <p class="form-status" id="status-next" role="status"></p>
           </form>
         </div>
@@ -900,7 +911,7 @@
         </div>
       </div>
       <div class="slide-foot">
-        <span>eightytwenty · Independent, community-made Claude skill. Not affiliated with Anthropic.</span>
+        <span>Independent project based in Ontario, Canada. Not affiliated with Anthropic. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="cookies.html">Cookies</a></span>
         <span class="num">08</span>
       </div>
     </div>
@@ -945,7 +956,7 @@
                 </div>
               </div>
               <div class="sheet-row">
-                <label class="fb-label" for="fb-email">Email<small>Optional, only to reply</small></label>
+                <label class="fb-label" for="fb-email">Email<small>Optional, only used to reply</small></label>
                 <input type="email" id="fb-email" name="email" autocomplete="email" inputmode="email" placeholder="you@school.ca" aria-describedby="fb-status">
               </div>
               <div class="sheet-foot">
@@ -969,6 +980,7 @@
         </div>
       </div>
       <div class="slide-foot">
+        <span>Feedback is stored with PostHog and Vercel. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="cookies.html">Cookies</a></span>
         <span class="num">09</span>
       </div>
     </div>
@@ -1099,6 +1111,7 @@
         fig.className = "thumb";
         fig.innerHTML = '<img alt=""><button type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>';
         fig.querySelector("img").src = ph.url;
+        fig.querySelector("img").alt = "Screenshot " + (i + 1);
         const rm = fig.querySelector("button");
         rm.setAttribute("aria-label", "Remove screenshot " + (i + 1));
         rm.addEventListener("click", () => {
@@ -1151,6 +1164,7 @@
       const message = msg.value.trim();
       if (!outcome && !message && !photos.length) { msg.setAttribute("aria-invalid", "true"); msg.focus(); return say("Pick how it went, write a comment or add a screenshot first.", "err"); }
       if (email.value.trim() && !email.checkValidity()) { email.setAttribute("aria-invalid", "true"); email.focus(); return say("That email doesn't look right. Fix it or leave it blank.", "err"); }
+      if (window.ANALYTICS_OFF) return say("Your browser's privacy setting turns off the service that carries feedback. Email eightytwenty.tech@gmail.com instead.", "err");
       if (!(window.posthog && posthog.__loaded)) return say("Your browser blocked the send, usually an ad blocker. Allow this site and try again.", "err");
 
       button.disabled = true;
