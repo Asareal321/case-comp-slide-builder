@@ -17,7 +17,7 @@ Both groups find the site through a shared link (LinkedIn, group chats, clubs), 
 
 eightytwenty is a free Claude skill, distributed through this one-page site. Inside Claude, it turns a case prompt or brief into a judge-ready case competition slide, then a full deck. It does this by asking one or two questions at a time, researching, and filling gaps.
 
-The site exists to get the skill installed and to grow a community around it. Success means visitors download and install the skill and stay reachable for future skills or products. Downloads and visits are tracked in PostHog (`$pageview`, `skill_downloaded`, `install_tab_viewed`).
+The site exists to get the skill installed and to grow a community around it. Success means visitors download and install the skill and stay reachable for future skills or products. Downloads and visits are tracked in PostHog (`$pageview`, `skill_downloaded`, `signup_submitted`).
 
 ## Positioning
 

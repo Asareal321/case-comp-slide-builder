@@ -32,23 +32,31 @@
 <style>
   @font-face { font-family: "TeX Gyre Heros"; src: url("fonts/texgyreheros-regular.otf") format("opentype"); font-weight: 300 500; font-display: swap; }
   @font-face { font-family: "TeX Gyre Heros"; src: url("fonts/texgyreheros-bold.otf") format("opentype"); font-weight: 600 800; font-display: swap; }
+  /* Palette taken from the deck eightytwenty built for this site */
   :root {
-    --navy: #070d1f;
-    --navy-2: #0e1733;
-    --blue: #3a63f5;
-    --blue-hover: #2f56d9;
-    --blue-ink: #2f56d9;
-    --blue-bright: #8ea8ff;
-    --gold: #ffb23f;
-    --paper: #f5f4ef;
-    --slide: #fbfaf6;
+    --page: #0a1024;
+    --navy: #111833;
+    --navy-card: #1a2340;
+    --navy-line: #2a3350;
+    --navy-field: #3a4466;
+    --panel: #1f2a5c;
+    --blue: #3d63f2;
+    --blue-hover: #2f53d8;
+    --blue-bright: #8fa8ff;
+    --tint: #e6ecfe;
+    --red: #c8102e;
+    --gold: #f6b53d;
+    --slide: #f9f8f5;
     --surface: #ffffff;
-    --ink: #0b1020;
-    --muted: #555b6c;
-    --line: #e2e0d8;
-    --well: #eeece5;
+    --ink: #111833;
+    --ink-2: #3f4558;
+    --muted: #5b6275;
+    --line: #e3e1db;
+    --well: #f0efea;
+    --bar-grey: #c9cee3;
     --on-navy: #ffffff;
-    --on-navy-muted: rgba(255,255,255,.72);
+    --on-navy-muted: #c5cad6;
+    --on-navy-faint: #9aa0b3;
     --font: "Helvetica Neue", "TeX Gyre Heros", Helvetica, Arial, sans-serif;
     --mono: ui-monospace, "SF Mono", Menlo, monospace;
     --bar: 56px;
@@ -56,270 +64,299 @@
   }
 
   * { box-sizing: border-box; }
-  html { background: var(--navy); scroll-behavior: smooth; }
+  html { background: var(--page); scroll-behavior: smooth; scrollbar-color: #2a3350 var(--page); }
   body {
-    margin: 0; color: var(--ink); background: var(--navy);
+    margin: 0; color: var(--ink); background: var(--page);
     font-family: var(--font); line-height: 1.5; -webkit-font-smoothing: antialiased;
     font-variant-numeric: tabular-nums;
   }
   ::selection { background: var(--gold); color: var(--navy); }
   input { caret-color: var(--blue); }
   a { color: inherit; text-underline-offset: 3px; }
-  :focus-visible { outline: 2px solid var(--blue-ink); outline-offset: 3px; border-radius: 4px; }
+  p { margin: 0; }
+  h1, h2, h3 { margin: 0; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
   .navy :focus-visible, .topbar :focus-visible { outline-color: var(--gold); }
   .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  html { scrollbar-color: #2a3550 var(--navy); }
 
   /* ---------- Top bar: logo, tracker, slide counter ---------- */
   .topbar {
     position: fixed; inset: 0 0 auto 0; height: var(--bar); z-index: 10;
     display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px;
-    padding: 0 24px; background: var(--navy); color: var(--on-navy);
+    padding: 0 24px; background: var(--page); color: var(--on-navy);
     border-bottom: 1px solid rgba(255,255,255,.08);
   }
   .topbar .logo { display: block; line-height: 0; justify-self: start; border-radius: 4px; }
   .topbar .logo img { height: 34px; width: auto; }
   .tracker { display: flex; gap: 4px; }
   .tracker a {
-    font-size: 13px; font-weight: 500; letter-spacing: .02em; color: rgba(255,255,255,.62);
+    font-size: 13px; font-weight: 500; letter-spacing: .02em; color: var(--on-navy-faint);
     text-decoration: none; padding: 6px 10px; border-radius: 6px; position: relative; transition: color .15s;
   }
-  .tracker a:hover { color: #fff; }
-  .tracker a[aria-current="true"] { color: #fff; }
+  .tracker a:hover, .tracker a[aria-current="true"] { color: #fff; }
   .tracker a[aria-current="true"]::after {
     content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; height: 2px; background: var(--blue-bright);
   }
-  .counter { justify-self: end; font-size: 13px; color: rgba(255,255,255,.62); letter-spacing: .04em; }
+  .counter { justify-self: end; font-size: 13px; color: var(--on-navy-faint); letter-spacing: .04em; }
   .counter b { color: #fff; font-weight: 600; }
   .topbar .topbar-cta { display: none; }
 
-  /* ---------- Slides ---------- */
+  /* ---------- Slide anatomy ---------- */
   /* Every size inside a slide is a multiple of --u: 1% of the slide width in deck mode, a fixed step on phones. */
-  .stage-wrap { display: block; }
   .slide {
     --u: 10.5px;
     position: relative; background: var(--slide); color: var(--ink);
     display: flex; flex-direction: column;
-    padding: calc(var(--u) * 6) calc(var(--u) * 2) calc(var(--u) * 3);
+    padding: calc(var(--u) * 5) calc(var(--u) * 2.2) calc(var(--u) * 2.4);
   }
-  .slide.navy { background: var(--navy-2); color: var(--on-navy); }
+  .slide.navy { background: var(--navy); color: var(--on-navy); }
   .slide-head { display: flex; justify-content: space-between; align-items: flex-start; gap: calc(var(--u) * 2); }
-  .slide-title { margin: 0; font-size: calc(var(--u) * 2.9); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
-  .tagline { margin: calc(var(--u) * .6) 0 0; font-size: calc(var(--u) * 1.65); line-height: 1.3; font-weight: 300; color: var(--muted); max-width: 46em; }
-  .head-logo { flex: none; line-height: 0; }
+  .slide-title { font-size: calc(var(--u) * 3.1); line-height: 1.1; letter-spacing: -0.015em; font-weight: 700; }
+  .tagline { margin-top: calc(var(--u) * .45); font-size: calc(var(--u) * 1.65); line-height: 1.3; color: var(--muted); }
+  .navy .tagline { color: var(--on-navy-muted); }
+  .head-logo { flex: none; line-height: 0; margin-left: auto; }
   .head-logo img { height: calc(var(--u) * 3.2); width: auto; }
-  .rule { border: 0; border-top: 1px solid var(--line); margin: calc(var(--u) * 1.6) 0 0; }
-  .slide-body { flex: 1; min-height: 0; padding-top: calc(var(--u) * 2.4); }
+  .rule { border: 0; border-top: 1px solid var(--line); margin: calc(var(--u) * .9) 0 0; }
+  .navy .rule { border-top-color: var(--navy-line); }
+  .slide-body { flex: 1; min-height: 0; padding-top: calc(var(--u) * 1.8); }
   .slide-foot {
     display: flex; justify-content: space-between; gap: calc(var(--u) * 2); align-items: baseline;
-    margin-top: calc(var(--u) * 2); padding-top: calc(var(--u) * 1); border-top: 1px solid var(--line);
+    margin-top: calc(var(--u) * 2); padding-top: calc(var(--u) * 1.5); border-top: 1px solid var(--line);
     font-size: calc(var(--u) * 1.05); color: var(--muted);
   }
-  .navy .slide-foot { border-top-color: rgba(255,255,255,.12); color: var(--on-navy-muted); }
-  .slide-foot .num { font-weight: 600; color: var(--ink); }
+  .navy .slide-foot { border-top-color: var(--navy-line); color: var(--on-navy-faint); }
+  .slide-foot .num { font-weight: 700; color: var(--ink); margin-left: auto; }
   .navy .slide-foot .num { color: #fff; }
-  p { margin: 0; }
-  .body-text { font-size: calc(var(--u) * 1.35); line-height: 1.5; color: var(--muted); }
+  .label { font-size: calc(var(--u) * 1.05); font-weight: 700; color: var(--blue); }
+  .navy .label { color: var(--blue-bright); }
 
   /* ---------- Buttons ---------- */
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: .6em;
-    padding: .9em 1.5em; border-radius: 10px; border: 1px solid transparent;
-    font: 600 calc(var(--u) * 1.45) / 1 var(--font); text-decoration: none; cursor: pointer;
-    transition: background .15s ease, transform .15s ease, box-shadow .2s ease;
+    padding: .95em 1.7em; border-radius: calc(var(--u) * .6); border: 1px solid transparent;
+    font: 700 calc(var(--u) * 1.6) / 1 var(--font); text-decoration: none; cursor: pointer;
+    transition: background .15s ease, transform .15s ease, border-color .15s ease;
   }
-  .btn svg { width: 1.1em; height: 1.1em; flex: none; }
-  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 6px 16px -6px rgba(7,13,31,.55); }
+  .btn-primary { background: var(--blue); color: #fff; }
   .btn-primary:hover { background: var(--blue-hover); transform: translateY(-1px); }
   .btn-primary:active { transform: translateY(0); }
   .btn-primary[disabled] { opacity: .6; cursor: progress; transform: none; }
-  .btn-ghost { color: var(--on-navy); border-color: rgba(255,255,255,.28); background: transparent; }
-  .btn-ghost:hover { background: rgba(255,255,255,.08); }
-  .btn-quiet { color: var(--ink); border-color: var(--line); background: var(--surface); }
-  .btn-quiet:hover { border-color: var(--muted); }
-  .btn-sm { font-size: calc(var(--u) * 1.15); padding: .7em 1.1em; border-radius: 8px; }
+  .btn-ghost { color: var(--on-navy); border-color: #5b6275; background: transparent; }
+  .btn-ghost:hover { background: rgba(255,255,255,.06); border-color: var(--on-navy-faint); }
+  .btn-sm { font-size: calc(var(--u) * 1.25); padding: .6em 1.6em; border-radius: calc(var(--u) * .5); }
+  .link-btn { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  code { font-family: var(--mono); font-size: .88em; }
+
+  /* Numbered discs shared by summary, process, install and team steps */
+  .disc {
+    flex: none; display: inline-grid; place-items: center; border-radius: 50%;
+    width: calc(var(--u) * 2.9); height: calc(var(--u) * 2.9);
+    background: var(--blue); color: #fff; font-size: calc(var(--u) * 1.1); font-weight: 700; line-height: 1;
+  }
+  .disc.dark { background: var(--navy); }
+
+  /* Sample-slide chart bars (title + summary exhibits) */
+  .bars { display: flex; align-items: flex-end; gap: 9%; border-bottom: 1px solid #c5cad6; padding: 0 5%; }
+  .bars > div { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+  .bars i { display: block; width: 100%; background: var(--bar-grey); transform-origin: bottom; }
+  .bars .hl i { background: var(--red); }
+  .bars b { font-weight: 700; color: var(--ink); margin-bottom: .45em; line-height: 1; }
+  .years { display: flex; gap: 9%; padding: 0 5%; color: var(--ink); }
+  .years span { flex: 1; text-align: center; }
+  .grow .bars i { animation: grow 1.1s cubic-bezier(.16,1,.3,1) both; }
+  .grow .bars > div:nth-child(2) i { animation-delay: .08s; } .grow .bars > div:nth-child(3) i { animation-delay: .16s; }
+  .grow .bars > div:nth-child(4) i { animation-delay: .24s; } .grow .bars > div:nth-child(5) i { animation-delay: .32s; }
+  @keyframes grow { from { transform: scaleY(.04); } }
+  .panel-h { background: var(--panel); color: #fff; font-weight: 700; line-height: 1.2; }
 
   /* ---------- 01 Title ---------- */
-  .title-slide .slide-body { display: grid; grid-template-columns: 1.4fr 1fr; gap: calc(var(--u) * 5); align-items: center; padding-top: 0; }
-  .prepared { color: var(--on-navy-muted); }
-  .prepared b { color: #fff; font-weight: 600; }
-  .display {
-    margin: 0 0 calc(var(--u) * 1.8);
-    font-size: calc(var(--u) * 7.2); line-height: .96; letter-spacing: -0.04em; font-weight: 700;
-  }
-  .lede { font-size: calc(var(--u) * 1.6); line-height: 1.45; font-weight: 300; color: var(--on-navy-muted); max-width: 30em; }
-  .cta-row { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 1.2); margin-top: calc(var(--u) * 2.6); }
-  .needs {
-    display: flex; align-items: center; gap: .55em; margin-top: calc(var(--u) * 1.6);
-    font-size: calc(var(--u) * 1.2); color: var(--on-navy-muted);
-  }
-  .needs svg { width: 1.15em; height: 1.15em; color: var(--gold); flex: none; }
-  .mobile-only { display: none; }
+  .title-slide .slide-body { display: grid; grid-template-columns: 1fr calc(var(--u) * 33.3); gap: calc(var(--u) * 4.5); align-items: center; padding-top: calc(var(--u) * 1.8); }
+  .display { font-size: calc(var(--u) * 4.8); line-height: 1.12; letter-spacing: -0.02em; font-weight: 700; max-width: 10.4em; }
+  .lede { margin-top: calc(var(--u) * 2.2); font-size: calc(var(--u) * 1.65); line-height: 1.55; color: var(--on-navy-muted); max-width: 31em; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 1.3); margin-top: calc(var(--u) * 3.2); }
+  .needs { margin-top: calc(var(--u) * 1.3); font-size: calc(var(--u) * 1.2); color: var(--on-navy-faint); }
+  .mobile-only, .share-row.mobile-only { display: none; }
 
-  /* Title slide side panel: what the skill's output looks like, as a flagged figure */
-  .verify-card {
-    border: 1px solid rgba(255,255,255,.14); border-radius: 12px; padding: calc(var(--u) * 2.2);
-    background: rgba(255,255,255,.04);
+  .flow { display: flex; flex-direction: column; }
+  .bring {
+    display: flex; align-items: center; gap: calc(var(--u) * 1.6);
+    background: var(--navy-card); border: 1px solid var(--navy-line); border-radius: calc(var(--u) * .9);
+    padding: calc(var(--u) * 1.5) calc(var(--u) * 1.6);
   }
-  .verify-card h2 { margin: 0 0 calc(var(--u) * 1.2); font-size: calc(var(--u) * 1.1); font-weight: 600; letter-spacing: .02em; color: var(--on-navy-muted); }
-  .vc-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; padding: calc(var(--u) * 1) 0; border-top: 1px solid rgba(255,255,255,.1); font-size: calc(var(--u) * 1.3); }
-  .vc-row > span { color: var(--on-navy-muted); }
-  .vc-row b { font-weight: 600; color: #fff; white-space: nowrap; }
-  .flag {
-    display: inline-block; font: 600 .78em/1 var(--mono); color: var(--navy); background: var(--gold);
-    padding: .3em .45em; border-radius: 4px; margin-left: .4em; vertical-align: .1em; white-space: nowrap;
-  }
-  .vc-note { margin-top: calc(var(--u) * 1.2); font-size: calc(var(--u) * 1.1); line-height: 1.45; color: var(--on-navy-muted); }
+  .bring svg { width: calc(var(--u) * 3.2); height: auto; flex: none; }
+  .bring b { display: block; font-size: calc(var(--u) * 1.65); color: #fff; margin-top: calc(var(--u) * .25); }
+  .arrow-step { position: relative; height: calc(var(--u) * 3.6); display: flex; align-items: center; padding-left: calc(50% + var(--u) * 1.2); font-size: calc(var(--u) * 1.15); color: var(--on-navy-faint); }
+  .arrow-step::before { content: ""; position: absolute; left: 50%; top: 0; bottom: calc(var(--u) * .3); width: 2px; background: var(--blue); }
+  .arrow-step::after { content: ""; position: absolute; left: calc(50% - var(--u) * .4 + 1px); bottom: 0; border: calc(var(--u) * .4) solid transparent; border-top: calc(var(--u) * .55) solid var(--blue); border-bottom: 0; }
+  .get-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; margin-bottom: calc(var(--u) * .8); }
+  .get-row small { font-size: calc(var(--u) * .9); color: var(--on-navy-faint); }
+
+  .mini { background: var(--slide); color: var(--ink); border-radius: calc(var(--u) * .9); padding: calc(var(--u) * 1.3) calc(var(--u) * 1.3) calc(var(--u) * 1.1); }
+  .mini-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .mini-head b { font-size: calc(var(--u) * 1.3); }
+  .mini-head span { font-size: calc(var(--u) * .85); font-weight: 700; color: var(--red); }
+  .mini-tag { font-size: calc(var(--u) * .82); color: var(--muted); margin-top: calc(var(--u) * .3); padding-bottom: calc(var(--u) * .8); border-bottom: 1px solid var(--line); }
+  .mini-body { display: grid; grid-template-columns: 1fr calc(var(--u) * 10.9); gap: calc(var(--u) * .8); margin-top: calc(var(--u) * .8); }
+  .mini .panel-h { font-size: calc(var(--u) * .75); padding: calc(var(--u) * .45) calc(var(--u) * .55); }
+  .mini .bars { height: calc(var(--u) * 13.2); margin-top: calc(var(--u) * 1.2); font-size: calc(var(--u) * .8); }
+  .mini .years { font-size: calc(var(--u) * .8); margin-top: calc(var(--u) * .5); }
+  .recs { list-style: none; margin: calc(var(--u) * .9) 0 0; padding: 0; display: grid; gap: calc(var(--u) * 1.15); }
+  .recs b { display: block; font-size: calc(var(--u) * 1.1); line-height: 1.2; }
+  .recs li:first-child b { color: var(--red); }
+  .recs span { display: block; font-size: calc(var(--u) * .72); color: var(--muted); margin-top: calc(var(--u) * .45); }
 
   /* ---------- 02 Executive summary ---------- */
-  .exec .slide-body { display: grid; grid-template-columns: 1fr 1.25fr; gap: calc(var(--u) * 3.5); align-items: start; }
-  .points { list-style: none; margin: 0; padding: 0; display: grid; gap: calc(var(--u) * 2); }
-  .points li { display: grid; grid-template-columns: calc(var(--u) * 2.6) 1fr; gap: calc(var(--u) * 1); }
-  .points .n { font-size: calc(var(--u) * 1.5); font-weight: 700; color: var(--blue-ink); line-height: 1.25; }
-  .points h3 { margin: 0 0 calc(var(--u) * .35); font-size: calc(var(--u) * 1.6); letter-spacing: -0.01em; line-height: 1.25; }
-  .points p { font-size: calc(var(--u) * 1.3); line-height: 1.5; color: var(--muted); }
-  .exhibit figcaption { margin-top: calc(var(--u) * 1); font-size: calc(var(--u) * 1.05); color: var(--muted); }
-  .exhibit figcaption b { color: var(--ink); font-weight: 600; }
-  .exhibit { margin: 0; }
-  .mock-wrap { container-type: inline-size; }
+  .exec .slide-body { display: grid; grid-template-columns: calc(var(--u) * 45.7) 1fr; align-items: stretch; }
+  .exec-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: calc(var(--u) * 1);
+    padding: calc(var(--u) * 2.3) calc(var(--u) * 2.3) calc(var(--u) * 1.4);
+    display: flex; flex-direction: column; min-height: 0;
+  }
+  .ec-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1em; padding-bottom: calc(var(--u) * 1.2); border-bottom: 1px solid var(--line); }
+  .ec-head b { display: block; font-size: calc(var(--u) * 1.5); }
+  .ec-head span { display: block; font-size: calc(var(--u) * 1.02); color: var(--muted); margin-top: calc(var(--u) * .35); }
+  .ec-dot { width: calc(var(--u) * 2.2); height: calc(var(--u) * 2.2); border-radius: 50%; background: var(--red); flex: none; }
+  .ec-body { flex: 1; display: grid; grid-template-columns: 1fr calc(var(--u) * 15.2); gap: calc(var(--u) * 1.4); margin-top: calc(var(--u) * 1); min-height: 0; }
+  .ec-col { display: flex; flex-direction: column; min-height: 0; }
+  .exec-card .panel-h { font-size: calc(var(--u) * 1.08); padding: calc(var(--u) * .6) calc(var(--u) * .95); }
+  .exec-card .bars { flex: 1; min-height: calc(var(--u) * 12); margin-top: calc(var(--u) * 1.4); font-size: calc(var(--u) * 1.3); }
+  .exec-card .years { font-size: calc(var(--u) * 1.3); margin-top: calc(var(--u) * .6); }
+  .kpis { list-style: none; margin: calc(var(--u) * 1.3) 0 0; padding: 0; display: grid; gap: calc(var(--u) * 1.5); }
+  .kpis b { display: block; font-size: calc(var(--u) * 2.15); line-height: 1.05; color: var(--panel); letter-spacing: -0.01em; }
+  .kpis span { display: block; font-size: calc(var(--u) * 1.05); color: var(--muted); margin-top: calc(var(--u) * .3); }
+  .ec-tracker { display: flex; justify-content: space-around; margin-top: calc(var(--u) * 1.6); padding: 0 calc(var(--u) * 1); font-size: calc(var(--u) * .92); font-weight: 700; color: var(--muted); }
+  .ec-tracker .on { color: var(--red); box-shadow: 0 calc(var(--u) * .45) 0 -1px var(--red); }
 
-  /* The sample slide, drawn as a real consulting slide */
-  .mock {
-    aspect-ratio: 16 / 9; background: #fff; color: #0b1020; border-radius: 6px; padding: 4.2cqw 4.6cqw;
-    display: flex; flex-direction: column; gap: 3cqw; font-size: 1.9cqw;
-    box-shadow: 0 18px 40px -18px rgba(7,13,31,.45), 0 0 0 1px rgba(7,13,31,.08);
-  }
-  .mock-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #e5e7ee; padding-bottom: 2.4%; }
-  .mock-title { font-weight: 700; font-size: 1.6em; letter-spacing: -0.02em; }
-  .mock-tag { color: #555b6c; font-size: .95em; margin-top: 2px; }
-  .mock-logo { width: 2.6em; height: 2.6em; border-radius: 50%; background: conic-gradient(#c81e2b 0 50%, #1d2b5c 0); flex: none; }
-  .mock-body { flex: 1; display: grid; grid-template-columns: 1.25fr 1fr; gap: 3.5%; min-height: 0; }
-  .panel-h { background: #1d2b5c; color: #fff; font-weight: 700; font-size: .85em; padding: 1.4% 3%; border-radius: 2px; margin-bottom: 4%; }
-  .chart { display: flex; align-items: flex-end; gap: 6%; height: 72%; padding: 0 3%; border-bottom: 1px solid #c8ccd8; }
-  .bar { flex: 1; background: #c9d1e8; border-radius: 2px 2px 0 0; transform-origin: bottom; position: relative; }
-  .bar.hl { background: #c81e2b; }
-  .bar span { position: absolute; top: -1.5em; left: 50%; transform: translateX(-50%); font-size: .8em; font-weight: 700; color: #1d2b5c; }
-  .bar.hl span { color: #c81e2b; }
-  .exhibit.grow .bar { animation: grow 1.1s cubic-bezier(.16,1,.3,1) both; }
-  .exhibit.grow .bar:nth-child(2) { animation-delay: .08s; } .exhibit.grow .bar:nth-child(3) { animation-delay: .16s; }
-  .exhibit.grow .bar:nth-child(4) { animation-delay: .24s; } .exhibit.grow .bar:nth-child(5) { animation-delay: .32s; }
-  @keyframes grow { from { transform: scaleY(.04); } }
-  .kpis { display: grid; gap: 1em; }
-  .kpi b { display: block; font-size: 1.6em; letter-spacing: -0.03em; line-height: 1.05; color: #1d2b5c; }
-  .kpi b i { font-style: normal; color: #c81e2b; }
-  .kpi small { color: #555b6c; font-size: .82em; }
-  .mock-tracker { display: flex; justify-content: center; gap: 4%; font-size: .72em; color: #6b7184; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
-  .mock-tracker .on { color: #c81e2b; box-shadow: 0 2px 0 #c81e2b; }
+  .points { list-style: none; margin: 0 0 0 calc(var(--u) * -.85); padding: calc(var(--u) * 2.5) 0 calc(var(--u) * 1.6); display: grid; align-content: space-between; position: relative; z-index: 1; }
+  .points li { display: grid; grid-template-columns: calc(var(--u) * 1.7) calc(var(--u) * 3.2) 1fr; align-items: start; position: relative; }
+  .points .disc { width: calc(var(--u) * 1.7); height: calc(var(--u) * 1.7); font-size: calc(var(--u) * .9); margin-top: calc(var(--u) * .25); }
+  .points .dash { border-top: 1.5px dashed var(--blue); margin: calc(var(--u) * 1.1) calc(var(--u) * .5) 0 0; }
+  .points h3 { font-size: calc(var(--u) * 1.6); line-height: 1.35; }
+  .points p { font-size: calc(var(--u) * 1.45); line-height: 1.55; color: var(--muted); margin-top: calc(var(--u) * .3); }
+  .points li.lead::before { content: ""; position: absolute; right: 100%; top: calc(var(--u) * 1.1); width: calc(var(--u) * 19.6); border-top: 1.5px dashed var(--blue); }
+  .flag { font-family: var(--mono); font-size: .9em; background: var(--gold); color: var(--ink); padding: .05em .3em; }
 
-  /* ---------- 03 Scorecard ---------- */
-  .scorecard { width: 100%; border-collapse: collapse; font-size: calc(var(--u) * 1.65); }
-  .scorecard th {
-    text-align: left; font-size: calc(var(--u) * 1.05); font-weight: 600; letter-spacing: .02em; color: var(--muted);
-    padding: 0 calc(var(--u) * 1.5) calc(var(--u) * .9) 0; border-bottom: 2px solid var(--ink);
-  }
-  .scorecard td { padding: calc(var(--u) * 2.1) calc(var(--u) * 1.5) calc(var(--u) * 1.7) 0; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.45; }
-  .scorecard td:first-child { font-weight: 700; color: var(--ink); width: 18%; }
-  .scorecard td:nth-child(2) { color: var(--muted); width: 34%; }
-  .scorecard td:last-child { color: var(--ink); }
+  /* ---------- 03 Why it's different ---------- */
+  .compare { width: 100%; border-collapse: separate; border-spacing: 0 calc(var(--u) * .85); margin-top: calc(var(--u) * -.6); }
+  .compare th { text-align: left; font-size: calc(var(--u) * 1.3); font-weight: 700; color: var(--ink-2); padding: 0 calc(var(--u) * 1.6) 0 0; }
+  .compare th:nth-child(2) { padding-left: calc(var(--u) * 1.3); }
+  .compare th:last-child { color: var(--blue); padding-left: calc(var(--u) * 1.3); }
+  .compare td { height: calc(var(--u) * 7.55); vertical-align: middle; font-size: calc(var(--u) * 1.55); line-height: 1.4; padding: 0 calc(var(--u) * 2.2) 0 calc(var(--u) * 1.6); }
+  .compare th[scope="row"] { font-size: calc(var(--u) * 1.85); color: var(--ink); width: 19%; padding: 0; }
+  .compare td.typ { background: var(--well); color: var(--muted); width: 36%; border-right: calc(var(--u) * 1.2) solid var(--slide); }
+  .compare td.ours { background: var(--tint); color: var(--ink); box-shadow: inset calc(var(--u) * .4) 0 0 var(--blue); }
 
-  /* ---------- 04 Process ---------- */
-  .process { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: auto auto auto; column-gap: calc(var(--u) * .5); }
-  .process li { position: relative; display: grid; grid-row: span 3; grid-template-rows: subgrid; }
-  .phase-bar {
-    display: flex; align-items: center; height: calc(var(--u) * 5.2); padding: 0 calc(var(--u) * 2.2);
-    background: var(--well); color: var(--ink); font-weight: 700; font-size: calc(var(--u) * 1.8);
-    clip-path: polygon(0 0, calc(100% - var(--u) * 1.4) 0, 100% 50%, calc(100% - var(--u) * 1.4) 100%, 0 100%, calc(var(--u) * 1.4) 50%);
+  /* ---------- 04 How it works ---------- */
+  .flow-grid {
+    display: grid; grid-template-columns: calc(var(--u) * 12.5) repeat(4, 1fr);
+    grid-template-rows: auto auto auto; column-gap: calc(var(--u) * .9); row-gap: calc(var(--u) * 1.6);
   }
-  .process li:first-child .phase-bar { clip-path: polygon(0 0, calc(100% - var(--u) * 1.4) 0, 100% 50%, calc(100% - var(--u) * 1.4) 100%, 0 100%); }
-  .process li:last-child .phase-bar { background: var(--navy); color: #fff; }
-  .phase-bar small { font-weight: 400; color: var(--muted); margin-right: .6em; font-size: .8em; }
-  .process li:last-child .phase-bar small { color: rgba(255,255,255,.7); }
-  .process p { padding: calc(var(--u) * 1.8) calc(var(--u) * 2.4) 0 calc(var(--u) * .4); font-size: calc(var(--u) * 1.55); line-height: 1.5; color: var(--muted); }
-  .process p b { color: var(--ink); font-weight: 600; }
-  .process .call {
-    margin: calc(var(--u) * 2.2) calc(var(--u) * 2.4) 0 calc(var(--u) * .4); padding: calc(var(--u) * 1.2) 0 0; border-top: 1px solid var(--line);
-    font-size: calc(var(--u) * 1.4); color: var(--ink);
-  }
-  .process .call b { display: block; font-size: calc(var(--u) * 1.05); font-weight: 600; letter-spacing: .02em; color: var(--blue-ink); margin-bottom: .3em; }
-  .process-note { margin-top: calc(var(--u) * 4); font-size: calc(var(--u) * 1.5); color: var(--muted); max-width: 52em; }
+  .row-label { grid-column: 1; align-self: center; font-size: calc(var(--u) * 1.15); font-weight: 700; line-height: 1.3; padding-right: 1em; }
+  .row-label.does { grid-row: 2; }
+  .row-label.decide { grid-row: 3; color: var(--blue); }
+  .flow-rule { grid-column: 1 / -1; grid-row: 3; align-self: start; height: 1px; background: var(--line); margin-top: calc(var(--u) * -.8 - .5px); }
+  .phases { grid-column: 2 / -1; grid-row: 1 / -1; display: grid; grid-template-columns: subgrid; grid-template-rows: subgrid; list-style: none; margin: 0; padding: 0; }
+  .phases li { grid-row: 1 / -1; display: grid; grid-template-rows: subgrid; }
+  .phase-h { display: flex; align-items: center; gap: calc(var(--u) * 1); font-size: calc(var(--u) * 1.85); font-weight: 700; }
+  .does-card { background: var(--surface); border: 1px solid var(--line); padding: calc(var(--u) * 1.5) calc(var(--u) * 1.3); font-size: calc(var(--u) * 1.45); line-height: 1.5; color: var(--muted); }
+  .does-card b { color: var(--ink); }
+  .phases li:last-child .does-card { background: var(--navy); border-color: var(--navy); color: var(--on-navy-muted); }
+  .phases li:last-child .does-card b { color: #fff; }
+  .decide-card { display: flex; flex-direction: column; justify-content: center; background: var(--tint); padding: calc(var(--u) * 1.6) calc(var(--u) * 1.3); min-height: calc(var(--u) * 11.2); font-size: calc(var(--u) * 1.45); line-height: 1.5; font-weight: 700; color: var(--ink); }
+  .m-label { display: none; }
+  .flow-note { margin-top: calc(var(--u) * 3); font-size: calc(var(--u) * 1.65); color: var(--ink); }
 
   /* ---------- 05 Install ---------- */
-  .tabs { display: inline-flex; gap: 4px; padding: 4px; background: var(--well); border-radius: 10px; }
-  .tab {
-    background: none; border: 0; font: 600 calc(var(--u) * 1.25) / 1 var(--font); color: var(--muted);
-    padding: .75em 1.1em; border-radius: 7px; cursor: pointer;
-  }
-  .tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(7,13,31,.18); }
-  .tabpanel { margin-top: calc(var(--u) * 2); }
-  .tabpanel[hidden] { display: none; }
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--u) * 2); counter-reset: s; }
-  .steps.three { grid-template-columns: repeat(3, 1fr); }
-  .steps li { counter-increment: s; border-top: 2px solid var(--line); padding-top: calc(var(--u) * 1.2); }
-  .steps li:first-child { border-top-color: var(--blue); }
-  .steps li::before { content: counter(s); display: block; font-size: calc(var(--u) * 2.2); font-weight: 700; letter-spacing: -0.03em; color: var(--blue-ink); line-height: 1; margin-bottom: calc(var(--u) * .8); }
-  .steps strong { display: block; font-size: calc(var(--u) * 1.6); margin-bottom: calc(var(--u) * .4); }
-  .steps p { font-size: calc(var(--u) * 1.4); line-height: 1.5; color: var(--muted); }
-  .steps p b { color: var(--ink); font-weight: 600; }
-  .steps .btn { margin-top: calc(var(--u) * 1.1); }
-  code { font-family: var(--mono); font-size: .9em; background: var(--well); padding: .1em .35em; border-radius: 4px; }
-  .cmd { display: flex; align-items: stretch; margin-top: calc(var(--u) * 1); border-radius: 8px; overflow: hidden; background: var(--navy); }
-  .cmd pre { margin: 0; flex: 1; padding: calc(var(--u) * 1) calc(var(--u) * 1.2); color: #cfd8ff; font: calc(var(--u) * 1.05) / 1.5 var(--mono); white-space: pre-wrap; word-break: break-all; }
-  .copy {
-    border: 0; border-left: 1px solid rgba(255,255,255,.12); background: transparent; color: #fff; cursor: pointer;
-    font: 600 calc(var(--u) * 1.05) / 1 var(--font); padding: 0 calc(var(--u) * 1.2);
-  }
-  .copy:hover { background: rgba(255,255,255,.08); }
-  .install-notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--u) * 2); margin-top: calc(var(--u) * 3.2); padding-top: calc(var(--u) * 2); border-top: 1px solid var(--line); }
-  .install-notes div { font-size: calc(var(--u) * 1.3); line-height: 1.5; color: var(--muted); }
-  .install-notes b { display: block; color: var(--ink); font-size: calc(var(--u) * 1.4); margin-bottom: .2em; }
+  .install .slide-body { display: grid; grid-template-columns: 1fr calc(var(--u) * 42.7); gap: calc(var(--u) * 5); }
+  .stepper { list-style: none; margin: 0; padding: calc(var(--u) * .6) 0 calc(var(--u) * 1); display: grid; align-content: space-between; }
+  .stepper li { display: grid; grid-template-columns: calc(var(--u) * 2.9) 1fr; column-gap: calc(var(--u) * 1.9); position: relative; }
+  .stepper li:not(:last-child)::before { content: ""; position: absolute; left: calc(var(--u) * 1.45 - 1px); top: calc(var(--u) * 2.9); bottom: calc(var(--u) * -3); width: 2px; background: var(--bar-grey); }
+  .stepper .disc { grid-row: span 2; position: relative; }
+  .stepper h3 { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) * .8) calc(var(--u) * 1.4); min-height: calc(var(--u) * 2.9); font-size: calc(var(--u) * 1.85); }
+  .stepper p { font-size: calc(var(--u) * 1.45); line-height: 1.55; color: var(--muted); margin-top: calc(var(--u) * .4); }
+  .stepper p b { color: var(--ink); }
+  .window { background: var(--surface); border: 1px solid var(--line); border-radius: calc(var(--u) * .9); overflow: hidden; margin-top: calc(var(--u) * .9); }
+  .win-bar { position: relative; display: flex; align-items: center; justify-content: center; height: calc(var(--u) * 2.8); background: var(--well); font-size: calc(var(--u) * 1.1); font-weight: 700; color: var(--muted); }
+  .win-bar::before { content: ""; position: absolute; left: calc(var(--u) * 1.3); top: 50%; width: calc(var(--u) * .85); height: calc(var(--u) * .85); margin-top: calc(var(--u) * -.425); border-radius: 50%; background: var(--bar-grey); box-shadow: calc(var(--u) * 1.3) 0 0 var(--bar-grey), calc(var(--u) * 2.6) 0 0 var(--bar-grey); }
+  .win-body { padding: calc(var(--u) * 1.2) calc(var(--u) * 1.6) calc(var(--u) * 1.6); }
+  .skills-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: calc(var(--u) * 1); border-bottom: 1px solid var(--line); font-size: calc(var(--u) * 1.2); font-weight: 700; }
+  .fake-btn { border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .5); padding: calc(var(--u) * .6) calc(var(--u) * 1.8); font-size: calc(var(--u) * 1.05); }
+  .skill-row { display: flex; align-items: center; gap: calc(var(--u) * 1.2); margin-top: calc(var(--u) * 1); background: var(--tint); border-radius: calc(var(--u) * .6); padding: calc(var(--u) * 1.2); }
+  .skill-icon { display: grid; place-items: center; width: calc(var(--u) * 3.2); height: calc(var(--u) * 3.2); border-radius: calc(var(--u) * .4); background: var(--navy); color: #fff; font-size: calc(var(--u) * 1.05); font-weight: 700; flex: none; }
+  .skill-row div { flex: 1; }
+  .skill-row b { display: block; font-size: calc(var(--u) * 1.4); }
+  .skill-row span { font-size: calc(var(--u) * 1.05); color: var(--muted); }
+  .toggle { width: calc(var(--u) * 4.1); height: calc(var(--u) * 2.2); border-radius: 99px; background: var(--blue); position: relative; flex: none; }
+  .toggle::after { content: ""; position: absolute; right: calc(var(--u) * .25); top: calc(var(--u) * .25); width: calc(var(--u) * 1.7); height: calc(var(--u) * 1.7); border-radius: 50%; background: #fff; }
+  .notes { margin-top: calc(var(--u) * 1.9); }
+  .notes div { border-top: 1px solid var(--line); padding: calc(var(--u) * 1.1) 0 calc(var(--u) * .9); }
+  .notes b { display: block; font-size: calc(var(--u) * 1.4); line-height: 1.3; }
+  .notes p { font-size: calc(var(--u) * 1.45); line-height: 1.45; color: var(--muted); margin-top: calc(var(--u) * .2); }
+  .notes .link-btn { color: var(--blue); font-weight: 700; margin-left: .4em; }
 
-  /* ---------- 06 Prompts ---------- */
-  .try-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: calc(var(--u) * 3.5); align-items: start; }
-  .prompts { display: grid; gap: calc(var(--u) * 1.2); }
-  .exchange { margin: 0; display: grid; gap: calc(var(--u) * 1.4); }
-  .msg { font-size: calc(var(--u) * 1.5); line-height: 1.45; padding: calc(var(--u) * 1.6) calc(var(--u) * 1.9); border-radius: 14px; }
-  .msg span { display: block; font-size: calc(var(--u) * 1.05); font-weight: 600; letter-spacing: .02em; margin-bottom: .45em; }
-  .msg.you { background: var(--well); justify-self: end; max-width: 85%; border-bottom-right-radius: 4px; }
-  .msg.you span { color: var(--muted); }
-  .msg.claude { background: var(--navy-2); color: #fff; border-bottom-left-radius: 4px; }
-  .msg.claude span { color: var(--blue-bright); }
-  .msg.claude em { display: block; margin-top: .8em; font-style: normal; font-size: calc(var(--u) * 1.05); color: rgba(255,255,255,.72); }
-  .exchange figcaption { font-size: calc(var(--u) * 1.05); color: var(--muted); }
-  .prompt {
-    display: flex; align-items: center; justify-content: space-between; gap: calc(var(--u) * 1.6);
-    background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: calc(var(--u) * 1.5) calc(var(--u) * 1.8);
-  }
-  .prompt p { font-size: calc(var(--u) * 1.45); line-height: 1.35; letter-spacing: -0.01em; color: var(--ink); }
-  .prompt .copy-prompt { flex: none; }
-  .prompts-note { margin-top: calc(var(--u) * 3); font-size: calc(var(--u) * 1.5); color: var(--muted); max-width: 54em; }
+  /* ---------- 06 Try it ---------- */
+  .try .slide-body { display: grid; grid-template-columns: calc(var(--u) * 59.3) 1fr; gap: calc(var(--u) * 3); align-items: start; }
+  .try .window { margin-top: 0; }
+  .chat { padding: calc(var(--u) * 1.6) calc(var(--u) * 1.6) calc(var(--u) * 1); display: flex; flex-direction: column; }
+  .attach { align-self: flex-end; border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .5); padding: calc(var(--u) * .6) calc(var(--u) * 1.2); min-width: calc(var(--u) * 16.8); font-size: calc(var(--u) * 1.2); font-weight: 700; }
+  .bubble-you { align-self: flex-end; max-width: 72%; margin-top: calc(var(--u) * .6); background: var(--well); border-radius: calc(var(--u) * .6); padding: calc(var(--u) * .9) calc(var(--u) * 1.6); font-size: calc(var(--u) * 1.55); line-height: 1.45; }
+  .bubble-claude { align-self: flex-start; max-width: 77%; margin-top: calc(var(--u) * 1.4); background: var(--navy); color: #fff; border-radius: calc(var(--u) * .8); padding: calc(var(--u) * 1.6) calc(var(--u) * 1.7) calc(var(--u) * 1.5); font-size: calc(var(--u) * 1.55); line-height: 1.45; }
+  .bubble-claude .label { display: block; font-size: calc(var(--u) * 1.1); color: var(--blue-bright); margin-bottom: calc(var(--u) * .4); }
+  .bubble-claude small { display: block; font-size: calc(var(--u) * 1.05); color: var(--on-navy-faint); margin-top: calc(var(--u) * .35); }
+  .starts { margin-top: calc(var(--u) * 1.8); }
+  .starts .label { font-size: calc(var(--u) * .95); }
+  .chips { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * .8); margin-top: calc(var(--u) * .7); }
+  .chip { font: 700 calc(var(--u) * 1.1) / 1.2 var(--font); color: var(--blue); background: var(--surface); border: 1px solid var(--blue); border-radius: 99px; padding: calc(var(--u) * .65) calc(var(--u) * 1); cursor: pointer; transition: background .15s; }
+  .chip:hover { background: var(--tint); }
+  .reply { display: flex; justify-content: space-between; align-items: center; margin-top: calc(var(--u) * .8); border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .6); padding: calc(var(--u) * .5) calc(var(--u) * .6) calc(var(--u) * .5) calc(var(--u) * 1.4); font-size: calc(var(--u) * 1.3); color: var(--muted); }
+  .reply i { width: calc(var(--u) * 2.1); height: calc(var(--u) * 2.1); border-radius: 50%; background: var(--blue); }
+  .tips { list-style: none; margin: calc(var(--u) * 1.2) 0 0; padding: 0; }
+  .tips li { display: grid; grid-template-columns: calc(var(--u) * 4) 1fr; border-top: 1px solid var(--line); padding: calc(var(--u) * 2.2) 0 calc(var(--u) * 2.4); }
+  .tips .n { font-size: calc(var(--u) * 1.75); font-weight: 700; color: var(--blue); line-height: 1.2; }
+  .tips h3 { font-size: calc(var(--u) * 1.65); line-height: 1.3; }
+  .tips p { font-size: calc(var(--u) * 1.45); line-height: 1.5; color: var(--muted); margin-top: calc(var(--u) * .6); }
 
   /* ---------- 07 Q&A ---------- */
-  .qa { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--u) * 3.4) calc(var(--u) * 3); margin: 0; }
-  .qa div { border-top: 1px solid var(--line); padding-top: calc(var(--u) * 1.4); }
-  .qa dt { font-weight: 700; font-size: calc(var(--u) * 1.85); margin-bottom: calc(var(--u) * .5); }
-  .qa dd { margin: 0; font-size: calc(var(--u) * 1.6); line-height: 1.5; color: var(--muted); }
+  .qa { margin: calc(var(--u) * -.2) 0 0; }
+  .qa div { display: grid; grid-template-columns: calc(var(--u) * 33.4) 1fr; align-items: baseline; border-top: 1px solid var(--line); padding: calc(var(--u) * 1.5) 0 calc(var(--u) * 1.4); }
+  .qa dt { font-size: calc(var(--u) * 1.75); font-weight: 700; line-height: 1.3; padding-right: 1em; }
+  .qa dd { margin: 0; font-size: calc(var(--u) * 1.45); line-height: 1.55; color: var(--muted); }
 
-  /* ---------- 08 Next steps + signup form ---------- */
-  .next .slide-body { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 6); align-items: start; padding-top: calc(var(--u) * 4); }
-  .next-col h3 { margin: 0 0 calc(var(--u) * .7); font-size: calc(var(--u) * 2.8); letter-spacing: -0.02em; }
-  .next-col > p { font-size: calc(var(--u) * 1.6); color: var(--on-navy-muted); margin-bottom: calc(var(--u) * 1.8); line-height: 1.5; }
-  .signup .field { display: flex; gap: calc(var(--u) * .8); flex-wrap: wrap; }
-  .signup label { display: block; font-size: calc(var(--u) * 1.15); font-weight: 600; margin-bottom: calc(var(--u) * .6); }
+  /* ---------- 08 Next steps ---------- */
+  .next .slide-body { display: grid; grid-template-columns: calc(var(--u) * 43.8) 1fr; grid-template-rows: auto auto; gap: calc(var(--u) * 2.1) calc(var(--u) * 3); align-content: start; }
+  .ticket { display: grid; grid-template-columns: 1fr calc(var(--u) * 10.5); background: var(--navy-card); border: 1px solid var(--navy-line); border-radius: calc(var(--u) * 1); position: relative; }
+  .ticket-main { padding: calc(var(--u) * 2.4) calc(var(--u) * 2.4) calc(var(--u) * 2.6); }
+  .ticket h3, .signup-col h3 { font-size: calc(var(--u) * 2.4); line-height: 1.2; }
+  .ticket-main p, .signup-col > p { font-size: calc(var(--u) * 1.6); line-height: 1.5; color: var(--on-navy-muted); margin-top: calc(var(--u) * 1); }
+  .ticket-main .btn { margin-top: calc(var(--u) * 2.6); }
+  .stub { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-left: 2px dashed #4a5578; position: relative; }
+  .stub::before, .stub::after { content: ""; position: absolute; left: calc(var(--u) * -1 - 1px); width: calc(var(--u) * 2); height: calc(var(--u) * 2); border-radius: 50%; background: var(--navy); }
+  .stub::before { top: calc(var(--u) * -1 - 1px); box-shadow: inset 0 -1px 0 var(--navy-line); }
+  .stub::after { bottom: calc(var(--u) * -1 - 1px); box-shadow: inset 0 1px 0 var(--navy-line); }
+  .stub strong { font-size: calc(var(--u) * 4.4); line-height: 1; }
+  .stub .label { font-size: calc(var(--u) * 1); margin-top: calc(var(--u) * .9); }
+  .stub span:last-child { font-size: calc(var(--u) * 1.1); color: var(--on-navy-muted); }
+  .signup-col { padding-top: calc(var(--u) * 1.6); }
+  .signup { margin-top: calc(var(--u) * 2.2); }
+  .signup .field { display: flex; gap: calc(var(--u) * 1); flex-wrap: wrap; }
+  .signup label { display: block; font-size: calc(var(--u) * 1.25); font-weight: 700; margin-bottom: calc(var(--u) * .6); }
   .signup input {
-    flex: 1 1 14em; min-width: 0; font: 400 calc(var(--u) * 1.45) / 1 var(--font); padding: .85em 1em;
-    border-radius: 10px; border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.06); color: #fff;
+    flex: 1 1 14em; min-width: 0; font: 400 calc(var(--u) * 1.6) / 1 var(--font); padding: .95em 1em;
+    border-radius: calc(var(--u) * .5); border: 1px solid var(--navy-field); background: var(--navy-card); color: #fff;
   }
-  .signup input::placeholder { color: rgba(255,255,255,.5); }
+  .signup input::placeholder { color: var(--on-navy-faint); }
   .signup input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   .signup input[aria-invalid="true"] { border-color: #ff8f8f; }
-  .consent { margin-top: calc(var(--u) * .9); font-size: calc(var(--u) * 1.05); line-height: 1.45; color: var(--on-navy-muted); }
-  .form-status { margin-top: calc(var(--u) * .9); font-size: calc(var(--u) * 1.2); line-height: 1.4; min-height: 1.4em; }
+  .consent { margin-top: calc(var(--u) * 1.1); font-size: calc(var(--u) * 1.1); line-height: 1.45; color: var(--on-navy-faint); }
+  .form-status { margin-top: calc(var(--u) * .8); font-size: calc(var(--u) * 1.2); line-height: 1.4; min-height: 1.4em; }
   .form-status.ok { color: #9be7b4; }
   .form-status.err { color: #ffb4b4; }
   .signup.done .field, .signup.done .consent { display: none; }
-  .share-row.mobile-only { display: none; }
   .share-row { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-top: calc(var(--u) * 1.6); font-size: calc(var(--u) * 1.2); color: var(--on-navy-muted); }
-  .link-btn { background: none; border: 0; padding: 0; font: inherit; color: #fff; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .share-row .link-btn { color: #fff; }
+  .team { grid-column: 1 / -1; background: var(--navy-card); border: 1px solid var(--navy-line); border-radius: calc(var(--u) * 1); padding: calc(var(--u) * 2) calc(var(--u) * 2.1) calc(var(--u) * 2.2); }
+  .team ol { list-style: none; margin: calc(var(--u) * 1.4) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--u) * 2); }
+  .team li { display: flex; align-items: center; gap: calc(var(--u) * 1.2); font-size: calc(var(--u) * 1.6); line-height: 1.3; }
 
   /* ---------- Deck mode: real 16:9 slides, one per screen ---------- */
   @media (min-width: 1024px) and (min-height: 620px) {
@@ -333,10 +370,11 @@
       container-type: inline-size;
       width: min(100%, calc((100svh - var(--bar) - 40px) * 16 / 9));
       aspect-ratio: 16 / 9; overflow: hidden; border-radius: 6px;
-      padding: 4.2cqw 4.6cqw 2.6cqw;
+      padding: 4.4cqw 5.35cqw 2.3cqw;
       box-shadow: 0 40px 80px -40px rgba(0,0,0,.8);
     }
-    .slide.navy { box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 40px 80px -40px rgba(0,0,0,.8); }
+    .slide.navy { box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 40px 80px -40px rgba(0,0,0,.8); }
+    .title-slide { padding-top: 3.6cqw; }
   }
 
   /* ---------- Phone / small-screen mode: a normal scrolling page ---------- */
@@ -344,47 +382,73 @@
     body { padding-top: var(--bar); }
     html { scroll-padding-top: var(--bar); }
     .stage-wrap + .stage-wrap .slide { border-top: 1px solid var(--line); }
-    .slide { min-height: auto; padding-left: 24px; padding-right: 24px; }
-    .tracker { display: none; }
+    .slide { padding-left: 32px; padding-right: 32px; }
+    .tracker, .counter { display: none; }
     .topbar { grid-template-columns: auto 1fr auto; padding: 0 16px; }
-    .counter { display: none; }
-    .topbar .topbar-cta { display: inline-flex; justify-self: end; font-size: 14px; padding: .6em 1em; --u: 10px; box-shadow: none; }
+    .topbar .topbar-cta { display: inline-flex; justify-self: end; font-size: 14px; padding: .6em 1em; }
   }
   @media (max-width: 860px) {
-    .slide { --u: 10px; padding: 40px 20px 28px; }
-    .slide-head { flex-wrap: wrap; }
+    .slide { padding: 36px 20px 24px; }
     .head-logo { display: none; }
-    .slide-title { font-size: 30px; }
+    .title-slide .slide-head, .title-slide .rule { display: none; }
+    .slide-title { font-size: 31px; }
     .tagline { font-size: 17px; }
-    .title-slide .slide-body, .exec .slide-body, .next .slide-body { grid-template-columns: 1fr; gap: 36px; }
-    .title-slide .slide-body { padding-top: 0; }
-    .display { font-size: clamp(42px, 12vw, 60px); }
+    .slide-body { padding-top: 24px; }
+    .title-slide .slide-body, .exec .slide-body, .install .slide-body, .try .slide-body, .next .slide-body { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .display { font-size: clamp(38px, 11vw, 54px); }
     .lede { font-size: 17px; }
-    .steps, .steps.three, .install-notes, .prompts, .qa, .process, .try-grid { grid-template-columns: 1fr; }
-    .prompt { flex-direction: column; align-items: flex-start; }
-    .process { gap: 14px; grid-template-rows: none; }
-    .process li { display: block; }
-    .phase-bar, .process li:first-child .phase-bar { clip-path: none; border-radius: 8px; }
-    .scorecard thead { display: none; }
-    .scorecard tr { display: grid; grid-template-columns: 1fr; padding: 14px 0; border-bottom: 1px solid var(--line); }
-    .scorecard td { border: 0; padding: 2px 0; width: auto !important; }
-    .slide-foot { flex-direction: column; gap: 4px; }
-    .tabs { display: flex; }
-    .tab { flex: 1; }
     .desktop-only { display: none; }
     .mobile-only { display: block; }
     .share-row.mobile-only { display: flex; }
-    .title-slide .verify-card { order: 2; }
-    .title-slide div.mobile-only { margin-top: 32px; }
+    .title-slide div.mobile-only { margin-top: 28px; }
+    .mobile-only .signup { margin-top: 0; }
+    .mobile-only .signup label { font-size: 15px; font-weight: 600; line-height: 1.4; }
+
+    .points { margin: 0; padding: 0; gap: 24px; }
+    .points li.lead::before { display: none; }
+    .ec-tracker { justify-content: space-between; padding: 0; }
+    .exec-card .bars { min-height: 150px; }
+
+    .compare thead { display: none; }
+    .compare, .compare tbody, .compare tr, .compare th, .compare td { display: block; width: auto !important; }
+    .compare tr { margin-bottom: 18px; }
+    .compare th[scope="row"] { margin-bottom: 8px; }
+    .compare td { height: auto; padding: 12px 14px; }
+    .compare td.typ { border-right: 0; }
+    .compare td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 700; color: var(--ink-2); margin-bottom: 2px; }
+    .compare td.ours::before { color: var(--blue); }
+
+    .flow-grid { display: block; }
+    .row-label, .flow-rule { display: none; }
+    .phases { display: grid; grid-template-columns: 1fr; gap: 22px; }
+    .phases li { display: grid; grid-template-rows: none; gap: 10px; }
+    .phases li { grid-row: auto; }
+    .decide-card { min-height: 0; }
+    .exec-card { padding: 18px 16px 14px; }
+    .ec-body { grid-template-columns: minmax(0, 1fr) 118px; gap: 12px; }
+    .kpis b { font-size: 22px; }
+    .exec-card .bars, .exec-card .years { font-size: 11px; gap: 6%; padding: 0 2%; }
+    .m-label { display: block; font-size: 12px; color: var(--blue); margin-bottom: 2px; }
+
+    .stepper { gap: 26px; }
+    .stepper li:not(:last-child)::before { bottom: -26px; }
+    .chips { grid-template-columns: 1fr; }
+    .bubble-you, .bubble-claude { max-width: 90%; }
+    .qa div { grid-template-columns: 1fr; gap: 6px; }
+    .ticket { grid-template-columns: 1fr 88px; }
+    .team ol { grid-template-columns: 1fr; gap: 14px; }
+    .signup-col { padding-top: 0; }
+    .slide-foot { flex-direction: column; gap: 4px; }
+    .slide-foot .num { margin-left: 0; }
   }
   @media (max-width: 420px) {
     .signup .field .btn { width: 100%; }
-    .cta-row .btn { width: 100%; }
+    .ticket-main { padding: 20px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .exhibit.grow .bar { animation: none; }
+    .grow .bars i { animation: none; }
     .btn { transition: none; }
   }
 </style>
@@ -411,17 +475,16 @@
   <!-- 01 Title -->
   <section class="stage-wrap" id="title" aria-labelledby="t-title">
     <div class="slide navy title-slide">
+      <div class="slide-head"><span class="head-logo"><img src="logo-white.png" alt="" width="58" height="32"></span></div>
+      <hr class="rule">
       <div class="slide-body">
         <div>
-          <h1 class="display" id="t-title">Slides that win the room.</h1>
-          <p class="lede">eightytwenty is a free Claude skill, an add-on that teaches Claude a new workflow. Give it a case prompt and it builds judge-ready slides, then the full deck.</p>
+          <h1 class="display" id="t-title">Spend case week on the answer, not the slides.</h1>
+          <p class="lede">A free Claude skill for case competitions. It handles the formatting, alignment and last-minute fixes, so the night before goes to rehearsal.</p>
 
           <div class="desktop-only">
             <div class="cta-row">
-              <a class="btn btn-primary" href="eightytwenty.zip" download data-track="hero">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-                Download the skill
-              </a>
+              <a class="btn btn-primary" href="eightytwenty.zip" download data-track="hero">Download the skill</a>
               <a class="btn btn-ghost" href="#install">Install guide</a>
             </div>
           </div>
@@ -442,22 +505,45 @@
             </div>
           </div>
 
-          <p class="needs">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
-            Needs Claude Pro, Max, Team or Enterprise, or Claude Code. Not the free plan.
-          </p>
+          <p class="needs">Needs a paid Claude plan: Pro, Max, Team or Enterprise.</p>
         </div>
 
-        <aside class="verify-card" aria-labelledby="vc-h">
-          <h2 id="vc-h">How it handles numbers it can't confirm</h2>
-          <div class="vc-row"><span>Online share of category sales</span><b>41%</b></div>
-          <div class="vc-row"><span>Category market size</span><b>~$4.2B<span class="flag">verify</span></b></div>
-          <div class="vc-row"><span>Payback on platform build</span><b>18 mo</b></div>
-          <p class="vc-note">Figures from your case prompt go straight in. Anything Claude only remembers is tagged <span class="flag">verify</span> until you source it. Example figures, fictional client.</p>
-        </aside>
+        <div class="flow" aria-label="What you bring and what you get">
+          <div class="bring">
+            <svg viewBox="0 0 32 40" aria-hidden="true"><path d="M2 2h20l8 8v28H2z" fill="#f9f8f5"/><path d="M22 2v8h8" fill="#c9cee3"/><path d="M8 18h16M8 24h16M8 30h11" stroke="#c9cee3" stroke-width="1.6"/></svg>
+            <div><span class="label">You Bring</span><b>Your case prompt</b></div>
+          </div>
+          <p class="arrow-step">A few sharp questions</p>
+          <div class="get-row"><span class="label">You Get</span><small>Sample slide · fictional client</small></div>
+          <div class="mini chart-anim" role="img" aria-label="Sample slide for a fictional client, Northwind: online sales rose from 12% to 41% of category sales between 2021 and 2025, with three recommendations.">
+            <div class="mini-head"><b>Market Opportunity</b><span>Northwind</span></div>
+            <p class="mini-tag">Online sales tripled their share of the category since 2021</p>
+            <div class="mini-body">
+              <div>
+                <div class="panel-h">Online share of category sales</div>
+                <div class="bars">
+                  <div><b>12%</b><i style="height:24%"></i></div>
+                  <div><b>17%</b><i style="height:34%"></i></div>
+                  <div><b>23%</b><i style="height:46%"></i></div>
+                  <div><b>30%</b><i style="height:60%"></i></div>
+                  <div class="hl"><b>41%</b><i style="height:82%"></i></div>
+                </div>
+                <div class="years"><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span></div>
+              </div>
+              <div>
+                <div class="panel-h">Recommendation</div>
+                <ul class="recs">
+                  <li><b>Move spend online</b><span>from store promotions</span></li>
+                  <li><b>Rebuild checkout</b><span>app and web first</span></li>
+                  <li><b>Pilot, then scale</b><span>one region before national</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="slide-foot">
-        <span class="prepared">Prepared for: <b>your judging panel</b></span>
+        <span>Works in Claude.ai, the desktop app and Claude Code</span>
         <span class="num">01</span>
       </div>
     </div>
@@ -469,53 +555,49 @@
       <div class="slide-head">
         <div>
           <h2 class="slide-title" id="t-summary">Executive Summary</h2>
-          <p class="tagline">eightytwenty turns a case prompt into a judge-ready deck without inventing a single number</p>
+          <p class="tagline">A judge can read the answer off each slide in five seconds</p>
         </div>
-        <picture class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></picture>
+        <span class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></span>
       </div>
       <hr class="rule">
       <div class="slide-body">
+        <div class="exec-card chart-anim" role="img" aria-label="Sample executive summary slide for a fictional client, Northwind: online share of category sales grew from 12 to 41 percent, with the 2025 bar highlighted, beside three headline numbers.">
+          <div class="ec-head">
+            <div><b>Executive Summary</b><span>Northwind must shift spend to digital to recover 4 pts of margin by 2028</span></div>
+            <i class="ec-dot"></i>
+          </div>
+          <div class="ec-body">
+            <div class="ec-col">
+              <div class="panel-h">Online share of category sales, %</div>
+              <div class="bars">
+                <div><b>12</b><i style="height:26%"></i></div>
+                <div><b>17</b><i style="height:37%"></i></div>
+                <div><b>23</b><i style="height:50%"></i></div>
+                <div><b>30</b><i style="height:66%"></i></div>
+                <div class="hl"><b>41</b><i style="height:90%"></i></div>
+              </div>
+              <div class="years"><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span></div>
+            </div>
+            <div class="ec-col">
+              <div class="panel-h">Recommendation</div>
+              <ul class="kpis">
+                <li><b>+$180M</b><span>new revenue by Year 3</span></li>
+                <li><b>4.2 pts</b><span>EBITDA margin recovered</span></li>
+                <li><b>18 mo</b><span>payback on platform build</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="ec-tracker"><span>Problem</span><span class="on">Summary</span><span>Strategy</span><span>Financials</span><span>Risks</span></div>
+        </div>
         <ol class="points">
-          <li><span class="n">1</span><div><h3>Asks, then builds</h3><p>One or two sharp questions at a time, never a wall of them. Then it researches and fills the gaps before it designs anything.</p></div></li>
-          <li><span class="n">2</span><div><h3>Never invents numbers</h3><p>The case prompt is the source of truth. Anything it can't confirm is flagged until you source it.</p></div></li>
-          <li><span class="n">3</span><div><h3>Distinctive by default</h3><p>On-brand fonts and colors from the first draft, layouts built to be remembered after the 15th team presents, and a polish pass on every slide.</p></div></li>
+          <li><span class="disc">1</span><span class="dash"></span><div><h3>Asks, then builds</h3><p>The tagline is the claim you picked when it asked, not a topic label.</p></div></li>
+          <li><span class="disc">2</span><span class="dash"></span><div><h3>Never invents numbers</h3><p>Figures come from your case prompt. Anything else is tagged <span class="flag">verify</span>.</p></div></li>
+          <li class="lead"><span class="disc">3</span><span class="dash"></span><div><h3>One highlight per chart</h3><p>Every bar is grey except the one that proves the claim, so judges find it in two seconds.</p></div></li>
+          <li><span class="disc">4</span><span class="dash"></span><div><h3>Polished from the first draft</h3><p>Tracker, shared margins and one type style.</p></div></li>
         </ol>
-        <figure class="exhibit" id="exhibit">
-          <div class="mock-wrap"><div class="mock" aria-hidden="true">
-            <div class="mock-head">
-              <div>
-                <div class="mock-title">Executive Summary</div>
-                <div class="mock-tag">Northwind must shift spend to digital to recover 4 pts of margin by 2028</div>
-              </div>
-              <div class="mock-logo"></div>
-            </div>
-            <div class="mock-body">
-              <div>
-                <div class="panel-h">Online share of category sales, %</div>
-                <div class="chart">
-                  <div class="bar" style="height:28%"><span>12</span></div>
-                  <div class="bar" style="height:38%"><span>17</span></div>
-                  <div class="bar" style="height:50%"><span>23</span></div>
-                  <div class="bar" style="height:64%"><span>30</span></div>
-                  <div class="bar hl" style="height:86%"><span>41</span></div>
-                </div>
-              </div>
-              <div>
-                <div class="panel-h">Recommendation</div>
-                <div class="kpis">
-                  <div class="kpi"><b><i>+</i>$180M</b><small>incremental revenue by Year 3</small></div>
-                  <div class="kpi"><b>4.2 pts</b><small>EBITDA margin recovered</small></div>
-                  <div class="kpi"><b>18 mo</b><small>payback on platform build</small></div>
-                </div>
-              </div>
-            </div>
-            <div class="mock-tracker"><span>Problem</span><span class="on">Summary</span><span>Strategy</span><span>Financials</span><span>Risks</span></div>
-          </div></div>
-          <figcaption><b>Exhibit 1.</b> A sample slide in the style eightytwenty builds. Northwind is a fictional client.</figcaption>
-        </figure>
       </div>
       <div class="slide-foot">
-        <span>Exhibit 1 is an illustration of the format, not output from a real case.</span>
+        <span>Sample slide. Northwind is a fictional client.</span>
         <span class="num">02</span>
       </div>
     </div>
@@ -526,25 +608,25 @@
     <div class="slide">
       <div class="slide-head">
         <div>
-          <h2 class="slide-title" id="t-why">Why it's different</h2>
-          <p class="tagline">Built the way judges actually score decks, not the way slide generators fill them</p>
+          <h2 class="slide-title" id="t-why">Why It's Different</h2>
+          <p class="tagline">Four mistakes cost teams points, and eightytwenty checks for each one before you see the deck</p>
         </div>
-        <picture class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></picture>
+        <span class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></span>
       </div>
       <hr class="rule">
       <div class="slide-body">
-        <table class="scorecard">
-          <thead><tr><th scope="col">Judges score</th><th scope="col">What they look for</th><th scope="col">What eightytwenty does</th></tr></thead>
+        <table class="compare">
+          <thead><tr><th scope="col">Judges Score</th><th scope="col">Typical AI Deck</th><th scope="col">With eightytwenty</th></tr></thead>
           <tbody>
-            <tr><td>Clarity</td><td>One message per slide that a tired panel gets in seconds</td><td>Every slide carries one recommendation, stated as a claim in the tagline</td></tr>
-            <tr><td>Evidence</td><td>Numbers that hold up under questioning</td><td>Takes figures from the case prompt and flags the rest with <span class="flag">verify</span> until you source them</td></tr>
-            <tr><td>Polish</td><td>A deck that looks made by one careful hand</td><td>Shared margins, one capitalization style, consistent titles and a final QA pass across every slide</td></tr>
-            <tr><td>Memorability</td><td>Something they still recall after 15 other teams</td><td>Distinctive layouts by default, modeled on real Ivey/Western case comp decks</td></tr>
+            <tr><th scope="row">Analysis</th><td class="typ" data-label="Typical AI deck">Symptoms listed as if they were causes</td><td class="ours" data-label="With eightytwenty">Ranked root causes, the mechanism behind each, and what the evidence ruled out</td></tr>
+            <tr><th scope="row">Insight</th><td class="typ" data-label="Typical AI deck">The same so-what box on every slide</td><td class="ours" data-label="With eightytwenty">The proof shown a new way on each slide: a chart note, a hero number or a callout</td></tr>
+            <tr><th scope="row">Storyline</th><td class="typ" data-label="Typical AI deck">The same point made twice, on one slide or across three</td><td class="ours" data-label="With eightytwenty">Every slide checked against itself and the rest, so nothing is said twice</td></tr>
+            <tr><th scope="row">Conclusion</th><td class="typ" data-label="Typical AI deck">A deck that stops at the risk slide</td><td class="ours" data-label="With eightytwenty">Always a closing slide with the answer, the headline numbers and the ask</td></tr>
           </tbody>
         </table>
       </div>
       <div class="slide-foot">
-        <span>Modeled on Ivey/Western case comp decks and a large library of consulting slide templates.</span>
+        <span>Modeled on Ivey/Western case comp decks.</span>
         <span class="num">03</span>
       </div>
     </div>
@@ -555,23 +637,44 @@
     <div class="slide">
       <div class="slide-head">
         <div>
-          <h2 class="slide-title" id="t-how">How it works</h2>
-          <p class="tagline">From case prompt to full deck in four moves, with you making every call</p>
+          <h2 class="slide-title" id="t-how">How It Works</h2>
+          <p class="tagline">The full deck follows once your first slide is right</p>
         </div>
-        <picture class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></picture>
+        <span class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></span>
       </div>
       <hr class="rule">
       <div class="slide-body">
-        <ol class="process">
-          <li><div class="phase-bar"><small>1</small>Brief</div><p><b>Upload the case prompt</b> or describe the slide you need. It sets fonts and colors from the client's brand.</p><p class="call"><b>Your call</b>Confirm the client, the ask and the brand.</p></li>
-          <li><div class="phase-bar"><small>2</small>Questions</div><p><b>One or two at a time,</b> then research to fill the gaps. You never get a questionnaire.</p><p class="call"><b>Your call</b>Answer, add data, or tell it to skip.</p></li>
-          <li><div class="phase-bar"><small>3</small>Build</div><p><b>A judge-ready slide,</b> then a choice of fonts and 6 color palettes, shown on a mock before anything changes.</p><p class="call"><b>Your call</b>Approve the slide and pick the look.</p></li>
-          <li><div class="phase-bar"><small>4</small>Polish</div><p><b>The rest of the deck</b> through a conclusion slide, then a polish pass on every slide.</p><p class="call"><b>Your call</b>Keep or delete the working slides.</p></li>
-        </ol>
-        <p class="process-note">The output is real, editable PowerPoint slides you can keep working on in PowerPoint or Google Slides.</p>
+        <div class="flow-grid">
+          <span class="row-label does" aria-hidden="true">eightytwenty<br>Does</span>
+          <span class="row-label decide" aria-hidden="true">You Decide</span>
+          <span class="flow-rule" aria-hidden="true"></span>
+          <ol class="phases">
+            <li>
+              <h3 class="phase-h"><span class="disc">1</span>Brief</h3>
+              <p class="does-card"><b>Upload the case prompt</b> or describe the slide. It takes fonts and colors from the client's brand.</p>
+              <p class="decide-card"><span class="m-label">You decide</span>Confirm the client, the ask and the brand</p>
+            </li>
+            <li>
+              <h3 class="phase-h"><span class="disc">2</span>Questions</h3>
+              <p class="does-card"><b>One or two at a time,</b> then research to fill the gaps. Never a questionnaire.</p>
+              <p class="decide-card"><span class="m-label">You decide</span>Answer, add data or tell it to skip</p>
+            </li>
+            <li>
+              <h3 class="phase-h"><span class="disc">3</span>Build</h3>
+              <p class="does-card"><b>A judge-ready slide,</b> then six palettes on a mock before the deck changes.</p>
+              <p class="decide-card"><span class="m-label">You decide</span>Approve the slide and pick the look</p>
+            </li>
+            <li>
+              <h3 class="phase-h"><span class="disc dark">4</span>Polish</h3>
+              <p class="does-card"><b>The rest of the deck</b> and a final polish pass, then an offer to push the blandest slides further.</p>
+              <p class="decide-card"><span class="m-label">You decide</span>Keep or delete working slides, and pick which slides to push</p>
+            </li>
+          </ol>
+        </div>
+        <p class="flow-note">The output is real, editable slides you can keep working on in PowerPoint or Google Slides.</p>
       </div>
       <div class="slide-foot">
-        <span>Working slides are moved to the back of the deck. Only you decide whether to delete them.</span>
+        <span>Working slides move to the back of the deck. Only you decide whether to delete them.</span>
         <span class="num">04</span>
       </div>
     </div>
@@ -579,55 +682,40 @@
 
   <!-- 05 Install -->
   <section class="stage-wrap" id="install" aria-labelledby="t-install">
-    <div class="slide">
+    <div class="slide install">
       <div class="slide-head">
         <div>
           <h2 class="slide-title" id="t-install">Install</h2>
-          <p class="tagline">Up and running in two minutes. Choose where you use Claude.</p>
+          <p class="tagline">Four steps in Claude's settings, with no code to touch</p>
         </div>
-        <picture class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></picture>
+        <span class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></span>
       </div>
       <hr class="rule">
       <div class="slide-body">
-        <div class="tabs" role="tablist" aria-label="Where you use Claude">
-          <button class="tab" role="tab" id="tab-web" aria-selected="true" aria-controls="panel-web" tabindex="0">Claude.ai or desktop app</button>
-          <button class="tab" role="tab" id="tab-code" aria-selected="false" aria-controls="panel-code" tabindex="-1">Claude Code</button>
-        </div>
-
-        <div class="tabpanel" role="tabpanel" id="panel-web" aria-labelledby="tab-web" tabindex="0">
-          <ol class="steps">
-            <li><strong>Download the zip</strong><p><b>Don't unzip it.</b> Claude wants the .zip file itself.</p>
-              <a class="btn btn-primary btn-sm" href="eightytwenty.zip" download data-track="install">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-                eightytwenty.zip
-              </a></li>
-            <li><strong>Open Settings</strong><p>Click your name, then <b>Settings → Capabilities</b>, and turn on <b>Code execution and file creation</b>.</p></li>
-            <li><strong>Upload the skill</strong><p>Under <b>Skills</b>, click <b>Upload skill</b> and choose <code>eightytwenty.zip</code>.</p></li>
-            <li><strong>Switch it on</strong><p>Make sure its toggle is on, then start a new chat.</p></li>
-          </ol>
-        </div>
-
-        <div class="tabpanel" role="tabpanel" id="panel-code" aria-labelledby="tab-code" tabindex="0" hidden>
-          <ol class="steps three">
-            <li><strong>Download the zip</strong><p>Save it anywhere, for example your Downloads folder.</p>
-              <a class="btn btn-primary btn-sm" href="eightytwenty.zip" download data-track="install-code">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-                eightytwenty.zip
-              </a></li>
-            <li><strong>Unzip into your skills folder</strong><p>Run this in Terminal from that folder:</p>
-              <div class="cmd"><pre id="cmd-text">mkdir -p ~/.claude/skills && unzip eightytwenty.zip -d ~/.claude/skills/</pre><button class="copy" type="button" data-copy="#cmd-text" aria-label="Copy the install command">Copy</button></div></li>
-            <li><strong>Restart Claude Code</strong><p>It shows up as <code>/eightytwenty</code>.</p></li>
-          </ol>
-        </div>
-
-        <div class="install-notes">
-          <div><b>What's in the zip</b>One SKILL.md file of written instructions for Claude. No code, and nothing runs on your computer.</div>
-          <div><b>Don't have Pro?</b>Skills need a paid Claude plan with code execution. The free plan can't run them yet.</div>
-          <div><b>Safari unzipped it?</b>Right-click the <code>eightytwenty</code> folder, choose Compress, and upload that zip.</div>
+        <ol class="stepper">
+          <li><span class="disc">1</span><h3>Download the zip <a class="btn btn-primary btn-sm" href="eightytwenty.zip" download data-track="install">eightytwenty.zip</a></h3><p><b>Don't unzip it.</b> Claude wants the .zip file itself.</p></li>
+          <li><span class="disc">2</span><h3>Turn on code execution</h3><p>In <b>Settings</b>, open <b>Capabilities</b> and turn on <b>Code execution and file creation</b>.</p></li>
+          <li><span class="disc">3</span><h3>Upload the skill</h3><p>In <b>Customize</b>, open <b>Skills</b>, click <b>Upload skill</b> to add it.</p></li>
+          <li><span class="disc dark">4</span><h3>Switch it on</h3><p>Check its toggle is on, then start a new chat.</p></li>
+        </ol>
+        <div>
+          <span class="label">What Done Looks Like</span>
+          <div class="window" aria-hidden="true">
+            <div class="win-bar">Customize&nbsp;&nbsp;/&nbsp;&nbsp;Skills</div>
+            <div class="win-body">
+              <div class="skills-top">Your skills <span class="fake-btn">Upload skill</span></div>
+              <div class="skill-row"><span class="skill-icon">80</span><div><b>eightytwenty</b><span>Case competition slides and decks</span></div><span class="toggle"></span></div>
+            </div>
+          </div>
+          <div class="notes">
+            <div><b>Using Claude Code?</b><p>Unzip into <code>~/.claude/skills/</code> for every project.<button class="link-btn" type="button" data-copy-text="mkdir -p ~/.claude/skills && unzip eightytwenty.zip -d ~/.claude/skills/" aria-label="Copy the Claude Code install command">Copy command</button></p></div>
+            <div><b>On a Team or Enterprise plan?</b><p>An owner may need to turn on skills first.</p></div>
+            <div><b>Safari unzipped it?</b><p>Right-click the folder, choose Compress, upload that.</p></div>
+          </div>
         </div>
       </div>
       <div class="slide-foot">
-        <span>On a Team or Enterprise plan, an admin may need to enable skills for your organization first.</span>
+        <span>Menu names can move between Claude releases. If one differs, look for Skills under Settings.</span>
         <span class="num">05</span>
       </div>
     </div>
@@ -635,32 +723,43 @@
 
   <!-- 06 Try it -->
   <section class="stage-wrap" id="try" aria-labelledby="t-try">
-    <div class="slide">
+    <div class="slide try">
       <div class="slide-head">
         <div>
-          <h2 class="slide-title" id="t-try">Try it</h2>
-          <p class="tagline">Just ask. Claude picks up the skill on its own.</p>
+          <h2 class="slide-title" id="t-try">Try It</h2>
+          <p class="tagline">Just ask: Claude picks up the skill on its own</p>
         </div>
-        <picture class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></picture>
+        <span class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></span>
       </div>
       <hr class="rule">
       <div class="slide-body">
-        <div class="try-grid">
-        <div class="prompts">
-          <div class="prompt"><p id="p1">Here's our case prompt. Build me the executive summary slide.</p><button class="btn btn-quiet btn-sm copy-prompt" type="button" data-copy="#p1">Copy prompt</button></div>
-          <div class="prompt"><p id="p2">I need a situational analysis slide for a retail case on e-commerce growth.</p><button class="btn btn-quiet btn-sm copy-prompt" type="button" data-copy="#p2">Copy prompt</button></div>
-          <div class="prompt"><p id="p3">Use eightytwenty to turn this recommendation into a full deck.</p><button class="btn btn-quiet btn-sm copy-prompt" type="button" data-copy="#p3">Copy prompt</button></div>
-        </div>
-        <figure class="exchange">
-          <div class="msg you"><span>You</span>Here's our case prompt. Build me the executive summary slide.</div>
-          <div class="msg claude"><span>Claude, using eightytwenty</span>Before I build: what's the one recommendation this slide has to prove? If you don't have it yet, I'll draft two options from the prompt.<em>Question 1 of 2</em></div>
-          <figcaption>Example exchange, written to show the format. Real replies depend on your case.</figcaption>
+        <figure class="window" style="margin:0" aria-label="Example chat">
+          <div class="win-bar" aria-hidden="true">New chat</div>
+          <div class="chat">
+            <span class="attach">case-prompt.pdf</span>
+            <p class="bubble-you"><span class="visually-hidden">You: </span>Here's our case prompt. Build me the executive summary slide.</p>
+            <p class="bubble-claude"><span class="label">Claude, using eightytwenty</span>Before I build: what's the one recommendation this slide has to prove? If you don't have it yet, I'll draft two options.<small>Question 1 of 2</small></p>
+            <div class="starts">
+              <span class="label">More Ways to Start</span>
+              <div class="chips">
+                <button class="chip" type="button" data-copy-text="I need a situational analysis slide for a retail case on e-commerce growth." aria-label="Copy prompt: situational analysis for a retail case">Situational analysis for a retail case</button>
+                <button class="chip" type="button" data-copy-text="Use eightytwenty to turn this recommendation into a full deck." aria-label="Copy prompt: turn this recommendation into a deck">Turn this recommendation into a deck</button>
+              </div>
+            </div>
+            <div class="reply" aria-hidden="true">Reply to Claude <i></i></div>
+          </div>
         </figure>
+        <div>
+          <span class="label">For Better Slides</span>
+          <ol class="tips">
+            <li><span class="n">01</span><div><h3>Start with one slide</h3><p>Get one slide right first. The rest of the deck follows its style.</p></div></li>
+            <li><span class="n">02</span><div><h3>Answer as you go</h3><p>Each answer sharpens the slide. Say skip and it moves on.</p></div></li>
+            <li><span class="n">03</span><div><h3>Ask for it by name</h3><p>If it doesn't start, type "use eightytwenty."</p></div></li>
+          </ol>
         </div>
-        <p class="prompts-note">Attach your case prompt as a PDF or doc for the best results. Answer its questions as you go: the slides get noticeably better with your answers.</p>
       </div>
       <div class="slide-foot">
-        <span>Not triggering? Ask for it by name: "use eightytwenty".</span>
+        <span>Example exchange. Tap a starter to copy it. Real replies depend on your case.</span>
         <span class="num">06</span>
       </div>
     </div>
@@ -671,24 +770,24 @@
     <div class="slide">
       <div class="slide-head">
         <div>
-          <h2 class="slide-title" id="t-qa">Appendix: Q&amp;A</h2>
-          <p class="tagline">The questions judges would ask, answered before they come up</p>
+          <h2 class="slide-title" id="t-qa">Q&amp;A</h2>
+          <p class="tagline">Straight answers to what people ask before they install</p>
         </div>
-        <picture class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></picture>
+        <span class="head-logo"><img src="logo-black.png" alt="" width="58" height="32"></span>
       </div>
       <hr class="rule">
       <div class="slide-body">
         <dl class="qa">
-          <div><dt>Is it free?</dt><dd>The skill is. Running it needs a Claude plan that supports skills: Pro, Max, Team or Enterprise, or Claude Code.</dd></div>
-          <div><dt>The upload says the file is invalid.</dt><dd>Upload the .zip as-is. If your browser unzipped it, compress the <code>eightytwenty</code> folder again and upload that.</dd></div>
-          <div><dt>Claude isn't using the skill.</dt><dd>Check its toggle under Settings → Capabilities → Skills, start a new chat, or ask for "eightytwenty" by name.</dd></div>
-          <div><dt>Does it make PowerPoint files?</dt><dd>Yes. Real, editable slides you can download and keep working on in PowerPoint or Google Slides.</dd></div>
-          <div><dt>Can I use it on my phone?</dt><dd>Installing needs Claude.ai on a computer. Once it's on, you can use it anywhere your Claude account works.</dd></div>
-          <div><dt>Will it make up data?</dt><dd>No. It works from your case prompt and flags anything it can't confirm so you can source it before judges ask.</dd></div>
+          <div><dt>Is it free?</dt><dd>The skill is. Running it needs a paid Claude plan: Pro, Max, Team or Enterprise, with code execution on.</dd></div>
+          <div><dt>Can it use our team's template?</dt><dd>Yes. It reads the fonts and colors your deck already uses, and asks before changing the font or layout.</dd></div>
+          <div><dt>What if there's no client logo?</dt><dd>It uses the company's published brand colors, or picks a color that fits the prompt and tells you so.</dd></div>
+          <div><dt>Can it fix a deck we started?</dt><dd>Yes. It reads each slide before it edits anything, and keeps your wording unless you ask it to change.</dd></div>
+          <div><dt>Will judges spot it as AI?</dt><dd>It strips the usual tells, like arrow symbols, all-caps labels and stray fonts, before you see the deck.</dd></div>
+          <div><dt>Can I use it on my phone?</dt><dd>Install it on a computer. Once it's on, you can use it anywhere your Claude account works.</dd></div>
         </dl>
       </div>
       <div class="slide-foot">
-        <span>Skill settings can move between Claude releases. If a menu name differs, look for Skills under Settings.</span>
+        <span>Still stuck? Ask for it by name in a new chat: "use eightytwenty".</span>
         <span class="num">07</span>
       </div>
     </div>
@@ -699,25 +798,25 @@
     <div class="slide navy next">
       <div class="slide-head">
         <div>
-          <h2 class="slide-title" id="t-next">Next steps</h2>
-          <p class="tagline" style="color:var(--on-navy-muted)">Install it tonight. Get the next skill the day it ships.</p>
+          <h2 class="slide-title" id="t-next">Next Steps</h2>
+          <p class="tagline">One download covers this case, and the list covers every case after it</p>
         </div>
         <span class="head-logo"><img src="logo-white.png" alt="" width="58" height="32"></span>
       </div>
-      <hr class="rule" style="border-top-color:rgba(255,255,255,.12)">
+      <hr class="rule">
       <div class="slide-body">
-        <div class="next-col">
-          <h3>Install eightytwenty</h3>
-          <p>Two minutes on a laptop with Claude Pro or higher. Then attach your case prompt and ask for a slide.</p>
-          <a class="btn btn-primary" href="eightytwenty.zip" download data-track="footer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-            Download the skill
-          </a>
-          <div class="share-row mobile-only">
-            <button class="link-btn" type="button" data-share>Send this page to my laptop</button>
+        <div class="ticket">
+          <div class="ticket-main">
+            <h3>Install eightytwenty</h3>
+            <p>One small zip file, added once to your Claude account.</p>
+            <a class="btn btn-primary" href="eightytwenty.zip" download data-track="footer">Download the skill</a>
+            <div class="share-row mobile-only">
+              <button class="link-btn" type="button" data-share>Send this page to my laptop</button>
+            </div>
           </div>
+          <div class="stub"><strong>2</strong><span class="label">minutes</span><span>to install</span></div>
         </div>
-        <div class="next-col">
+        <div class="signup-col">
           <h3>Get the next skill</h3>
           <p>One email with the install link now, then a short note whenever a new eightytwenty skill ships.</p>
           <form class="signup" data-kit-url="https://app.kit.com/forms/10145789/subscriptions" data-kit-form data-source="next-steps" novalidate>
@@ -726,9 +825,17 @@
               <input type="email" id="email-next" name="email_address" autocomplete="email" inputmode="email" placeholder="you@school.ca" required aria-describedby="consent-next status-next">
               <button class="btn btn-primary" type="submit" disabled>Join the list</button>
             </div>
-            <p class="consent" id="consent-next">eightytwenty will email you the install link and the occasional new skill. Unsubscribe anytime.</p>
+            <p class="consent" id="consent-next">No spam. Unsubscribe anytime.</p>
             <p class="form-status" id="status-next" role="status"></p>
           </form>
+        </div>
+        <div class="team">
+          <span class="label">Installing for Your Whole Team</span>
+          <ol>
+            <li><span class="disc">1</span>Send teammates the zip</li>
+            <li><span class="disc">2</span>Each adds it to their account</li>
+            <li><span class="disc">3</span>Team plan owners can share it</li>
+          </ol>
         </div>
       </div>
       <div class="slide-foot">
@@ -768,12 +875,12 @@
   addEventListener("resize", sync);
   sync();
 
-  // Deck keys: arrows / Page keys / Home / End move one slide, outside form fields and the tab list
+  // Deck keys: arrows / Page keys / Home / End move one slide, outside form fields
   const deckMode = window.matchMedia("(min-width: 1024px) and (min-height: 620px)");
   const go = (i) => { slides[Math.max(0, Math.min(slides.length - 1, i))].scrollIntoView({ block: "start" }); setTimeout(sync, 700); };
   document.addEventListener("keydown", e => {
     if (!deckMode.matches || e.altKey || e.ctrlKey || e.metaKey) return;
-    if (e.target.closest && e.target.closest("input, textarea, select, [role=tablist]")) return;
+    if (e.target.closest && e.target.closest("input, textarea, select")) return;
     const i = current();
     if (["ArrowDown", "ArrowRight", "PageDown"].includes(e.key)) { e.preventDefault(); go(i + 1); }
     else if (["ArrowUp", "ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); go(i - 1); }
@@ -781,40 +888,18 @@
     else if (e.key === "End") { e.preventDefault(); go(slides.length - 1); }
   });
 
-  // Exhibit bars grow once, when the summary slide comes into view
-  const exhibit = document.getElementById("exhibit");
-  new IntersectionObserver((entries, obs) => {
-    if (entries[0].isIntersecting) { exhibit.classList.add("grow"); obs.disconnect(); }
-  }, { threshold: 0.4 }).observe(exhibit);
+  // Sample-slide bars grow once, when each comes into view
+  const grower = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("grow"); grower.unobserve(en.target); } });
+  }, { threshold: 0.4 });
+  document.querySelectorAll(".chart-anim").forEach(el => grower.observe(el));
 
-  // Install tabs (ARIA tabs pattern with arrow keys)
-  const tabs = [...document.querySelectorAll('[role="tab"]')];
-  const selectTab = (tab, focus) => {
-    tabs.forEach(t => {
-      const on = t === tab;
-      t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1;
-      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
-    });
-    if (focus) tab.focus();
-    track("install_tab_viewed", { tab: tab.id.replace("tab-", "") });
-  };
-  tabs.forEach((t, i) => {
-    t.addEventListener("click", () => selectTab(t));
-    t.addEventListener("keydown", e => {
-      const k = e.key;
-      if (k === "ArrowRight" || k === "ArrowLeft") { e.preventDefault(); selectTab(tabs[(i + (k === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length], true); }
-      if (k === "Home") { e.preventDefault(); selectTab(tabs[0], true); }
-      if (k === "End") { e.preventDefault(); selectTab(tabs[tabs.length - 1], true); }
-    });
-  });
-
-  // Copy buttons
-  document.querySelectorAll("[data-copy]").forEach(b => {
+  // Copy buttons: install command and prompt starters
+  document.querySelectorAll("[data-copy-text]").forEach(b => {
     b.addEventListener("click", async () => {
-      const text = document.querySelector(b.dataset.copy).textContent.trim();
       const label = b.textContent;
-      try { await navigator.clipboard.writeText(text); b.textContent = "Copied"; track("text_copied", { what: b.dataset.copy }); }
-      catch { b.textContent = "Press Ctrl+C to copy"; }
+      try { await navigator.clipboard.writeText(b.dataset.copyText); b.textContent = "Copied"; track("text_copied", { what: label }); }
+      catch { b.textContent = "Copy failed"; }
       setTimeout(() => { b.textContent = label; }, 1800);
     });
   });
@@ -845,7 +930,6 @@
         input.setAttribute("aria-invalid", "true"); input.focus();
         return say("That email doesn't look right. Check it and try again.", "err");
       }
-      if (window.KIT_FORM_ID.startsWith("REPLACE")) return say("Signups open soon. For now, download the skill on a laptop.", "err");
       button.disabled = true; button.textContent = "Sending…"; say("");
       try {
         const res = await fetch(form.dataset.kitUrl, {

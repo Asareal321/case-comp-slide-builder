@@ -60,7 +60,6 @@ In PostHog, go to **Dashboards → New dashboard** and add these insights:
 The site sends these events:
 - `$pageview`, automatically on every visit
 - `skill_downloaded`, on every click of a Download button (`location` says which one)
-- `install_tab_viewed`, when someone switches between the Claude.ai and Claude Code install tabs
 - `signup_submitted` / `signup_failed`, when someone joins the email list (`source` says which form)
 - `link_shared` / `link_copied`, when a phone visitor sends the page to their laptop
 - `text_copied`, when someone copies the install command or an example prompt
