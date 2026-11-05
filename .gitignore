@@ -1,1 +1,10 @@
 .DS_Store
+
+# Impeccable working files (screenshots, critique archive, live-mode sessions, caches)
+.impeccable/review/
+.impeccable/critique/
+.impeccable/questions/
+.impeccable/live/sessions/
+.impeccable/live/annotations/
+.impeccable/live/roots.json
+.impeccable/hook.cache.json

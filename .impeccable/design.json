@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-05T03:45:46+00:00",
+  "title": "Design System: eightytwenty",
+  "extensions": {
+    "colorMeta": {
+      "midnight-navy": {
+        "role": "neutral",
+        "displayName": "Midnight Navy",
+        "canonical": "oklch(16.4% 0.039 267.4)",
+        "tonalRamp": [
+          "#080b12",
+          "#212632",
+          "#3e4556",
+          "#5d667c",
+          "#80899f",
+          "#a6aec0",
+          "#cbd1e0",
+          "#eaeefa"
+        ]
+      },
+      "midnight-navy-raised": {
+        "role": "neutral",
+        "displayName": "Midnight Navy Raised",
+        "canonical": "oklch(21.4% 0.057 268.0)",
+        "tonalRamp": [
+          "#070b15",
+          "#1f2637",
+          "#3b445d",
+          "#596585",
+          "#7c89a8",
+          "#a3aec8",
+          "#c8d1e6",
+          "#e8eeff"
+        ]
+      },
+      "signal-blue": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "oklch(56.1% 0.223 266.8)",
+        "tonalRamp": [
+          "#010231",
+          "#0a1a65",
+          "#1c369f",
+          "#3055dc",
+          "#537efe",
+          "#80a9ff",
+          "#adcfff",
+          "#d2eeff"
+        ]
+      },
+      "signal-blue-ink": {
+        "role": "primary",
+        "displayName": "Signal Blue Ink",
+        "canonical": "oklch(51.0% 0.205 266.2)",
+        "tonalRamp": [
+          "#01042e",
+          "#0b1d60",
+          "#1e3a98",
+          "#3258d3",
+          "#5680f5",
+          "#83aaff",
+          "#afcfff",
+          "#d4eeff"
+        ]
+      },
+      "signal-blue-bright": {
+        "role": "primary",
+        "displayName": "Signal Blue Bright",
+        "canonical": "oklch(74.7% 0.129 270.4)",
+        "tonalRamp": [
+          "#040821",
+          "#19224b",
+          "#31407a",
+          "#4c60ab",
+          "#6f85ce",
+          "#98abe9",
+          "#bfcfff",
+          "#e0eeff"
+        ]
+      },
+      "highlighter-gold": {
+        "role": "tertiary",
+        "displayName": "Highlighter Gold",
+        "canonical": "oklch(81.8% 0.153 72.8)",
+        "tonalRamp": [
+          "#1a0500",
+          "#401c00",
+          "#693700",
+          "#965400",
+          "#ba7a00",
+          "#d8a35c",
+          "#f3c994",
+          "#ffe9c0"
+        ]
+      },
+      "slide-paper": {
+        "role": "neutral",
+        "displayName": "Slide Paper",
+        "canonical": "oklch(98.5% 0.005 95.1)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#272625",
+          "#464543",
+          "#676663",
+          "#8a8986",
+          "#aeaeab",
+          "#d1d1cf",
+          "#efeeed"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#262626",
+          "#454545",
+          "#666666",
+          "#898989",
+          "#aeaeae",
+          "#d1d1d1",
+          "#eeeeee"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(17.7% 0.034 269.6)",
+        "tonalRamp": [
+          "#090b11",
+          "#222631",
+          "#3f4553",
+          "#5f6679",
+          "#82899c",
+          "#a8aebe",
+          "#ccd1de",
+          "#eaeef8"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "oklch(47.2% 0.029 270.0)",
+        "tonalRamp": [
+          "#090b10",
+          "#23262f",
+          "#404551",
+          "#606676",
+          "#838999",
+          "#a9aebb",
+          "#cdd1dc",
+          "#ebeef7"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(90.6% 0.011 95.2)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#272623",
+          "#464540",
+          "#686660",
+          "#8b8983",
+          "#afaea8",
+          "#d2d1cd",
+          "#efeeeb"
+        ]
+      },
+      "well": {
+        "role": "neutral",
+        "displayName": "Well",
+        "canonical": "oklch(94.3% 0.010 93.6)",
+        "tonalRamp": [
+          "#0c0b09",
+          "#272623",
+          "#464541",
+          "#686660",
+          "#8b8983",
+          "#afaea9",
+          "#d2d1cd",
+          "#efeeeb"
+        ]
+      },
+      "on-navy": {
+        "role": "neutral",
+        "displayName": "On Navy",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#262626",
+          "#454545",
+          "#666666",
+          "#898989",
+          "#aeaeae",
+          "#d1d1d1",
+          "#eeeeee"
+        ]
+      },
+      "on-navy-muted": {
+        "role": "neutral",
+        "displayName": "On Navy Muted",
+        "canonical": "rgba(255,255,255,0.72)",
+        "tonalRamp": [
+          "rgba(255,255,255,0.08)",
+          "rgba(255,255,255,0.12)",
+          "rgba(255,255,255,0.14)",
+          "rgba(255,255,255,0.28)",
+          "rgba(255,255,255,0.5)",
+          "rgba(255,255,255,0.62)",
+          "rgba(255,255,255,0.72)",
+          "rgba(255,255,255,1)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Title-slide headline only; clamp(42px, 12vw, 60px) on phones."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Slide titles, two to four words; 30px on phones."
+      },
+      "tagline": {
+        "displayName": "Tagline",
+        "purpose": "The light claim sentence under every slide title; renders at regular weight on non-Apple devices (TeX Gyre Heros has no light cut)."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Title-slide explanation and closing-slide paragraphs, on navy."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Point heads, step names, install-note heads."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Point copy, table cells, step copy, Q&A answers; 1.3u to 1.6u by density, tabular numerals."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Table headers, footnotes, captions, speaker names; sentence case."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Install command, inline code, and the verify flag only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "slide-lift",
+        "value": "0 40px 80px -40px rgba(0,0,0,.8)",
+        "purpose": "Every slide in deck mode."
+      },
+      {
+        "name": "raised-slide-edge",
+        "value": "0 0 0 1px rgba(255,255,255,.12), 0 40px 80px -40px rgba(0,0,0,.8)",
+        "purpose": "Navy slides in deck mode, edged so they read against the room."
+      },
+      {
+        "name": "exhibit",
+        "value": "0 18px 40px -18px rgba(7,13,31,.45), 0 0 0 1px rgba(7,13,31,.08)",
+        "purpose": "A slide shown inside a slide."
+      },
+      {
+        "name": "button-press",
+        "value": "0 6px 16px -6px rgba(7,13,31,.55)",
+        "purpose": "Primary buttons; dropped in the compact top-bar button."
+      },
+      {
+        "name": "tab-lift",
+        "value": "0 1px 3px rgba(7,13,31,.18)",
+        "purpose": "Selected segment in a tab track."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state",
+        "value": "0.15s ease",
+        "purpose": "Button fill, lift and tracker color transitions; disabled under reduced motion."
+      },
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Exhibit bar-chart grow-in (1.1s, 0.08s stagger); disabled under reduced motion."
+      },
+      {
+        "name": "scroll",
+        "value": "smooth; scroll-snap-type: y mandatory in deck mode",
+        "purpose": "One slide per screen on desktop; scroll-behavior auto under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "deck",
+        "value": "(min-width: 1024px) and (min-height: 620px)"
+      },
+      {
+        "name": "compact",
+        "value": "max-width: 860px"
+      },
+      {
+        "name": "narrow",
+        "value": "max-width: 420px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Signal Blue action with a soft press shadow; Download, Install, Join the list.",
+      "html": "<button class=\"ds-btn-primary\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3v12\"/><path d=\"m7 10 5 5 5-5\"/><path d=\"M5 21h14\"/></svg>Download the skill</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: .6em; padding: .9em 1.5em; border-radius: 10px; border: 1px solid transparent; background: var(--blue, #3a63f5); color: #fff; font: 600 15px/1 var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); cursor: pointer; box-shadow: 0 6px 16px -6px rgba(7,13,31,.55); transition: background .15s ease, transform .15s ease; } .ds-btn-primary svg { width: 1.1em; height: 1.1em; } .ds-btn-primary:hover { background: var(--blue-hover, #2f56d9); transform: translateY(-1px); } .ds-btn-primary:active { transform: translateY(0); } .ds-btn-primary:focus-visible { outline: 2px solid #2f56d9; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action on navy slides: transparent with a 28% white border.",
+      "html": "<div class=\"ds-navy-pad\"><button class=\"ds-btn-ghost\">Install guide</button></div>",
+      "css": ".ds-navy-pad { background: #0e1733; padding: 24px; } .ds-btn-ghost { padding: .9em 1.5em; border-radius: 10px; border: 1px solid rgba(255,255,255,.28); background: transparent; color: #fff; font: 600 15px/1 var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); cursor: pointer; transition: background .15s ease; } .ds-btn-ghost:hover { background: rgba(255,255,255,.08); } .ds-btn-ghost:focus-visible { outline: 2px solid #ffb23f; outline-offset: 3px; }"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Small secondary action on paper, e.g. Copy on a prompt card.",
+      "html": "<button class=\"ds-btn-quiet\">Copy</button>",
+      "css": ".ds-btn-quiet { padding: .7em 1.1em; border-radius: 8px; border: 1px solid #e2e0d8; background: #fff; color: #0b1020; font: 600 12px/1 var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); cursor: pointer; } .ds-btn-quiet:hover { border-color: #555b6c; } .ds-btn-quiet:focus-visible { outline: 2px solid #2f56d9; outline-offset: 3px; }"
+    },
+    {
+      "name": "Verify Flag",
+      "kind": "chip",
+      "refersTo": "verify-flag",
+      "description": "The one Highlighter Gold object: marks a figure that is not yet sourced.",
+      "html": "<p class=\"ds-figure\">~$4.2B<span class=\"ds-flag\">verify</span></p>",
+      "css": ".ds-figure { font: 600 16px/1.5 var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); color: #0b1020; margin: 0; } .ds-flag { display: inline-block; font: 600 .78em/1 var(--mono, ui-monospace, \"SF Mono\", Menlo, monospace); color: #070d1f; background: #ffb23f; padding: .3em .45em; border-radius: 4px; margin-left: .4em; vertical-align: .1em; }"
+    },
+    {
+      "name": "Email Input (navy)",
+      "kind": "input",
+      "refersTo": "input-on-navy",
+      "description": "Signup field on navy slides with gold focus ring.",
+      "html": "<div class=\"ds-navy-pad\"><label class=\"ds-label\" for=\"ds-email\">Your email</label><input class=\"ds-input\" id=\"ds-email\" type=\"email\" placeholder=\"you@school.ca\"></div>",
+      "css": ".ds-navy-pad { background: #0e1733; padding: 24px; } .ds-label { display: block; color: #fff; font: 600 12px/1.4 var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); margin-bottom: 6px; } .ds-input { width: 100%; font: 400 15px/1 var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); padding: .85em 1em; border-radius: 10px; border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.06); color: #fff; caret-color: #3a63f5; } .ds-input::placeholder { color: rgba(255,255,255,.5); } .ds-input:focus-visible { outline: 2px solid #ffb23f; outline-offset: 2px; } .ds-input[aria-invalid=\"true\"] { border-color: #ff8f8f; }"
+    },
+    {
+      "name": "Top Bar with Tracker",
+      "kind": "nav",
+      "refersTo": "topbar",
+      "description": "Fixed navy bar: wordmark, clickable section tracker, slide counter.",
+      "html": "<header class=\"ds-topbar\"><span class=\"ds-mark\">eightytwenty</span><nav class=\"ds-tracker\"><a href=\"#\">Summary</a><a href=\"#\" aria-current=\"true\">How it works</a><a href=\"#\">Install</a></nav><div class=\"ds-counter\"><b>04</b> / 08</div></header>",
+      "css": ".ds-topbar { height: 56px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 0 24px; background: #070d1f; color: #fff; border-bottom: 1px solid rgba(255,255,255,.08); font-family: var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); } .ds-mark { font: italic 600 15px/1 Georgia, serif; } .ds-tracker { display: flex; gap: 4px; } .ds-tracker a { position: relative; font-size: 13px; font-weight: 500; letter-spacing: .02em; color: rgba(255,255,255,.62); text-decoration: none; padding: 6px 10px; border-radius: 6px; transition: color .15s; } .ds-tracker a:hover, .ds-tracker a[aria-current=\"true\"] { color: #fff; } .ds-tracker a[aria-current=\"true\"]::after { content: \"\"; position: absolute; left: 10px; right: 10px; bottom: 0; height: 2px; background: #8ea8ff; } .ds-tracker a:focus-visible { outline: 2px solid #ffb23f; outline-offset: 3px; } .ds-counter { justify-self: end; font-size: 13px; letter-spacing: .04em; color: rgba(255,255,255,.62); } .ds-counter b { color: #fff; font-weight: 600; }"
+    },
+    {
+      "name": "Tabs",
+      "kind": "custom",
+      "refersTo": "tab-selected",
+      "description": "Segmented install-method switch on a Well track.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button class=\"ds-tab\" role=\"tab\" aria-selected=\"true\">Claude.ai</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\">Claude Code</button></div>",
+      "css": ".ds-tabs { display: inline-flex; gap: 4px; padding: 4px; background: #eeece5; border-radius: 10px; } .ds-tab { background: none; border: 0; font: 600 13px/1 var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); color: #555b6c; padding: .75em 1.1em; border-radius: 7px; cursor: pointer; } .ds-tab[aria-selected=\"true\"] { background: #fff; color: #0b1020; box-shadow: 0 1px 3px rgba(7,13,31,.18); } .ds-tab:focus-visible { outline: 2px solid #2f56d9; outline-offset: 3px; }"
+    },
+    {
+      "name": "Prompt Card",
+      "kind": "card",
+      "refersTo": "prompt-card",
+      "description": "White card on paper with a copyable prompt and a quiet Copy button.",
+      "html": "<div class=\"ds-prompt\"><p>Build the executive summary slide from this case prompt.</p><button class=\"ds-copy\">Copy</button></div>",
+      "css": ".ds-prompt { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1px solid #e2e0d8; border-radius: 12px; padding: 15px 18px; font-family: var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); } .ds-prompt p { margin: 0; font-size: 15px; line-height: 1.35; letter-spacing: -0.01em; color: #0b1020; } .ds-copy { flex: none; padding: .7em 1.1em; border-radius: 8px; border: 1px solid #e2e0d8; background: #fff; color: #0b1020; font: 600 12px/1 var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); cursor: pointer; } .ds-copy:hover { border-color: #555b6c; } .ds-copy:focus-visible { outline: 2px solid #2f56d9; outline-offset: 3px; }"
+    },
+    {
+      "name": "Slide (anatomy)",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "The signature: 16:9 paper slide with title, claim tagline, logo top right, hairline rule, body and numbered footnote row, all in --u.",
+      "html": "<div class=\"ds-room\"><div class=\"ds-slide\"><div class=\"ds-head\"><div><h2 class=\"ds-title\">Why it's different</h2><p class=\"ds-tagline\">Built the way judges actually score decks, not the way slide generators fill them</p></div><span class=\"ds-logo\">eighty<br>twenty</span></div><hr class=\"ds-rule\"><div class=\"ds-body\"><p>Body content scaled from one unit.</p></div><div class=\"ds-foot\"><span>Modeled on Ivey/Western case comp decks.</span><span class=\"ds-num\">03</span></div></div></div>",
+      "css": ".ds-room { background: #070d1f; padding: 24px; } .ds-slide { container-type: inline-size; --u: 1cqw; aspect-ratio: 16 / 9; display: flex; flex-direction: column; background: #fbfaf6; color: #0b1020; border-radius: 6px; padding: 4.2cqw 4.6cqw 2.6cqw; box-shadow: 0 40px 80px -40px rgba(0,0,0,.8); font-family: var(--font, \"Helvetica Neue\", \"TeX Gyre Heros\", Helvetica, Arial, sans-serif); font-variant-numeric: tabular-nums; } .ds-head { display: flex; justify-content: space-between; align-items: flex-start; gap: calc(var(--u) * 2); } .ds-title { margin: 0; font-size: calc(var(--u) * 2.9); line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; } .ds-tagline { margin: calc(var(--u) * .6) 0 0; font-size: calc(var(--u) * 1.65); line-height: 1.3; font-weight: 300; color: #555b6c; } .ds-logo { font: italic 600 calc(var(--u) * 1.3)/1 Georgia, serif; } .ds-rule { border: 0; border-top: 1px solid #e2e0d8; margin: calc(var(--u) * 1.6) 0 0; } .ds-body { flex: 1; padding-top: calc(var(--u) * 2.4); font-size: calc(var(--u) * 1.4); line-height: 1.5; color: #555b6c; } .ds-body p { margin: 0; } .ds-foot { display: flex; justify-content: space-between; align-items: baseline; margin-top: calc(var(--u) * 2); padding-top: calc(var(--u) * 1); border-top: 1px solid #e2e0d8; font-size: calc(var(--u) * 1.05); color: #555b6c; } .ds-num { font-weight: 600; color: #0b1020; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Midnight Boardroom",
+    "overview": "The site is a case competition deck, presented in a darkened room. The room is Midnight Navy; the slides are lit paper, 16:9, hanging in it. On a laptop the page behaves like a deck: one slide per screen, scroll-snapped, with a fixed top bar holding the wordmark, a clickable section tracker and a slide counter (\"01 / 08\"). On a phone the deck unfolds into an ordinary scrolling page, with the same slides stacked edge to edge. The opening and closing slides are navy-on-navy (Midnight Navy Raised), so the deck starts and ends with the lights low.\n\nThe system's signature is slide anatomy, borrowed from the slides eightytwenty itself builds: a short heavy title, a light claim tagline beneath it that states the slide's one point, the logo top right, a hairline rule, a body, and a footnote row with the slide number. Everything inside a slide is sized from a single unit, so a slide is a scaled object rather than a responsive page. Density is a consulting slide's: tables, numbered points, exhibits and footnotes, with text in the muted ink and only titles and data in full ink.\n\nComponents are confident and tactile: solid fills, real borders, and soft shadows that drop downward, never colored glows. The deck deliberately refuses the stock AI-tool landing page: no kickers above headings, no gradient text, no icon-tile card rows, no stats strip, no emoji icons.",
+    "keyCharacteristics": [
+      "Midnight Navy room, paper 16:9 slides lit inside it; the paper stays paper in every color scheme.",
+      "One sizing unit per slide (1% of slide width in deck mode, a fixed step on phones).",
+      "Slide anatomy on every content slide: title, claim tagline, logo top right, hairline rule, footnote row with number.",
+      "Signal Blue does the work (actions, the tracker, numerals); Highlighter Gold marks only what needs checking.",
+      "Helvetica set heavy and tight for titles, light for claims; monospace only for literal text."
+    ],
+    "rules": [
+      {
+        "name": "The Highlighter Rule",
+        "body": "Highlighter Gold marks what still needs checking: the `[verify]` flag, selected text, tiny markers, and focus on navy. It is never a fill for a button, card, heading or background.",
+        "section": "colors"
+      },
+      {
+        "name": "The Lit Slide Rule",
+        "body": "Paper slides stay paper. The room is navy; slides are lit objects in it. There is no dark-mode inversion of slide faces (the page declares a light color scheme), and navy slides use Midnight Navy Raised, never the room color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Blue Does Work Rule",
+        "body": "Signal Blue appears only where something can be pressed or where it counts: actions, the tracker, step and point numerals. Decorative blue is off the table.",
+        "section": "colors"
+      },
+      {
+        "name": "The Heavy Title, Light Claim Rule",
+        "body": "Every slide pairs a short 700-weight title with a 300-weight claim tagline. The title names the slide; the tagline says what it proves.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mono Means Literal Rule",
+        "body": "Monospace appears only for text the reader types, copies or must verify: code, the install command, the `[verify]` flag. Never for labels or decoration.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Unit Rule",
+        "body": "Every size inside a slide is a multiple of `--u`. Pixel values inside a slide exist only as phone overrides.",
+        "section": "layout"
+      },
+      {
+        "name": "The Slide Anatomy Rule",
+        "body": "Every content slide carries, in order: title and claim tagline at left, logo top right (black on paper, white on navy), a hairline rule, the body, and a footnote row with a source or caveat at left and the two-digit slide number at right in 600-weight ink. The title slide replaces the head with the display headline and keeps the footnote row as metadata (\"Prepared for: your judging panel\").",
+        "section": "layout"
+      },
+      {
+        "name": "The Lit Object Rule",
+        "body": "A shadow means \"this is a physical object in the room\": a slide, a slide inside a slide, a button you press. Cards and panels on a slide get a hairline or a fill instead.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** build every new section as a slide with the full anatomy: title, claim tagline, logo top right, hairline rule, body, footnote row with the two-digit number.",
+      "**Do** size everything inside a slide in multiples of `--u`; use pixels only in phone overrides.",
+      "**Do** write taglines as claims (one sentence that states what the slide proves), set at weight 300 in muted ink.",
+      "**Do** keep content slides on Slide Paper and title or closing slides on Midnight Navy Raised, in every color scheme.",
+      "**Do** use Signal Blue for fills behind white text and Signal Blue Ink for blue text and thin lines on paper; use Signal Blue Bright for blue on navy.",
+      "**Do** separate content with hairlines and Well fills; reserve shadows for slides, exhibits, pressed buttons and the selected tab.",
+      "**Do** use inline SVG line icons (2.4 stroke, about 1.1em), only where they carry meaning.",
+      "**Do** label sample slides and example figures as samples with a fictional client."
+    ],
+    "donts": [
+      "**Don't** use Highlighter Gold as a button, card, heading or background color; it marks verification, selection, tiny markers and focus on navy only.",
+      "**Don't** put a kicker or eyebrow label above a heading.",
+      "**Don't** use gradient text.",
+      "**Don't** build rows of icon-tile cards.",
+      "**Don't** add a stats strip of big numbers.",
+      "**Don't** use emoji as icons.",
+      "**Don't** add colored glows; shadows are neutral, soft and drop downward.",
+      "**Don't** use monospace for labels or decoration.",
+      "**Don't** invert paper slides to dark in dark mode.",
+      "**Don't** set labels in uppercase; labels are sentence case at 600 with 0.02em tracking."
+    ]
+  }
+}

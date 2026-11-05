@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-05T03:35:01.777Z",
+        "reason": "Claude verified in browser: flagged rules are hairline top borders with computed padding-top 10-25px (deck and mobile); the static scan can't resolve calc(var(--u) * N)"
+      }
+    ]
+  }
+}

@@ -59,8 +59,38 @@ In PostHog, go to **Dashboards → New dashboard** and add these insights:
 
 The site sends these events:
 - `$pageview`, automatically on every visit
-- `skill_downloaded`, on every click of the Download button
+- `skill_downloaded`, on every click of a Download button (`location` says which one)
 - `install_tab_viewed`, when someone switches between the Claude.ai and Claude Code install tabs
+- `signup_submitted` / `signup_failed`, when someone joins the email list (`source` says which form)
+- `link_shared` / `link_copied`, when a phone visitor sends the page to their laptop
+- `text_copied`, when someone copies the install command or an example prompt
+
+Add a **Signups** insight too: Trends → `signup_submitted` → "Total count".
+
+## Step 5: Connect the email list on Kit (10 min)
+
+The signup forms (on phones at the top of the page, and on the last slide) send nothing until this is done.
+
+1. Go to **kit.com** and sign up for the free plan.
+2. Go to **Grow → Landing Pages & Forms → Create new → Form → Inline**, pick any template, and click **Save**. The design doesn't matter, because the site uses its own form.
+3. Click **Publish → HTML**. In the code it shows, find `app.kit.com/forms/1234567/subscriptions`. That number is your **form ID**.
+4. Open `index.html` and replace `REPLACE_WITH_KIT_FORM_ID` with the number. It appears near the top and in both forms, so replace all of them. Or send the number to Claude and ask it to do it.
+5. In the form's **Settings → Incentive**, turn on **Send incentive email**, set the button to link to `https://case-comp-slide-builder.vercel.app/#install`, and paste the welcome email below.
+6. Push the change. Then test it with your own email from your phone.
+
+**Draft welcome email** (Kit's incentive email):
+
+> **Subject:** Your eightytwenty install link
+>
+> Thanks for grabbing eightytwenty.
+>
+> Open this on a laptop: **[Install eightytwenty]** (button)
+>
+> It takes two minutes: download the zip, then in Claude go to Settings → Capabilities → Skills → Upload skill. You'll need Claude Pro or higher.
+>
+> Then attach your case prompt and ask for a slide. I'll only email you when a new skill ships.
+
+**Consent:** you're in Canada, so the anti-spam law (CASL) applies. The forms already say what people are signing up for and that they can unsubscribe. Kit adds the unsubscribe link to every email. Don't add people to the list any other way.
 
 ## Updating the skill later
 
