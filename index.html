@@ -367,40 +367,50 @@
 
   /* ---------- 09 Feedback: a judge's score sheet ---------- */
   .feedback .slide-body { display: grid; grid-template-columns: calc(var(--u) * 59.3) 1fr; gap: calc(var(--u) * 3); align-items: stretch; }
-  .feedback .slide-body > div { display: flex; flex-direction: column; }
-  .sheet { background: var(--surface); border: 1px solid var(--line); border-radius: calc(var(--u) * .9); overflow: hidden; display: flex; flex-direction: column; flex: 1; }
-  .sheet-bar { display: flex; justify-content: space-between; align-items: center; background: var(--panel); color: #fff; padding: calc(var(--u) * .8) calc(var(--u) * 1.6); font-size: calc(var(--u) * 1.15); font-weight: 700; }
+  .feedback .slide-body > div { display: flex; flex-direction: column; min-height: 0; }
+  .sheet { background: var(--surface); border: 1px solid var(--line); border-radius: calc(var(--u) * .9); overflow: hidden; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .sheet-bar { flex: none; display: flex; justify-content: space-between; align-items: center; background: var(--panel); color: #fff; padding: calc(var(--u) * .7) calc(var(--u) * 1.6); font-size: calc(var(--u) * 1.15); font-weight: 700; }
   .sheet-bar span { font-weight: 400; color: var(--on-navy-muted); }
-  .sheet form { flex: 1; display: flex; flex-direction: column; padding: 0 calc(var(--u) * 1.6) calc(var(--u) * 1.4); }
-  .sheet-row { display: grid; grid-template-columns: calc(var(--u) * 12) 1fr; gap: calc(var(--u) * 1.4); align-items: start; padding: calc(var(--u) * 1.3) 0; border-bottom: 1px solid var(--line); margin: 0; min-width: 0; }
-  .sheet-row.grow { flex: 1; }
-  .sheet-row > :first-child { font-size: calc(var(--u) * 1.25); font-weight: 700; color: var(--ink); padding: calc(var(--u) * .55) 0 0; }
-  .sheet-row small { display: block; font-size: calc(var(--u) * 1); font-weight: 400; color: var(--muted); margin-top: calc(var(--u) * .2); }
-  fieldset.sheet-row { border: 0; border-bottom: 1px solid var(--line); }
-  fieldset.sheet-row legend { float: left; width: 100%; padding: calc(var(--u) * .55) 0 0; font-size: calc(var(--u) * 1.25); font-weight: 700; }
-  .scores { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * .7); }
-  .score { position: relative; }
+  .sheet form { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 0 calc(var(--u) * 1.6) calc(var(--u) * 1.2); }
+  .sheet-row { flex: none; display: grid; grid-template-columns: calc(var(--u) * 11) minmax(0, 1fr); gap: calc(var(--u) * 1.4); align-items: start; padding: calc(var(--u) * 1) 0; border-bottom: 1px solid var(--line); }
+  .sheet-row.grow { flex: 1 1 auto; min-height: calc(var(--u) * 6.5); align-items: stretch; }
+  .fb-label { font-size: calc(var(--u) * 1.2); font-weight: 700; color: var(--ink); padding-top: calc(var(--u) * .5); }
+  .fb-label small { display: block; font-size: calc(var(--u) * .95); font-weight: 400; color: var(--muted); margin-top: calc(var(--u) * .15); line-height: 1.35; }
+  .sheet-row.stack { grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * .6); }
+  .sheet-row.stack .fb-label { padding-top: 0; }
+  .scores { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: calc(var(--u) * .7); }
+  .score { position: relative; display: block; }
   .score input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-  .score span { display: block; border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .5); padding: calc(var(--u) * .75) calc(var(--u) * 1); font-size: calc(var(--u) * 1.2); font-weight: 700; color: var(--ink); background: var(--surface); transition: background .15s, border-color .15s; }
+  .score span { display: block; border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .5); padding: calc(var(--u) * .75) calc(var(--u) * .6); font-size: calc(var(--u) * 1.15); line-height: 1.3; font-weight: 700; color: var(--ink); background: var(--surface); text-align: center; white-space: nowrap; transition: background .15s, border-color .15s; }
   .score:hover span { border-color: var(--blue); }
   .score input:checked + span { background: var(--tint); border-color: var(--blue); color: var(--blue-hover); box-shadow: inset calc(var(--u) * .35) 0 0 var(--blue); }
   .score input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
   .sheet textarea, .sheet input[type=email] {
-    width: 100%; font: 400 calc(var(--u) * 1.3) / 1.45 var(--font); color: var(--ink); background: var(--slide);
-    border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .5); padding: calc(var(--u) * .75) calc(var(--u) * 1);
+    width: 100%; font: 400 calc(var(--u) * 1.25) / 1.45 var(--font); color: var(--ink); background: var(--slide);
+    border: 1px solid var(--bar-grey); border-radius: calc(var(--u) * .5); padding: calc(var(--u) * .65) calc(var(--u) * 1);
   }
-  .sheet textarea { resize: vertical; min-height: calc(var(--u) * 7.5); height: 100%; }
+  .sheet textarea { resize: none; height: 100%; min-height: calc(var(--u) * 4.5); }
   .sheet textarea::placeholder, .sheet input::placeholder { color: var(--muted); }
   .sheet textarea:focus-visible, .sheet input:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; border-color: var(--blue); }
   .sheet [aria-invalid="true"] { border-color: var(--red); }
-  .sheet-foot { display: flex; align-items: center; gap: calc(var(--u) * 1.4); padding-top: calc(var(--u) * 1.3); }
-  .sheet-foot .btn { font-size: calc(var(--u) * 1.3); padding: .8em 1.6em; }
-  .sheet .fb-status { font-size: calc(var(--u) * 1.15); line-height: 1.4; color: var(--muted); }
+  .photos { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) * .7); }
+  .thumb { position: relative; margin: 0; width: calc(var(--u) * 4.4); height: calc(var(--u) * 4.4); border-radius: calc(var(--u) * .5); overflow: hidden; border: 1px solid var(--line); background: var(--well); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb button { position: absolute; top: calc(var(--u) * .25); right: calc(var(--u) * .25); width: calc(var(--u) * 1.7); height: calc(var(--u) * 1.7); min-width: 22px; min-height: 22px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(17,24,51,.82); color: #fff; cursor: pointer; padding: 0; }
+  .thumb button svg { width: 60%; height: 60%; }
+  .thumb button:hover { background: var(--navy); }
+  .add-photo { display: inline-flex; align-items: center; gap: .5em; height: calc(var(--u) * 4.4); padding: 0 calc(var(--u) * 1.3); border: 1px dashed var(--blue); border-radius: calc(var(--u) * .5); color: var(--blue-hover); font-size: calc(var(--u) * 1.1); font-weight: 700; cursor: pointer; background: var(--surface); transition: background .15s; }
+  .add-photo:hover { background: var(--tint); }
+  .add-photo svg { width: 1.2em; height: 1.2em; }
+  #fb-photos:focus-visible + .photos .add-photo { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .photos[data-full] .add-photo { display: none; }
+  .sheet-foot { flex: none; display: flex; align-items: center; gap: calc(var(--u) * 1.4); padding-top: calc(var(--u) * 1.1); }
+  .sheet-foot .btn { font-size: calc(var(--u) * 1.25); padding: .75em 1.6em; flex: none; }
+  .sheet .fb-status { font-size: calc(var(--u) * 1.1); line-height: 1.4; color: var(--muted); }
   .sheet .fb-status.err { color: var(--red); }
   .sheet .fb-done { flex: 1; display: none; flex-direction: column; justify-content: center; align-items: flex-start; gap: calc(var(--u) * .8); padding: calc(var(--u) * 2) calc(var(--u) * 2.4); }
   .sheet .fb-done b { font-size: calc(var(--u) * 2.2); }
-  .sheet .fb-done p { font-size: calc(var(--u) * 1.45); color: var(--muted); max-width: 30em; }
-  .sheet .fb-done .link-btn { color: var(--blue-hover); font-weight: 700; }
+  .sheet .fb-done .link-btn { color: var(--blue-hover); font-weight: 700; font-size: calc(var(--u) * 1.3); }
   .sheet.sent form { display: none; }
   .sheet.sent .fb-done { display: flex; }
 
@@ -486,9 +496,11 @@
     .team ol { grid-template-columns: 1fr; gap: 14px; }
     .signup-col { padding-top: 0; }
     .feedback .slide-body { grid-template-columns: minmax(0, 1fr); gap: 36px; }
-    .sheet-row, fieldset.sheet-row { grid-template-columns: 1fr; gap: 10px; }
-    .scores { grid-template-columns: 1fr; }
+    .sheet-row { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 14px 0; }
+    .scores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .sheet textarea { min-height: 120px; }
+    .thumb, .add-photo { height: 56px; }
+    .thumb { width: 56px; }
     .sheet-foot { flex-wrap: wrap; }
     .slide-foot { flex-direction: column; gap: 4px; }
     .slide-foot .num { margin-left: 0; }
@@ -910,25 +922,31 @@
           <div class="sheet" id="fb-sheet">
             <div class="sheet-bar">Score Sheet <span>Judge: You</span></div>
             <form id="fb-form" novalidate>
-              <fieldset class="sheet-row">
-                <legend>How Did It Go?</legend>
+              <div class="sheet-row stack" role="radiogroup" aria-labelledby="fb-outcome-label">
+                <span class="fb-label" id="fb-outcome-label">How Did It Go?</span>
                 <div class="scores">
                   <label class="score"><input type="radio" name="outcome" value="ready"><span>Ready to present</span></label>
-                  <label class="score"><input type="radio" name="outcome" value="needed-edits"><span>Close, needed edits</span></label>
+                  <label class="score"><input type="radio" name="outcome" value="needed-edits"><span>Needed edits</span></label>
                   <label class="score"><input type="radio" name="outcome" value="needed-rewrite"><span>Needed a rewrite</span></label>
-                  <label class="score"><input type="radio" name="outcome" value="install-problem"><span>Couldn't get it working</span></label>
+                  <label class="score"><input type="radio" name="outcome" value="install-problem"><span>Couldn't install</span></label>
                 </div>
-              </fieldset>
+              </div>
               <div class="sheet-row grow">
-                <label for="fb-message">Comments<small>Name the slide if you can</small></label>
+                <label class="fb-label" for="fb-message">Comments<small>Name the slide if you can</small></label>
                 <textarea id="fb-message" name="message" maxlength="2000" placeholder="The risk matrix on my KPI slide was too small to read." aria-describedby="fb-status"></textarea>
               </div>
               <div class="sheet-row">
-                <label for="fb-email">Email<small>Optional</small></label>
+                <span class="fb-label" id="fb-photos-label">Screenshots<small>Up to 3. Crop out anything confidential.</small></span>
                 <div>
-                  <input type="email" id="fb-email" name="email" autocomplete="email" inputmode="email" placeholder="you@school.ca" aria-describedby="fb-email-note fb-status">
-                  <small id="fb-email-note" style="font-size:calc(var(--u) * 1);color:var(--muted);display:block;margin-top:calc(var(--u) * .4)">Only used to reply to this feedback.</small>
+                  <input type="file" id="fb-photos" class="visually-hidden" accept="image/png,image/jpeg,image/webp,image/heic,image/heif" multiple aria-labelledby="fb-photos-label">
+                  <div class="photos" id="fb-photo-list">
+                    <label class="add-photo" for="fb-photos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add screenshot</label>
+                  </div>
                 </div>
+              </div>
+              <div class="sheet-row">
+                <label class="fb-label" for="fb-email">Email<small>Optional, only to reply</small></label>
+                <input type="email" id="fb-email" name="email" autocomplete="email" inputmode="email" placeholder="you@school.ca" aria-describedby="fb-status">
               </div>
               <div class="sheet-foot">
                 <button class="btn btn-primary" type="submit" disabled>Send feedback</button>
@@ -1057,34 +1075,111 @@
       } finally { button.disabled = false; button.textContent = label; }
     });
   });
-  // Feedback score sheet: sent to PostHog as a feedback_submitted event
+  // Feedback score sheet: screenshots go to the private upload function, the rest to PostHog as feedback_submitted
   (() => {
+    const MAX_PHOTOS = 3, MAX_SIDE = 2000;
     const sheet = document.getElementById("fb-sheet");
     const form = document.getElementById("fb-form");
     const msg = document.getElementById("fb-message");
     const email = document.getElementById("fb-email");
+    const picker = document.getElementById("fb-photos");
+    const list = document.getElementById("fb-photo-list");
+    const addBtn = list.querySelector(".add-photo");
     const status = document.getElementById("fb-status");
     const button = form.querySelector("button[type=submit]");
+    const label = button.textContent;
+    let photos = []; // { file, url }
     const say = (t, kind) => { status.textContent = t; status.className = "fb-status " + (kind || ""); };
     button.disabled = false;
+
+    const render = () => {
+      list.querySelectorAll(".thumb").forEach(n => n.remove());
+      photos.forEach((ph, i) => {
+        const fig = document.createElement("figure");
+        fig.className = "thumb";
+        fig.innerHTML = '<img alt=""><button type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>';
+        fig.querySelector("img").src = ph.url;
+        const rm = fig.querySelector("button");
+        rm.setAttribute("aria-label", "Remove screenshot " + (i + 1));
+        rm.addEventListener("click", () => {
+          URL.revokeObjectURL(ph.url); photos.splice(i, 1); render();
+          (list.querySelector(".thumb button") || addBtn).focus();
+        });
+        list.insertBefore(fig, addBtn);
+      });
+      if (photos.length >= MAX_PHOTOS) list.setAttribute("data-full", ""); else list.removeAttribute("data-full");
+    };
+
+    picker.addEventListener("change", () => {
+      const files = [...picker.files];
+      picker.value = "";
+      const room = MAX_PHOTOS - photos.length;
+      files.filter(f => f.type.startsWith("image/") || /\.(heic|heif)$/i.test(f.name)).slice(0, room)
+        .forEach(file => photos.push({ file, url: URL.createObjectURL(file) }));
+      render();
+      say(files.length > room ? "Only " + MAX_PHOTOS + " screenshots fit. The rest were left out." : "", files.length > room ? "err" : "");
+    });
+
+    // Shrink each photo to a JPEG of at most 2000px a side, so uploads stay small
+    const compress = async (file) => {
+      const bmp = await createImageBitmap(file);
+      const k = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+      const ctx = c.getContext("2d");
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
+      ctx.drawImage(bmp, 0, 0, c.width, c.height);
+      bmp.close && bmp.close();
+      return new Promise((ok, bad) => c.toBlob(b => b ? ok(b) : bad(new Error("encode")), "image/jpeg", 0.85));
+    };
+
+    const upload = async (file) => {
+      let blob;
+      try { blob = await compress(file); } catch { throw new Error("decode"); }
+      const res = await fetch("/api/feedback-photo", { method: "POST", headers: { "Content-Type": "image/jpeg" }, body: blob });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "upload");
+      return data.pathname;
+    };
+
     [msg, email].forEach(f => f.addEventListener("input", () => { f.removeAttribute("aria-invalid"); if (status.classList.contains("err")) say(""); }));
-    form.addEventListener("change", () => { if (status.classList.contains("err")) say(""); });
-    form.addEventListener("submit", e => {
+    form.addEventListener("change", e => { if (e.target !== picker && status.classList.contains("err")) say(""); });
+
+    form.addEventListener("submit", async e => {
       e.preventDefault();
       const outcome = (form.querySelector("input[name=outcome]:checked") || {}).value;
       const message = msg.value.trim();
-      if (!outcome && !message) { msg.setAttribute("aria-invalid", "true"); msg.focus(); return say("Pick how it went or write a comment first.", "err"); }
+      if (!outcome && !message && !photos.length) { msg.setAttribute("aria-invalid", "true"); msg.focus(); return say("Pick how it went, write a comment or add a screenshot first.", "err"); }
       if (email.value.trim() && !email.checkValidity()) { email.setAttribute("aria-invalid", "true"); email.focus(); return say("That email doesn't look right. Fix it or leave it blank.", "err"); }
       if (!(window.posthog && posthog.__loaded)) return say("Your browser blocked the send, usually an ad blocker. Allow this site and try again.", "err");
-      const props = { outcome: outcome || "none", message, source: "feedback-slide" };
+
+      button.disabled = true;
+      const paths = [];
+      try {
+        for (let i = 0; i < photos.length; i++) {
+          button.textContent = "Uploading " + (i + 1) + " of " + photos.length + "…";
+          paths.push(await upload(photos[i].file));
+        }
+      } catch (err) {
+        button.disabled = false; button.textContent = label;
+        const why = err.message === "decode" ? "One screenshot couldn't be read. Try a PNG or JPG."
+          : err.message === "not-configured" ? "Screenshot uploads aren't switched on yet. Remove them to send your note."
+          : "A screenshot didn't upload. Try again, or remove it to send without.";
+        return say(why, "err");
+      }
+
+      const props = { outcome: outcome || "none", message, source: "feedback-slide", photo_count: paths.length };
+      if (paths.length) props.photos = paths;
       if (email.value.trim()) props.email = email.value.trim();
       posthog.capture("feedback_submitted", props, { send_instantly: true });
+      button.disabled = false; button.textContent = label;
       say("");
       sheet.classList.add("sent");
       sheet.querySelector(".fb-done").focus();
     });
+
     document.getElementById("fb-again").addEventListener("click", () => {
-      form.reset(); sheet.classList.remove("sent"); msg.focus();
+      form.reset(); photos.forEach(ph => URL.revokeObjectURL(ph.url)); photos = []; render(); sheet.classList.remove("sent"); msg.focus();
     });
   })();
 </script>

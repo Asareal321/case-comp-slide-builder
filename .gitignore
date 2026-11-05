@@ -8,3 +8,4 @@
 .impeccable/live/annotations/
 .impeccable/live/roots.json
 .impeccable/hook.cache.json
+node_modules/

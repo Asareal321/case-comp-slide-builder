@@ -63,7 +63,7 @@ The site sends these events:
 - `signup_submitted` / `signup_failed`, when someone joins the email list (`source` says which form)
 - `link_shared` / `link_copied`, when a phone visitor sends the page to their laptop
 - `text_copied`, when someone copies the install command or an example prompt
-- `feedback_submitted`, when someone sends the score sheet on the Feedback slide (`outcome`, `message`, and `email` if they gave one)
+- `feedback_submitted`, when someone sends the score sheet on the Feedback slide (`outcome`, `message`, `photo_count`, `photos`, and `email` if they gave one)
 
 Add a **Signups** insight too: Trends → `signup_submitted` → "Total count".
 
@@ -110,6 +110,19 @@ order by timestamp desc
 4. Link people to it directly: `https://case-comp-slide-builder.vercel.app/#feedback`. Add that link to the Kit welcome email.
 
 If a visitor's ad blocker stops PostHog, the form tells them it was blocked instead of pretending it sent.
+
+### Turn on screenshot uploads (5 min, once)
+
+People can attach up to 3 screenshots to their feedback. They're stored privately in your Vercel account, so only you can see them. Until you do this, the form tells people uploads aren't switched on and still lets them send text.
+
+1. In Vercel, open the `case-comp-slide-builder` project and go to **Storage → Create → Blob**.
+2. Name it `feedback-photos`, choose **Private** access, and connect it to the project for all environments. Vercel adds the `BLOB_READ_WRITE_TOKEN` setting for you.
+3. Go to **Deployments**, open the menu on the latest one, and click **Redeploy**, so the site picks up the new setting.
+4. Test it: send yourself feedback with a screenshot from the live site.
+
+**Finding the photos:** each `feedback_submitted` event lists its photos under `photos`, as paths like `feedback/2026-11-05/....jpg`. Open **Storage → feedback-photos** in Vercel and find the file under that path. Add `properties.photos` to the SQL query above to see them next to each comment.
+
+Each photo is checked to be a real image, shrunk to at most 2000px a side, and capped at 4 MB. Vercel's free Hobby plan includes a little Blob storage, which covers thousands of screenshots this size.
 
 ## Updating the skill later
 
